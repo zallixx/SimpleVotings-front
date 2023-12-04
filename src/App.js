@@ -9,6 +9,8 @@ import PrivateRoute from "./utils/PrivateRoute";
 import LoginPage from './components/LoginPage/LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RegisterPage from "./components/RegisterPage/RegisterPage";
+import PollsPage from "./components/PollsPage/PollsPage";
+
 
 function App() {
     return (
@@ -22,6 +24,11 @@ function App() {
                                 <HomePage/>
                             </PrivateRoute>
                         }/>
+                        <Route path="/polls" element={
+                            <PrivateRoute>
+                                <PollsPage/>
+                            </PrivateRoute>
+                        }/>
                         <Route element={<LoginPage/>} path="/login"/>
                         <Route element={<RegisterPage/>} path="/register"/>
                     </Routes>
@@ -29,8 +36,7 @@ function App() {
             </Router>
 
         </div>
-    )
-        ;
+    );
 }
 
 export default App;
