@@ -36,6 +36,27 @@ export const AuthProvider = ({children}) => {
             alert('Something went wrong!')
         }
     }
+    let registerUser = async (e) => {
+        e.preventDefault()
+        let response = await fetch('http://127.0.0.1:8000/api/register/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                'email': e.target.email.value,
+                'username': e.target.username.value,
+                'password': e.target.password.value,
+
+            })
+        })
+        let data = await response.json()
+        if (response.status === 201) {
+            navigate('/login')
+        } else {
+            alert('Something went wrong!')
+        }
+    }
     let updateToken = async () => {
         console.log('Update called')
         let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
@@ -68,7 +89,8 @@ export const AuthProvider = ({children}) => {
     let contextData = {
         user: user,
         loginUser: loginUser,
-        logoutUser: logoutUser
+        logoutUser: logoutUser,
+        registerUser: registerUser
     }
 
     useEffect(() => {
