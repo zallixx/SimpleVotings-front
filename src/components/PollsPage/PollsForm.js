@@ -1,42 +1,46 @@
-import React, { useState } from 'react';
-import Poll from './utils_for_polls/PollClass';
+import React, {useContext, useEffect, useState} from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthContext from "../../context/AuthContext";
 
+const Polls = () => {
+  const [polls, setPolls] = useState([]);
+  const navigate = useNavigate();
+  let {authTokens} = useContext(AuthContext);
 
-const PollForm = () => {
-  const weatherPoll = new Poll('Погодный опрос', 3, ['Солнечно', 'Облачно', 'Пасмурно']);
-  const [poll, setPoll] = useState(weatherPoll);
-
-
-  const vote = (option) => {
-    setPoll(prevPoll => {
-      const updatedPoll = new Poll(prevPoll.name_of_a_poll, 0, []);
-      updatedPoll.answers = prevPoll.answers.map(answer => ({ ...answer }));
-
-      const answerIndex = updatedPoll.answers.findIndex(answer => answer.option === option);
-
-      if (answerIndex !== -1) {
-        updatedPoll.answers[answerIndex].amount++;
+  const fetchPolls = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/polls', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + String(authTokens.access),
+        },
+      });
+      const data = await response.json();
+      if (response.status === 200) {
+        setPolls(data);
+      } else {
+        alert('Something went wrong!');
       }
-
-      return updatedPoll;
-    });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
+  useEffect(() => {
+    fetchPolls();
+  }, []);
 
   return (
     <div>
-      <h3>{poll.name_of_a_poll}</h3>
-      {poll.answers.map(answer => (
-        <div key={answer.number}>
-          <p>
-            {answer.option}{' '}
-            <button onClick={() => vote(answer.option)}>Голосовать</button>{' '}
-            количество голосов: {answer.amount}
-          </p>
+      <h3>Список опросов:</h3>
+      {polls.map((poll) => (
+        <div key={poll.poll_id}>
+          <Link to={`/polls/${poll.poll_id}`}>{poll.name_of_a_poll}</Link>
         </div>
       ))}
     </div>
   );
 };
 
-export default PollForm;
+export default Polls;

@@ -90,7 +90,8 @@ export const AuthProvider = ({children}) => {
         user: user,
         loginUser: loginUser,
         logoutUser: logoutUser,
-        registerUser: registerUser
+        registerUser: registerUser,
+        authTokens: authTokens,
     }
 
     useEffect(() => {
