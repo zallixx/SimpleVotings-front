@@ -13,8 +13,8 @@ const LoginForm = () => {
             <div className="auth-inner">
                 <Form horizontal className="LoginForm" id="loginForm" onSubmit={loginUser}>
                     <FormGroup controlId="formUsername" className="mb-3">
-                        <FormLabel>Email Address</FormLabel>
-                        <FormControl type="text" name="username" className="form-control" placeholder="Email Address"/>
+                        <FormLabel>Username</FormLabel>
+                        <FormControl type="text" name="username" className="form-control" placeholder="Username"/>
                     </FormGroup>
                     <FormGroup controlId="formPassword" className="mb-3">
                         <FormLabel>Password</FormLabel>
