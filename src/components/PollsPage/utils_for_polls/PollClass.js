@@ -7,14 +7,13 @@ class Answer {
 }
 
 class Poll {
-  constructor(name_of_a_poll, numAnswers, answerOptions) {
-    this.name_of_a_poll = name_of_a_poll;
-    this.answers = [];
-
-    for (let i = 0; i < numAnswers; i++) {
-      const answer = new Answer(i + 1, answerOptions[i]);
-      this.answers.push(answer);
-    }
+  constructor(poll_id, question, answers, creator_by_id, created_at, redacted_at) {
+    this.poll_id = poll_id;
+    this.question = question;
+    this.answers = answers.map((option, index) => new Answer(index + 1, option));
+    this.creator = creator_by_id;
+    this.created_at = created_at;
+    this.redacted_at = redacted_at;
   }
 }
 
