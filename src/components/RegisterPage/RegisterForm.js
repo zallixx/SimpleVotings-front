@@ -24,6 +24,10 @@ const RegisterPage = () => {
                         <FormLabel>Password</FormLabel>
                         <FormControl type="password" name="password" className="form-control" placeholder="Password"/>
                     </FormGroup>
+                    <FormGroup controlId="formPassword" className="mb-3">
+                        <FormLabel>Repeat Password</FormLabel>
+                        <FormControl type="password" name="password2" className="form-control" placeholder="Repeat Password"/>
+                    </FormGroup>
                     <FormGroup style={buttonStyle} controlId="formSubmit" className="d-grid">
                         <Button bsStyle="primary" type="submit">
                             Register

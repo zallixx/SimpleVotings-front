@@ -38,6 +38,10 @@ export const AuthProvider = ({children}) => {
     }
     let registerUser = async (e) => {
         e.preventDefault()
+        if (e.target.password.value !== e.target.password2.value) {
+            alert('Passwords do not match!')
+            return
+        }
         let response = await fetch('http://127.0.0.1:8000/api/register/', {
             method: 'POST',
             headers: {
