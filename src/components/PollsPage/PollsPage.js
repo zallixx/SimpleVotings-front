@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
 
 import './PollsPage.css';
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 
 const PollsPage = () => {
     const [polls, setPolls] = useState([]);
@@ -35,11 +36,10 @@ const PollsPage = () => {
     }, []);
 
     return (
-        <div>
-            <h3>Список опросов:</h3>
+        <div className="PollsPage">
             {polls.map((poll) => (
-                <div key={poll.poll_id}>
-                    <Link to={`/polls/${poll.poll_id}`}>{poll.name_of_a_poll}</Link>
+                <div key={poll.id} className="auth-inner">
+                    <a onClick={() => navigate(`/poll/${poll.id}`)}>{poll.question}</a>
                 </div>
             ))}
         </div>

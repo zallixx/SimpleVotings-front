@@ -10,6 +10,7 @@ import LoginPage from './components/LoginPage/LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import PollsPage from "./components/PollsPage/PollsPage";
+import PollPage from "./components/PollPage/PollPage";
 
 
 function App() {
@@ -29,8 +30,14 @@ function App() {
                                 <PollsPage/>
                             </PrivateRoute>
                         }/>
+                        <Route path="/polls/:id" element={
+                            <PrivateRoute>
+                                <PollPage/>
+                            </PrivateRoute>
+                        }/>
                         <Route element={<LoginPage/>} path="/login"/>
                         <Route element={<RegisterPage/>} path="/register"/>
+
                     </Routes>
                 </AuthProvider>
             </Router>
