@@ -18,6 +18,11 @@ const Header = () => {
                                     Logout
                                 </Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to={'/polls'}>
+                                    Polls
+                                </Link>
+                            </li>
                         </ul>
                     </div>) : (
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo02">

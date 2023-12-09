@@ -12,6 +12,7 @@ const PollsPage = () => {
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
     const params = useParams();
+    const [selected, setSelected] = useState('');
 
     const fetchPoll = async () => {
         try {
@@ -24,7 +25,6 @@ const PollsPage = () => {
             });
             const data = await response.json();
             if (response.status === 200) {
-                console.log(data)
                 setPoll(data);
             } else {
                 alert('Something went wrong!');
@@ -44,15 +44,14 @@ const PollsPage = () => {
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
                 body: JSON.stringify({
-                    'choices': e.target.answer.value
+                    'choices': selected
                 })
             });
             const data = await response.json();
-            if (response.status === 200) {
-                console.log(data)
-                navigate('/polls/' + params.id);
+            if (response.status === 201) {
+                navigate('/polls/' + params.id + '/results');
             } else {
-                alert('Something went wrong!');
+                alert(data);
             }
         } catch (error) {
             console.error(error);
@@ -71,17 +70,20 @@ const PollsPage = () => {
         <div className="PollsPage">
             <div key={poll.id} className="auth-inner">
                 <p>{poll.question}</p>
-                <Form horizontal onSubmit={vote}>
-                    {React.Children.toArray(
-                        poll.choices.map((choice) => (
-                            <Form.Check
+                <Form onSubmit={vote}>
+                    {poll.choices.map((choice) => (
+                        <div className="form-check">
+                            <input
+                                className="form-check-input"
                                 type="radio"
-                                id={choice}
-                                name="answer"
-                                label={choice}
+                                name="choices"
+                                value={choice}
+                                onChange={(e) => setSelected(e.target.value)}
+                                id={choice.id}
                             />
-                        ))
-                    )}
+                            <label className="form-check-label" htmlFor={choice.id}>{choice}</label>
+                        </div>
+                    ))}
                     <FormGroup>
                         <Button type="submit" bsStyle="primary">
                             Vote

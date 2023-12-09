@@ -11,6 +11,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import PollsPage from "./components/PollsPage/PollsPage";
 import PollPage from "./components/PollPage/PollPage";
+import ResultPage from "./components/ResultPage/ResultPage";
+
 
 
 function App() {
@@ -33,6 +35,11 @@ function App() {
                         <Route path="/polls/:id" element={
                             <PrivateRoute>
                                 <PollPage/>
+                            </PrivateRoute>
+                        }/>
+                        <Route path="/polls/:id/results" element={
+                            <PrivateRoute>
+                                <ResultPage/>
                             </PrivateRoute>
                         }/>
                         <Route element={<LoginPage/>} path="/login"/>

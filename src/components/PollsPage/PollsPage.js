@@ -6,6 +6,7 @@ import AuthContext from "../../context/AuthContext";
 import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 
 const PollsPage = () => {
+    const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
@@ -32,16 +33,30 @@ const PollsPage = () => {
     };
 
     useEffect(() => {
-        fetchPolls();
+        fetchPolls().then(() => setLoading(false));
     }, []);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className="PollsPage">
-            {polls.map((poll) => (
-                <div key={poll.id} className="auth-inner">
-                    <a onClick={() => navigate(`/poll/${poll.id}`)}>{poll.question}</a>
+            <div className="auth-wrapper">
+                <div className="auth-inner" style={{width: "1184px", height: "835px"}}>
+                    <div className="list-group h-75 w-75">
+                        {polls.map((poll) => (
+                            <a onClick={() => navigate(`/polls/${poll.id}`)} key={poll.id}
+                               className="list-group-item list-group-item-action">
+                                <div className="d-flex w-100 justify-content-between">
+                                    <h5 className="mb-1">{poll.question}</h5>
+                                    <small>3 days ago</small>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
                 </div>
-            ))}
+            </div>
         </div>
     );
 
