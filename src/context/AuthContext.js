@@ -38,6 +38,10 @@ export const AuthProvider = ({children}) => {
     }
     let registerUser = async (e) => {
         e.preventDefault()
+        if (e.target.password.value !== e.target.password2.value) {
+            alert('Passwords do not match!')
+            return
+        }
         let response = await fetch('http://127.0.0.1:8000/api/register/', {
             method: 'POST',
             headers: {
@@ -58,7 +62,6 @@ export const AuthProvider = ({children}) => {
         }
     }
     let updateToken = async () => {
-        console.log('Update called')
         let response = await fetch('http://127.0.0.1:8000/api/token/refresh/', {
             method: 'POST',
             headers: {
@@ -90,7 +93,8 @@ export const AuthProvider = ({children}) => {
         user: user,
         loginUser: loginUser,
         logoutUser: logoutUser,
-        registerUser: registerUser
+        registerUser: registerUser,
+        authTokens: authTokens,
     }
 
     useEffect(() => {
