@@ -1,0 +1,65 @@
+import React, {useContext, useEffect, useState} from "react";
+
+import './PollsPage.css';
+import {useNavigate} from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
+import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
+
+const PollsPage = () => {
+    const [isLoading, setLoading] = useState(true);
+    const [polls, setPolls] = useState([]);
+    const navigate = useNavigate();
+    let {authTokens} = useContext(AuthContext);
+
+    const fetchPolls = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/polls/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+            });
+            const data = await response.json();
+            if (response.status === 200) {
+                console.log(data)
+                setPolls(data);
+            } else {
+                alert('Something went wrong!');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPolls().then(() => setLoading(false));
+    }, []);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div className="PollsPage">
+            <div className="auth-wrapper">
+                <div className="auth-inner" style={{width: "1184px", height: "835px"}}>
+                    <div className="list-group h-75 w-75">
+                        {polls.map((poll) => (
+                            <a onClick={() => navigate(`/polls/${poll.id}`)} key={poll.id}
+                               className="list-group-item list-group-item-action">
+                                <div className="d-flex w-100 justify-content-between">
+                                    <h5 className="mb-1">{poll.question}</h5>
+                                    <small>3 days ago</small>
+                                </div>
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+
+}
+
+export default PollsPage;
