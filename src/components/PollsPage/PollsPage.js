@@ -43,7 +43,7 @@ const PollsPage = () => {
     return (
         <div className="PollsPage">
             <div className="auth-wrapper">
-                <div className="auth-inner" style={{width: "1184px", height: "835px"}}>
+                <div className="auth-inner h-100 w-75 position-relative">
                     <input type="search" className="form-control rounded weak-orange" placeholder="Поиск голосований..." aria-label="Search"/>
                     <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
