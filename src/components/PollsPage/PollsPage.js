@@ -44,12 +44,12 @@ const PollsPage = () => {
         <div className="PollsPage">
             <div className="auth-wrapper">
                 <div className="auth-inner" style={{width: "1184px", height: "835px"}}>
-                    <input type="search" className="form-control rounded" placeholder="Поиск голосований..." aria-label="Search"/>
+                    <input type="search" className="form-control rounded weak-orange" placeholder="Поиск голосований..." aria-label="Search"/>
                     <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
                         {polls.map((poll) => (
                             <a onClick={() => navigate(`/polls/${poll.id}`)} key={poll.id}
-                               className="list-group-item list-group-item-action">
+                               className="list-group-item list-group-item-action weak_blue">
                                 <div className="d-flex w-100 justify-content-between">
                                     <h5 className="mb-1">{poll.question}</h5>
                                     <small>3 days ago</small>

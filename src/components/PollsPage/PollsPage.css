@@ -7,3 +7,11 @@
     align-items: center;
     justify-content: center;
 }
+
+.weak-orange {
+  background-color: rgb(248, 240, 235);
+}
+
+.weak_blue {
+  background-color: rgb(215, 226, 255)
+}

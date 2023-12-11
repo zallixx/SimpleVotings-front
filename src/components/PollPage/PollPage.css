@@ -7,3 +7,7 @@
     align-items: center;
     justify-content: center;
 }
+
+.radio:hover {
+    background-color: #b3d7ff;
+}
