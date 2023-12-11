@@ -8,6 +8,10 @@
     justify-content: center;
 }
 
-.radio:hover {
+.radio {
+    display: flex;
+}
+
+.radio input[type="radio"]:hover {
     background-color: #b3d7ff;
 }

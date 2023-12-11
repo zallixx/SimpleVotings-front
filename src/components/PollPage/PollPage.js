@@ -72,10 +72,10 @@ const PollsPage = () => {
                 <p>{poll.question}</p>
                 <Form onSubmit={vote}>
                     {poll.choices.map((choice) => (
-                        <div className="form-check w-auto h-auto rounded p-3 border border-opacity-100 border-dark">
+                        <div className="form-check w-auto h-auto rounded p-3 border border-opacity-100 border-dark radio">
                             <label className="form-check-label" htmlFor={choice.id}>{choice}
                                 <input
-                                    className="radio form-check-input"
+                                    className="form-check-input"
                                     type="radio"
                                     name="choices"
                                     value={choice}
