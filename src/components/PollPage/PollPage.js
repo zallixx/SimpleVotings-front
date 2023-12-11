@@ -119,7 +119,7 @@ const PollsPage = () => {
                         </div>
                     ))}
 
-                    <div className="d-flex justify-content-between align-items-center">
+                    <div className="d-flex justify-content-between align-items-center mt-3">
                         <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
                            className="complain fs-5">Пожаловаться</a>
                         <FormGroup>
