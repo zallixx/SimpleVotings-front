@@ -79,9 +79,9 @@ const PollsPage = () => {
                     {poll.choices.map((choice) => (
                         <div
                             className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 border-dark d-flex">
-                            <label className="form-check-label fs-5 fw-normal" htmlFor={choice.id}>
+                            <label className="form-check-label fs-5 fw-normal radio" htmlFor={choice.id}>
                                 <input
-                                    className="radio form-check-input mx-2 border-1 border-dark"
+                                    className="form-check-input mx-2 border-1 border-dark"
                                     type="radio"
                                     name="choices"
                                     value={choice}

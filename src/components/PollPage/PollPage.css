@@ -8,10 +8,11 @@
     justify-content: center;
 }
 
-.radio {
-    display: flex;
+.radio input[type="radio"]:checked+span {
+  border-color: #0b76ef;
+  background-color: #0b76ef;
 }
 
-.radio input[type="radio"]:hover {
+.radio input[type="radio"]:not(:checked):hover {
     background-color: #b3d7ff;
 }
