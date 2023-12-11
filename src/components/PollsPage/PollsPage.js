@@ -44,7 +44,9 @@ const PollsPage = () => {
         <div className="PollsPage">
             <div className="auth-wrapper">
                 <div className="auth-inner" style={{width: "1184px", height: "835px"}}>
-                    <div className="list-group h-75 w-75">
+                    <input type="search" className="form-control rounded" placeholder="Поиск голосований..." aria-label="Search"/>
+                    <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                        <div className="list-group list-group-checkable h-100 w-100 rounded">
                         {polls.map((poll) => (
                             <a onClick={() => navigate(`/polls/${poll.id}`)} key={poll.id}
                                className="list-group-item list-group-item-action">
@@ -54,6 +56,7 @@ const PollsPage = () => {
                                 </div>
                             </a>
                         ))}
+                        </div>
                     </div>
                 </div>
             </div>
