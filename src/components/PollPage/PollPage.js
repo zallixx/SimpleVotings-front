@@ -13,6 +13,7 @@ const PollsPage = () => {
     let {authTokens} = useContext(AuthContext);
     const params = useParams();
     const [selected, setSelected] = useState('');
+    const [author_name, setAuthorName] = useState('');
 
     const fetchPoll = async () => {
         try {
@@ -26,6 +27,7 @@ const PollsPage = () => {
             const data = await response.json();
             if (response.status === 200) {
                 setPoll(data);
+                setAuthorName(await get_author_name(data.created_by));
             } else {
                 alert('Something went wrong!');
             }
@@ -33,6 +35,27 @@ const PollsPage = () => {
             console.error(error);
         }
     };
+
+    const get_author_name = async (id) => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/users/' + id + '/username/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+            });
+            const data = await response.json();
+            if (response.status === 200) {
+                return data;
+            } else {
+                alert('Something went wrong!');
+            }
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     const vote = async (e) => {
         e.preventDefault();
@@ -68,11 +91,14 @@ const PollsPage = () => {
     }
     return (
         <div className="PollsPage">
-            <div key={poll.id} className="auth-inner">
+            <div key={poll.id} className="auth-inner rounded-5">
                 <div className="mb-3">
-                    <div className="card-body">
-                        <h5 className="card-title">{poll.question}</h5>
-                        <p className="card-text">{poll.created_by.username}</p>
+                    <div className="card-body text-lg-start">
+                        <h3 className="card-title mb-1">{poll.question}</h3>
+                        {console.log(author_name)}
+                        <p className="card-text">Автор: <a className="author" href=""
+                                                           onClick={() => navigate('/users/' + poll.created_by + '/')}>{author_name}</a>
+                        </p>
                     </div>
                 </div>
                 <Form onSubmit={vote}>
@@ -92,11 +118,17 @@ const PollsPage = () => {
                             </label>
                         </div>
                     ))}
-                    <FormGroup>
-                        <Button type="submit" bsStyle="primary">
-                            Vote
-                        </Button>
-                    </FormGroup>
+
+                    <div className="d-flex justify-content-between align-items-center">
+                        <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
+                           className="complain fs-5">Пожаловаться</a>
+                        <FormGroup>
+                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                Отправить
+                            </Button>
+                        </FormGroup>
+                    </div>
+
                 </Form>
             </div>
         </div>
