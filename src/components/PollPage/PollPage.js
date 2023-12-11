@@ -69,19 +69,26 @@ const PollsPage = () => {
     return (
         <div className="PollsPage">
             <div key={poll.id} className="auth-inner">
-                <p>{poll.question}</p>
+                <div className="mb-3">
+                    <div className="card-body">
+                        <h5 className="card-title">{poll.question}</h5>
+                        <p className="card-text">{poll.created_by.username}</p>
+                    </div>
+                </div>
                 <Form onSubmit={vote}>
                     {poll.choices.map((choice) => (
-                        <div className="form-check w-auto h-auto rounded p-3 border border-opacity-100 border-dark radio">
-                            <label className="form-check-label" htmlFor={choice.id}>{choice}
+                        <div
+                            className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 border-dark d-flex">
+                            <label className="form-check-label fs-5 fw-normal" htmlFor={choice.id}>
                                 <input
-                                    className="form-check-input"
+                                    className="radio form-check-input mx-2 border-1 border-dark"
                                     type="radio"
                                     name="choices"
                                     value={choice}
                                     onChange={(e) => setSelected(e.target.value)}
                                     id={choice.id}
                                 />
+                                {choice}
                             </label>
                         </div>
                     ))}
