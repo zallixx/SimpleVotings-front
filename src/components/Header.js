@@ -41,6 +41,11 @@ const Header = () => {
                         </Link>
                     </li>
                 }
+                <li className="nav-item">
+                    <Link className="nav-link Link_color" onClick={logoutUser} to={'/login'} style={{ position: 'absolute', right: 0 }}>
+                        Logout
+                    </Link>
+                </li>
             </ul>
         </div>
     )

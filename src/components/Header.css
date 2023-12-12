@@ -3,9 +3,9 @@
 }
 
 .Link_color {
-    color: #ecf0f1
+    color: #ecf0f1 !important;
 }
 
 .Link_color:focus {
-    color: #bec2c3
+    color: #bec2c3 !important;
 }
