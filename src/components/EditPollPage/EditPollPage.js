@@ -32,6 +32,13 @@ const EditPollPage = () => {
     };
 
     const handleFormSubmit = async () => {
+        let toServer = {};
+        if (poll.question) {
+            toServer.question = poll.question
+        }
+        if (poll.choices) {
+            toServer.choices = poll.choices
+        }
         try {
             const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
                 method: "PATCH",
@@ -39,7 +46,7 @@ const EditPollPage = () => {
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
-                body: JSON.stringify({ question: poll.question, choices: poll.choices }),
+                body: JSON.stringify(toServer),
             });
             if (response.status === 200) {
                 alert("0");
