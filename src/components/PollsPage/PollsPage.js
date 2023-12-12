@@ -3,7 +3,6 @@ import React, {useContext, useEffect, useState} from "react";
 import './PollsPage.css';
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -32,9 +31,9 @@ const PollsPage = () => {
             console.error(error);
         }
     };
-
     useEffect(() => {
         fetchPolls().then(() => setLoading(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -97,7 +96,7 @@ const PollsPage = () => {
                                 </div>
                             ) : (
                                 filteredPolls.map((poll) => (
-                                    <a
+                                    <button
                                     onClick={() => navigate(`/polls/${poll.id}`)}
                                     key={poll.id}
                                     className="list-group-item list-group-item-action weak_blue"
@@ -106,7 +105,7 @@ const PollsPage = () => {
                                             <h5 className="mb-1">{poll.question}</h5>
                                             <small>{formatTimeSinceCreation(poll.created_at)}</small>
                                         </div>
-                                    </a>
+                                    </button>
                                 ))
                             )}
                         </div>
