@@ -9,7 +9,6 @@ const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
-    const [pollsLenght, setPollslenght] = useState(0);
     let {authTokens} = useContext(AuthContext);
 
     const fetchPolls = async () => {
@@ -26,9 +25,6 @@ const PollsPage = () => {
                 console.log(data)
                 setPolls(data);
                 setFilteredPolls(data)
-                const ids = data.map((poll) => poll.id);
-                const maxId = Math.max(...ids);
-                setPollslenght(maxId + 1);
             } else {
                 alert('Something went wrong!');
             }
@@ -97,7 +93,7 @@ const PollsPage = () => {
                                 <div>
                                     <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
                                     {' '}
-                                    <a href={`/polls/new/${pollsLenght}`}>создайте новый опрос</a>.
+                                    <a href={`/polls/new/`}>создайте новый опрос</a>.
                                 </div>
                             ) : (
                                 filteredPolls.map((poll) => (
