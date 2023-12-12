@@ -90,7 +90,7 @@ const EditPollPage = () => {
                         />
                     ))}
                     <br/>
-                    <button className="btn btn-primary" type="submit">Submit</button>
+                    <button className="btn btn-primary" type="submit">Изменить</button>
                 </div>
             </div>
         </Form>
