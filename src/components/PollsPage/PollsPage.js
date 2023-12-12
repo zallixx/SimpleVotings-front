@@ -21,8 +21,10 @@ const PollsPage = () => {
             });
             const data = await response.json();
             if (response.status === 200) {
-                console.log(data)
-                setPolls(data);
+                const authorNames = await getAuthorNames(data);
+                setPolls(data.map((poll) => {
+                    return { ...poll, created_by: authorNames[poll.created_by] };
+                }));
                 setFilteredPolls(data)
             } else {
                 alert('Something went wrong!');
@@ -31,6 +33,32 @@ const PollsPage = () => {
             console.error(error);
         }
     };
+
+    const getAuthorNames = async (polls) => {
+            const authorNames = {};
+            try {
+                await Promise.all(polls.map(async (poll) => {
+                    // да.. данная асинхр. функия имеет в себе Promise.all. Ссылки, где я его нашел - https://doka.guide/js/promise/, https://learn.javascript.ru/promise, https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise
+                    const response = await fetch('http://127.0.0.1:8000/api/users/' + poll.created_by + '/username/', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + String(authTokens.access),
+                        },
+                    });
+                    const data = await response.json();
+                    if (response.status === 200) {
+                        authorNames[poll.created_by] = data;
+                    } else {
+                        alert('Something went wrong!');
+                    }
+                }));
+                return authorNames;
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
     useEffect(() => {
         fetchPolls().then(() => setLoading(false));
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,12 +71,23 @@ const PollsPage = () => {
         const value = event.target.value;
         setSearchTerm(value);
 
-        if (searchTerm !== ""){
-            const filtered = polls.filter((poll) =>
-                poll.question.toLowerCase().includes(value.toLowerCase())
-            );
+        if (value !== "") {
+            if (value.startsWith("@")) {
+                const filtered = polls.filter((poll) =>
+                    poll.created_by.toLowerCase().includes(value.toLowerCase().slice(1))
+                );
             setFilteredPolls(filtered);
+            } else {
+                const filtered = polls.filter((poll) =>
+                    poll.question.toLowerCase().includes(value.toLowerCase())
+                );
+                setFilteredPolls(filtered);
+            }
         }
+        else {
+            const filtered = polls.filter((poll) => " ");
+            setFilteredPolls(filtered);
+            }
     };
 
     const formatTimeSinceCreation = (createdAt) => {
