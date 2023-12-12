@@ -38,6 +38,7 @@ const PollsPage = () => {
             const authorNames = {};
             try {
                 await Promise.all(polls.map(async (poll) => {
+                    // да.. данная асинхр. функия имеет в себе Promise.all. Ссылки, где я его нашел - https://doka.guide/js/promise/, https://learn.javascript.ru/promise, https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise
                     const response = await fetch('http://127.0.0.1:8000/api/users/' + poll.created_by + '/username/', {
                         method: 'GET',
                         headers: {
