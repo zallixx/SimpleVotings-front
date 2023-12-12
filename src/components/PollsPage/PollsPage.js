@@ -76,7 +76,7 @@ const PollsPage = () => {
                 const filtered = polls.filter((poll) =>
                     poll.created_by.toLowerCase().includes(value.toLowerCase().slice(1))
                 );
-                setFilteredPolls(filtered);
+            setFilteredPolls(filtered);
             } else {
                 const filtered = polls.filter((poll) =>
                     poll.question.toLowerCase().includes(value.toLowerCase())
@@ -84,6 +84,10 @@ const PollsPage = () => {
                 setFilteredPolls(filtered);
             }
         }
+        else {
+            const filtered = polls.filter((poll) => " ");
+            setFilteredPolls(filtered);
+            }
     };
 
     const formatTimeSinceCreation = (createdAt) => {
