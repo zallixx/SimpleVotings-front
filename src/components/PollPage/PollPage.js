@@ -3,7 +3,6 @@ import React, {useContext, useEffect, useState} from "react";
 import './PollPage.css';
 import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 import {Button, Form, FormGroup} from "react-bootstrap";
 
 const PollsPage = () => {
@@ -11,6 +10,7 @@ const PollsPage = () => {
     const [poll, setPoll] = useState([]);
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
+    let {user} = useContext(AuthContext)
     const params = useParams();
     const [selected, setSelected] = useState('');
     const [author_name, setAuthorName] = useState('');
@@ -85,6 +85,7 @@ const PollsPage = () => {
         fetchPoll().then(
             () => setLoading(false)
         );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (isLoading) {
         return <p>Loading...</p>;
@@ -94,8 +95,13 @@ const PollsPage = () => {
             <div key={poll.id} className="auth-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
+                        {user.username === author_name && (
+                            <button className="btn btn-primary float-end">
+                                Изменить
+                            </button>
+                        )}
                         <h3 className="card-title mb-1">{poll.question}</h3>
-                        {console.log(author_name)}
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <p className="card-text">Автор: <a className="author" href=""
                                                            onClick={() => navigate('/users/' + poll.created_by + '/')}>{author_name}</a>
                         </p>
@@ -120,6 +126,7 @@ const PollsPage = () => {
                     ))}
 
                     <div className="d-flex justify-content-between align-items-center mt-3">
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
                            className="complain fs-5">Пожаловаться</a>
                         <FormGroup>
@@ -128,7 +135,6 @@ const PollsPage = () => {
                             </Button>
                         </FormGroup>
                     </div>
-
                 </Form>
             </div>
         </div>
