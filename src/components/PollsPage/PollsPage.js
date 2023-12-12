@@ -24,6 +24,7 @@ const PollsPage = () => {
             if (response.status === 200) {
                 console.log(data)
                 setPolls(data);
+                setFilteredPolls(data);
             } else {
                 alert('Something went wrong!');
             }
@@ -43,10 +44,12 @@ const PollsPage = () => {
         const value = event.target.value;
         setSearchTerm(value);
 
-        const filtered = polls.filter((poll) =>
-            poll.question.toLowerCase().includes(value.toLowerCase())
-        );
-        setFilteredPolls(filtered);
+        if (searchTerm !== ""){
+            const filtered = polls.filter((poll) =>
+                poll.question.toLowerCase().includes(value.toLowerCase())
+            );
+            setFilteredPolls(filtered);
+        }
     };
 
     const formatTimeSinceCreation = (createdAt) => {
