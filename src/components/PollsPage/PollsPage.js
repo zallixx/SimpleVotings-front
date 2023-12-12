@@ -9,6 +9,7 @@ const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
+    const [pollsLenght, setPollslenght] = useState(0);
     let {authTokens} = useContext(AuthContext);
 
     const fetchPolls = async () => {
@@ -24,7 +25,10 @@ const PollsPage = () => {
             if (response.status === 200) {
                 console.log(data)
                 setPolls(data);
-                setFilteredPolls(data);
+                setFilteredPolls(data)
+                const ids = data.map((poll) => poll.id);
+                const maxId = Math.max(...ids);
+                setPollslenght(maxId + 1);
             } else {
                 alert('Something went wrong!');
             }
@@ -85,22 +89,30 @@ const PollsPage = () => {
                         placeholder="Поиск голосований..."
                         aria-label="Search"
                         value={searchTerm}
-                        onChange={handleSearch}
+                        onInput={handleSearch}
                     />
                     <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
-                        {filteredPolls.map((poll) => (
-                            <a
-                            onClick={() => navigate(`/polls/${poll.id}`)}
-                            key={poll.id}
-                            className="list-group-item list-group-item-action weak_blue"
-                            >
-                                <div className="d-flex w-100 justify-content-between">
-                                    <h5 className="mb-1">{poll.question}</h5>
-                                    <small>{formatTimeSinceCreation(poll.created_at)}</small>
+                            {filteredPolls.length === 0 ? (
+                                <div>
+                                    <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
+                                    {' '}
+                                    <a href={`/polls/new/${pollsLenght}`}>создайте новый опрос</a>.
                                 </div>
-                            </a>
-                        ))}
+                            ) : (
+                                filteredPolls.map((poll) => (
+                                    <a
+                                    onClick={() => navigate(`/polls/${poll.id}`)}
+                                    key={poll.id}
+                                    className="list-group-item list-group-item-action weak_blue"
+                                    >
+                                        <div className="d-flex w-100 justify-content-between">
+                                            <h5 className="mb-1">{poll.question}</h5>
+                                            <small>{formatTimeSinceCreation(poll.created_at)}</small>
+                                        </div>
+                                    </a>
+                                ))
+                            )}
                         </div>
                     </div>
                 </div>
