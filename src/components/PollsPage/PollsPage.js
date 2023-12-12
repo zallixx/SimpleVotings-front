@@ -96,7 +96,8 @@ const PollsPage = () => {
                                 </div>
                             ) : (
                                 filteredPolls.map((poll) => (
-                                    <button
+                                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                                    <a
                                     onClick={() => navigate(`/polls/${poll.id}`)}
                                     key={poll.id}
                                     className="list-group-item list-group-item-action weak_blue"
@@ -105,7 +106,7 @@ const PollsPage = () => {
                                             <h5 className="mb-1">{poll.question}</h5>
                                             <small>{formatTimeSinceCreation(poll.created_at)}</small>
                                         </div>
-                                    </button>
+                                    </a>
                                 ))
                             )}
                         </div>
