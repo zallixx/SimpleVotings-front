@@ -1,47 +1,85 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useState} from 'react';
 
-import './NewPollPage.css';
-import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 
 const NewPollPage = () => {
-    const [isLoading, setLoading] = useState(true);
-    const [polls, setPolls] = useState([]);
-    const navigate = useNavigate();
-    const [pollsLenght, setPollslenght] = useState(0);
+    const [pollType, setPollType] = useState(1);
+    const [question, setQuestion] = useState('');
+    const [answers, setAnswers] = useState([]);
     let {authTokens} = useContext(AuthContext);
 
-    const fetchPolls = async () => {
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/polls/new/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-            });
-            const data = await response.json();
-            if (response.status === 200) {
-
-            } else {
-                alert('Something went wrong!');
-            }
-        } catch (error) {
-            console.error(error);
-        }
+    const handlePollTypeChange = (event) => {
+        setPollType(event.target.value);
     };
 
-    useEffect(() => {
-        fetchPolls().then(() => setLoading(false));
-    }, []);
+    const handleQuestionChange = (event) => {
+        setQuestion(event.target.value);
+    };
 
-    if (isLoading) {
-        return <div>Loading...</div>;
-    }
+    const handleAnswerChange = (index, event) => {
+        const newAnswers = [...answers];
+        newAnswers[index] = event.target.value;
+        setAnswers(newAnswers);
+    };
 
-    return null;
+    const handleAddAnswer = () => {
+        setAnswers([...answers, '']);
+    };
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const payload = {
+            type_voting: pollType,
+            question: question,
+            choices: answers,
+        };
+        fetch('http://127.0.0.1:8000/api/polls/new/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+            body: JSON.stringify(payload),
+         })};
+
+    return (
+        <div>
+            <h1>Create New Poll</h1>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    Тип опроса:
+                    <select value={pollType} onChange={handlePollTypeChange}>
+                    <option value={1}>Тип 1</option>
+                    <option value={2}>Тип 2</option>
+                    <option value={3}>Тип 3</option>
+                    </select>
+                </label>
+                <br/>
+                <label>
+                    Вопрос:
+                    <input type="text" value={question} onChange={handleQuestionChange} />
+                </label>
+                <br/>
+                <label>
+                    Ответы:
+                    {answers.map((answer, index) => (
+                        <div key={index}>
+                            <input
+                            type="text"
+                            value={answer}
+                            onChange={(event) => handleAnswerChange(index, event)}
+                            />
+                        </div>
+                    ))}
+                    <button type="button" onClick={handleAddAnswer}>
+                        +
+                    </button>
+                </label>
+                <br/>
+                <button type="submit">Создать опрос</button>
+            </form>
+        </div>
+    );
 }
 
 export default NewPollPage;
