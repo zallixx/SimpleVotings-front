@@ -96,9 +96,9 @@ const PollsPage = () => {
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
                         {user.username === author_name && (
-                            <button className="btn btn-primary float-end">
+                            <a href={'/polls/' + poll.id + '/edit/'} className="btn btn-primary float-end">
                                 Изменить
-                            </button>
+                            </a>
                         )}
                         <h3 className="card-title mb-1">{poll.question}</h3>
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -124,7 +124,6 @@ const PollsPage = () => {
                             </label>
                         </div>
                     ))}
-
                     <div className="d-flex justify-content-between align-items-center mt-3">
                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                         <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}

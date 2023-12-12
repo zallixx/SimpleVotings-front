@@ -13,7 +13,7 @@ import PollsPage from "./components/PollsPage/PollsPage";
 import PollPage from "./components/PollPage/PollPage";
 import NewPollPage from "./components/NewPollPage/NewPollPage";
 import ResultPage from "./components/ResultPage/ResultPage";
-
+import EditPollPage from "./components/EditPollPage/EditPollPage";
 
 
 function App() {
@@ -46,6 +46,11 @@ function App() {
                         <Route path="/polls/new/" element={
                             <PrivateRoute>
                                 <NewPollPage/>
+                            </PrivateRoute>
+                        }/>
+                        <Route path="/polls/:id/edit/" element={
+                            <PrivateRoute>
+                                <EditPollPage/>
                             </PrivateRoute>
                         }/>
                         <Route element={<LoginPage/>} path="/login"/>
