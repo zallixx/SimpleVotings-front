@@ -49,6 +49,24 @@ const PollsPage = () => {
         setFilteredPolls(filtered);
     };
 
+    const formatTimeSinceCreation = (createdAt) => {
+        const now = new Date();
+        const createdDate = new Date(createdAt);
+
+        const diffInMinutes = Math.floor((now - createdDate) / (1000 * 60));
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+        const diffInMonths = Math.floor(diffInDays / 30);
+
+        if (diffInMinutes < 20) { return "just now";}
+        else if (diffInHours < 1) { return `${diffInMinutes} minutes ago`; }
+        else if (diffInDays < 1) { return `${diffInHours} hours ago`; }
+        else if (diffInDays < 2) { return `${diffInDays} day ago`; }
+        else if (diffInDays < 30) { return `${diffInDays} days ago`; }
+        else if (diffInMonths < 2) { return `${diffInMonths} month ago`; }
+        else { return `${diffInMonths} months ago`; }
+    };
+
 
     if (isLoading) {
         return <div>Loading...</div>;
@@ -76,7 +94,7 @@ const PollsPage = () => {
                             >
                                 <div className="d-flex w-100 justify-content-between">
                                     <h5 className="mb-1">{poll.question}</h5>
-                                    <small>3 days ago</small>
+                                    <small>{formatTimeSinceCreation(poll.created_at)}</small>
                                 </div>
                             </a>
                         ))}
