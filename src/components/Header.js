@@ -1,46 +1,48 @@
 import React, {useContext} from "react";
 import {Link} from "react-router-dom";
 import AuthContext from "../context/AuthContext";
+import './Header.css';
 
 const Header = () => {
     let {user, logoutUser} = useContext(AuthContext);
     return (
-        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-            <div className="container">
-                <Link className="navbar-brand" to={'/'}>
-                    Home
-                </Link>
+        <div className="navbar fixed-top flex-md-nowrap p-0 Header">
+            <ul className="nav">
+                <li className="nav-item">
+                    <Link to="/" className="nav-link Link_color">
+                        Home
+                    </Link>
+                </li>
                 {user ? (
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <Link className="nav-link" onClick={logoutUser} to={'/login'}>
-                                    Logout
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={'/polls'}>
-                                    Polls
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>) : (
-                    <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-                        <ul className="navbar-nav ml-auto">
-                            <li className="nav-item">
-                                <Link className="nav-link" to={'/login'}>
-                                    Login
-                                </Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to={'/register'}>
-                                    Sign up
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>)}
-            </div>
-        </nav>
+                    <li className="nav-item">
+                        <Link to="/profile" className="nav-link Link_color">
+                            Profile
+                        </Link>
+                    </li>
+                ) : null}
+                {user ? (
+                    <li className="nav-item">
+                        <Link to="/polls" className="nav-link Link_color">
+                            Polls
+                        </Link>
+                    </li>
+                ) : null}
+                {user ? null :
+                    <li className="nav-item">
+                        <Link to="/login" className="nav-link Link_color">
+                            Login
+                        </Link>
+                    </li>
+                }
+                {user ? null :
+                    <li className="nav-item">
+                        <Link to="/register" className="nav-link Link_color">
+                            Register
+                        </Link>
+                    </li>
+                }
+            </ul>
+        </div>
     )
 };
 
