@@ -3,13 +3,11 @@ import React, {useContext, useEffect, useState} from "react";
 import './PollsPage.css';
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
-    const [pollsLenght, setPollslenght] = useState(0);
     let {authTokens} = useContext(AuthContext);
 
     const fetchPolls = async () => {
@@ -26,9 +24,6 @@ const PollsPage = () => {
                 console.log(data)
                 setPolls(data);
                 setFilteredPolls(data)
-                const ids = data.map((poll) => poll.id);
-                const maxId = Math.max(...ids);
-                setPollslenght(maxId + 1);
             } else {
                 alert('Something went wrong!');
             }
@@ -36,9 +31,9 @@ const PollsPage = () => {
             console.error(error);
         }
     };
-
     useEffect(() => {
         fetchPolls().then(() => setLoading(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -97,11 +92,11 @@ const PollsPage = () => {
                                 <div>
                                     <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
                                     {' '}
-                                    <a href={`/polls/new/${pollsLenght}`}>создайте новый опрос</a>.
+                                    <a href={`/polls/new/`}>создайте новый опрос</a>.
                                 </div>
                             ) : (
                                 filteredPolls.map((poll) => (
-                                    <a
+                                    <button
                                     onClick={() => navigate(`/polls/${poll.id}`)}
                                     key={poll.id}
                                     className="list-group-item list-group-item-action weak_blue"
@@ -110,7 +105,7 @@ const PollsPage = () => {
                                             <h5 className="mb-1">{poll.question}</h5>
                                             <small>{formatTimeSinceCreation(poll.created_at)}</small>
                                         </div>
-                                    </a>
+                                    </button>
                                 ))
                             )}
                         </div>
