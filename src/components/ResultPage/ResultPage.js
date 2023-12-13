@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
 import "./ResultPage.css"
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
 const ResultPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [results, setResults] = useState([]);
-    const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
     const params = useParams();
 
     useEffect(() => {
         fetchResults().then(() => setLoading(false));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const fetchResults = async () => {
         try {

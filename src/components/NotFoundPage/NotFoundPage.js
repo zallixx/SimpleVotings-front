@@ -1,4 +1,4 @@
-import { Title, Text, Button, Container, Group, MantineProvider } from '@mantine/core';
+import { Title, Text, Container, Group, MantineProvider } from '@mantine/core';
 import classes from './NotFoundPage.module.css';
 import {useNavigate} from "react-router-dom";
 
