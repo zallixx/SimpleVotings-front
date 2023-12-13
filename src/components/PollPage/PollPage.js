@@ -14,6 +14,7 @@ const PollsPage = () => {
     const params = useParams();
     const [selected, setSelected] = useState('');
     const [author_name, setAuthorName] = useState('');
+    const [isEditMode, setEditMode] = useState(false);
 
     const fetchPoll = async () => {
         try {
@@ -81,6 +82,37 @@ const PollsPage = () => {
         }
     };
 
+    const handleFormSubmit = async () => {
+            let toServer = {};
+            if (poll.question) {
+                toServer.question = poll.question
+            }
+            if (poll.choices) {
+                toServer.choices = poll.choices
+            }
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify(toServer),
+                });
+                if (response.status === 200) {
+                    alert("0");
+                } else {
+                    alert("-1");
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+    const toggleEditMode = () => {
+        setEditMode(!isEditMode);
+    };
+
     useEffect(() => {
         fetchPoll().then(
             () => setLoading(false)
@@ -95,50 +127,89 @@ const PollsPage = () => {
             <div key={poll.id} className="auth-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
-                        {user.username === author_name && (
-                            <a href={'/polls/' + poll.id + '/edit/'} className="btn btn-primary float-end">
-                                Изменить
-                            </a>
+                        {user.username === author_name && !isEditMode && (
+                            <button className="btn btn-primary float-end" onClick={toggleEditMode}>
+                                Редактировать
+                            </button>
                         )}
-                        <h3 className="card-title mb-1">{poll.question}</h3>
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <p className="card-text">Автор: <a className="author" href=""
-                                                           onClick={() => navigate('/users/' + poll.created_by + '/')}>{author_name}</a>
-                        </p>
+                        {isEditMode ? (
+                            <>
+                                <Form onSubmit={handleFormSubmit}>
+                                    <input
+                                        type="text"
+                                        value={poll.question}
+                                        className="form-control"
+                                        onChange={(e) => setPoll((prevPoll) => ({
+                                            ...prevPoll,
+                                            question: e.target.value
+                                        }))}
+                                    />
+                                    {poll.choices.map((choice, index) => (
+                                        <input
+                                            type="text"
+                                            key={index}
+                                            value={choice}
+                                            className="form-control mb-1"
+                                            onChange={(e) => {
+                                                const updatedChoices = [...poll.choices];
+                                                updatedChoices[index] = e.target.value;
+                                                setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
+                                            }}
+                                        />
+                                    ))}
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                                Изменить опрос
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
+                            </>
+                            ) : (
+                            <>
+                            <h3 className="card-title mb-1">{poll.question}</h3>
+                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                    <p className="card-text">Автор: <a className="author" href=""
+                                                       onClick={() => navigate('/users/' + poll.created_by + '/')}>{author_name}</a>
+                    </p>
+                    <Form onSubmit={vote}>
+                        {poll.choices.map((choice) => (
+                            <div
+                                            className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 border-dark d-flex"
+                                            key={choice.id}
+                                        >
+                                            <label className="form-check-label fs-5 fw-normal radio" htmlFor={choice.id}>
+                                                <input
+                                                    className="form-check-input mx-2 border-1 border-dark"
+                                                    type="radio"
+                                                    name="choices"
+                                                    value={choice}
+                                                    onChange={(e) => setSelected(e.target.value)}
+                                                    id={choice.id}
+                                                />
+                                                {choice}
+                                            </label>
+                                        </div>
+                                    ))}
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                        <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
+                                           className="complain fs-5">Пожаловаться</a>
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                                Отправить
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
+                            </>
+                        )}
                     </div>
                 </div>
-                <Form onSubmit={vote}>
-                    {poll.choices.map((choice) => (
-                        <div
-                            className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 border-dark d-flex">
-                            <label className="form-check-label fs-5 fw-normal radio" htmlFor={choice.id}>
-                                <input
-                                    className="form-check-input mx-2 border-1 border-dark"
-                                    type="radio"
-                                    name="choices"
-                                    value={choice}
-                                    onChange={(e) => setSelected(e.target.value)}
-                                    id={choice.id}
-                                />
-                                {choice}
-                            </label>
-                        </div>
-                    ))}
-                    <div className="d-flex justify-content-between align-items-center mt-3">
-                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                        <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
-                           className="complain fs-5">Пожаловаться</a>
-                        <FormGroup>
-                            <Button type="submit" bsStyle="primary" className="fs-5">
-                                Отправить
-                            </Button>
-                        </FormGroup>
-                    </div>
-                </Form>
             </div>
         </div>
     );
-
 }
 
 export default PollsPage;
