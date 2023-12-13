@@ -44,6 +44,9 @@ const NewPollPage = () => {
             if(question === '') {
                 alert('Заполните вопрос!');
             }
+            else if(answers.length > 11) {
+                alert('Ой-ой-ой.. больше 10 ответов нельзя:(');
+            }
             else {
                 alert("Опрос создан!");
                 const payload = {
