@@ -13,7 +13,7 @@ import PollsPage from "./components/PollsPage/PollsPage";
 import PollPage from "./components/PollPage/PollPage";
 import NewPollPage from "./components/NewPollPage/NewPollPage";
 import ResultPage from "./components/ResultPage/ResultPage";
-
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 
 function App() {
     return (
@@ -49,7 +49,7 @@ function App() {
                         }/>
                         <Route element={<LoginPage/>} path="/login"/>
                         <Route element={<RegisterPage/>} path="/register"/>
-
+                        <Route element={<NotFoundPage/>} path="*"/>
                     </Routes>
                 </AuthProvider>
             </Router>
