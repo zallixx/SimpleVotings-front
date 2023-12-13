@@ -1,12 +1,15 @@
 import React, {useContext, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 
+import './NewPollPage.css';
 import AuthContext from "../../context/AuthContext";
 
 const NewPollPage = () => {
     const [pollType, setPollType] = useState(1);
     const [question, setQuestion] = useState('');
-    const [answers, setAnswers] = useState([]);
+    const [answers, setAnswers] = useState(['', '']);
     let {authTokens} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handlePollTypeChange = (event) => {
         setPollType(event.target.value);
@@ -26,58 +29,87 @@ const NewPollPage = () => {
         setAnswers([...answers, '']);
     };
 
+    const handleDelAnswer = () => {
+        if (answers.length > 2) {
+            setAnswers(answers.slice(0, -1));
+        }
+        else {
+            alert('Минимум 2 варианта ответа!');
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const payload = {
-            type_voting: pollType,
-            question: question,
-            choices: answers,
-        };
-        fetch('http://127.0.0.1:8000/api/polls/new/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + String(authTokens.access),
-            },
-            body: JSON.stringify(payload),
-         })};
+        if (event.target.type === "submit") {
+            if(question === '') {
+                alert('Заполните вопрос!');
+            }
+            else {
+                alert("Опрос создан!");
+                const payload = {
+                    type_voting: pollType,
+                    question: question,
+                    choices: answers,
+                };
+                fetch('http://127.0.0.1:8000/api/polls/new/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify(payload),
+                 }).then(() => {
+                    navigate('/polls/');
+                });
+            }
+        }};
 
     return (
-        <div>
-            <h1>Create New Poll</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Тип опроса:
-                    <select value={pollType} onChange={handlePollTypeChange}>
-                    <option value={1}>Тип 1</option>
-                    <option value={2}>Тип 2</option>
-                    <option value={3}>Тип 3</option>
-                    </select>
-                </label>
-                <br/>
-                <label>
-                    Вопрос:
-                    <input type="text" value={question} onChange={handleQuestionChange} />
-                </label>
-                <br/>
-                <label>
-                    Ответы:
-                    {answers.map((answer, index) => (
-                        <div key={index}>
-                            <input
+        <div className="PollsPage">
+            <div className="auth-inner rounded-5">
+                <div className="mb-1">
+                    <div className="card-body text-lg-start">
+                        <input
+                            className="form-control"
                             type="text"
-                            value={answer}
-                            onChange={(event) => handleAnswerChange(index, event)}
-                            />
-                        </div>
-                    ))}
-                    <button type="button" onClick={handleAddAnswer}>
-                        +
-                    </button>
-                </label>
+                            placeholder="Вопрос"
+                            value={question}
+                            onChange={handleQuestionChange}
+                        />
+                    </div>
+                    <label>
+                        Тип опроса:
+                        <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
+                            <option value={1}>Тип 1</option>
+                            <option value={2}>Тип 2</option>
+                            <option value={3}>Тип 3</option>
+                        </select>
+                    </label>
+                    <br/>
+                    <label>
+                        Ответы:
+                        {answers.map((answer, index) => (
+                            <div key={index}>
+                                <input
+                                    type="text"
+                                    className="form-control mb-1 rounded"
+                                    placeholder="Ответ"
+                                    value={answer}
+                                    onChange={(event) => handleAnswerChange(index, event)}
+                                />
+                            </div>
+                        ))}
+                        <button className="btn btn-primary" onClick={handleAddAnswer}>
+                            +
+                        </button>
+                        <button className="btn btn-primary" onClick={handleDelAnswer}>
+                            -
+                        </button>
+                    </label>
+                </div>
                 <br/>
-                <button type="submit">Создать опрос</button>
-            </form>
+                <button className="btn btn-primary" onClick={handleSubmit}>Создать опрос</button>
+            </div>
         </div>
     );
 }
