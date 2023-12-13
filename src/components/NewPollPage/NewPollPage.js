@@ -1,12 +1,15 @@
 import React, {useContext, useState} from 'react';
+import { useNavigate } from "react-router-dom";
 
+import './NewPollPage.css';
 import AuthContext from "../../context/AuthContext";
 
 const NewPollPage = () => {
     const [pollType, setPollType] = useState(1);
     const [question, setQuestion] = useState('');
-    const [answers, setAnswers] = useState([null, null]);
+    const [answers, setAnswers] = useState(['', '']);
     let {authTokens} = useContext(AuthContext);
+    const navigate = useNavigate();
 
     const handlePollTypeChange = (event) => {
         setPollType(event.target.value);
@@ -27,27 +30,38 @@ const NewPollPage = () => {
     };
 
     const handleDelAnswer = () => {
-        if (answers.length > 1) {
+        if (answers.length > 2) {
             setAnswers(answers.slice(0, -1));
+        }
+        else {
+            alert('Минимум 2 варианта ответа!');
         }
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
         if (event.target.type === "submit") {
-            const payload = {
-                type_voting: pollType,
-                question: question,
-                choices: answers,
-            };
-            fetch('http://127.0.0.1:8000/api/polls/new/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-                body: JSON.stringify(payload),
-             });
+            if(question === '') {
+                alert('Заполните вопрос!');
+            }
+            else {
+                alert("Опрос создан!");
+                const payload = {
+                    type_voting: pollType,
+                    question: question,
+                    choices: answers,
+                };
+                fetch('http://127.0.0.1:8000/api/polls/new/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify(payload),
+                 }).then(() => {
+                    navigate('/polls/');
+                });
+            }
         }};
 
     return (
