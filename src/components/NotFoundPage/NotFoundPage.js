@@ -1,7 +1,9 @@
 import { Title, Text, Button, Container, Group, MantineProvider } from '@mantine/core';
-import classes from './NotFoundPage.css';
+import classes from './NotFoundPage.module.css';
+import {useNavigate} from "react-router-dom";
 
 const NotFoundPage = () => {
+    const navigate = useNavigate()
     return (
     <MantineProvider>
         <Container className={classes.root}>
@@ -12,9 +14,9 @@ const NotFoundPage = () => {
                 been moved to another URL.
             </Text>
             <Group justify="center">
-                <Button variant="subtle" size="md">
+                <button className="btn btn-primary" onClick={() => navigate('/')}>
                     Take me back to home page
-                </Button>
+                </button>
             </Group>
         </Container>
     </MantineProvider>
