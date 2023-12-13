@@ -138,7 +138,7 @@ const PollsPage = () => {
                                     <input
                                         type="text"
                                         value={poll.question}
-                                        className="form-control"
+                                        className="form-control mb-2"
                                         onChange={(e) => setPoll((prevPoll) => ({
                                             ...prevPoll,
                                             question: e.target.value
