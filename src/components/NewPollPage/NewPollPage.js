@@ -26,7 +26,12 @@ const NewPollPage = () => {
     };
 
     const handleAddAnswer = () => {
-        setAnswers([...answers, '']);
+        if (answers.length < 11) {
+            setAnswers([...answers, '']);
+        }
+        else {
+            alert('Максимум 10 вариантов ответа!');
+        }
     };
 
     const handleDelAnswer = () => {
@@ -43,9 +48,6 @@ const NewPollPage = () => {
         if (event.target.type === "submit") {
             if(question === '') {
                 alert('Заполните вопрос!');
-            }
-            else if(answers.length > 11) {
-                alert('Ой-ой-ой.. больше 10 ответов нельзя:(');
             }
             else {
                 alert("Опрос создан!");
