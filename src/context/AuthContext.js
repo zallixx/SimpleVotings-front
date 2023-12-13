@@ -54,7 +54,6 @@ export const AuthProvider = ({children}) => {
 
             })
         })
-        let data = await response.json()
         if (response.status === 201) {
             navigate('/login')
         } else {
@@ -111,7 +110,7 @@ export const AuthProvider = ({children}) => {
         }, fourMinutes)
         return () => {
             clearInterval(interval)
-        };
+        };     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [authTokens, loading]);
 
     return (
