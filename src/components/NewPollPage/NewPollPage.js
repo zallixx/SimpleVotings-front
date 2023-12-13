@@ -1,6 +1,7 @@
 import React, {useContext, useState} from 'react';
 
 import AuthContext from "../../context/AuthContext";
+import {Form} from "react-bootstrap";
 
 const NewPollPage = () => {
     const [pollType, setPollType] = useState(1);
@@ -26,6 +27,12 @@ const NewPollPage = () => {
         setAnswers([...answers, '']);
     };
 
+    const handleDelAnswer = () => {
+        if (answers.length > 1) {
+            setAnswers(answers.slice(0, -1));
+        }
+    };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         const payload = {
@@ -43,42 +50,54 @@ const NewPollPage = () => {
          })};
 
     return (
-        <div>
-            <h1>Create New Poll</h1>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Тип опроса:
-                    <select value={pollType} onChange={handlePollTypeChange}>
-                    <option value={1}>Тип 1</option>
-                    <option value={2}>Тип 2</option>
-                    <option value={3}>Тип 3</option>
-                    </select>
-                </label>
-                <br/>
-                <label>
-                    Вопрос:
-                    <input type="text" value={question} onChange={handleQuestionChange} />
-                </label>
-                <br/>
-                <label>
-                    Ответы:
-                    {answers.map((answer, index) => (
-                        <div key={index}>
+        <Form onSubmit={handleSubmit}>
+            <div className="PollsPage">
+                <div className="auth-inner rounded-5">
+                    <div className="mb-1">
+                        <div className="card-body text-lg-start">
                             <input
-                            type="text"
-                            value={answer}
-                            onChange={(event) => handleAnswerChange(index, event)}
+                                className="form-control"
+                                type="text"
+                                placeholder="Вопрос"
+                                value={question}
+                                onChange={handleQuestionChange}
                             />
                         </div>
-                    ))}
-                    <button type="button" onClick={handleAddAnswer}>
-                        +
-                    </button>
-                </label>
-                <br/>
-                <button type="submit">Создать опрос</button>
-            </form>
-        </div>
+                        <label>
+                            Тип опроса:
+                            <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
+                                <option value={1}>Тип 1</option>
+                                <option value={2}>Тип 2</option>
+                                <option value={3}>Тип 3</option>
+                            </select>
+                        </label>
+                        <br/>
+                        <label>
+                            Ответы:
+                            {answers.map((answer, index) => (
+                                <div key={index}>
+                                    <input
+                                        type="text"
+                                        className="form-control mb-1 rounded"
+                                        placeholder="Ответ"
+                                        value={answer}
+                                        onChange={(event) => handleAnswerChange(index, event)}
+                                    />
+                                </div>
+                            ))}
+                            <button className="btn btn-primary" onClick={handleAddAnswer}>
+                                +
+                            </button>
+                            <button className="btn btn-primary" onClick={handleDelAnswer}>
+                                -
+                            </button>
+                        </label>
+                    </div>
+                    <br/>
+                    <button className="btn btn-primary" type="submit">Создать опрос</button>
+                </div>
+            </div>
+        </Form>
     );
 }
 
