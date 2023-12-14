@@ -221,6 +221,7 @@ const PollsPage = () => {
                                                 Удалить
                                             </button>
                                         ) : (
+                                            // eslint-disable-next-line
                                             <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
                                                className="complain fs-5">Пожаловаться</a>
                                         )}
