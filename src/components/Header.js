@@ -24,95 +24,70 @@ const tabs = {
     'Profile' : '/profile/',
 };
 
+const menu_items = {
+    'Liked polls': '/liked-polls/',
+    'Complains' : '/complains/',
+    'Your comments' : '/your-comments/',
+    'Logout' : '/login/',
+};
+
 const Header = () => {
     const [userMenuOpened, setUserMenuOpened] = useState(false);
     const navigate = useNavigate()
+    const [isOpen, setIsOpen] = useState(false);
+
+    const handleButtonClick = () => {
+        setIsOpen(!isOpen);
+    };
 
     const handleTabClick = (tab) => {
         navigate(tabs[tab])
     }
-      const items = Object.keys(tabs).map((tab) => (
+
+    const handleMenuItemClick = (item) => {
+        const path = menu_items[item];
+        console.log(item);
+        if (path) {
+            navigate(path);
+        }
+    };
+
+    const items = Object.keys(tabs).map((tab) => (
         <Tabs.Tab value={tab} key={tab} onClick={() => handleTabClick(tab)}>
-          {tab}
+            {tab}
         </Tabs.Tab>
       ));
+
     return (
-    <MantineProvider>
-        <div className={classes.header}>
-            <Container className={classes.mainSection + "navbar fixed-top flex-md-nowrap p-0"} size="md">
-                <Group justify="space-between">
-                    <Menu
-                        width={260}
-                        position="bottom-end"
-                        transitionProps={{transition: 'pop-top-right'}}
-                        onClose={() => setUserMenuOpened(false)}
-                        onOpen={() => setUserMenuOpened(true)}
-                        withinPortal
-                    >
-                        <Menu.Target>
-                            <button
-                                className={cx(classes.user, {[classes.userActive]: userMenuOpened})}
-                                style={{ position: 'absolute', right: 0 }}
-                            >
-                                <Group gap={5}>
-                                    <Text fw={1} size="sm" lh={1} mr={1}>
-                                        {user.name}
-                                    </Text>
-                                </Group>
-                            </button>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                            <Menu.Item>
+        <MantineProvider>
+            <div className={classes.dropdown}>
+                <button className={classes.button} onClick={handleButtonClick} style={{ position: 'absolute', right: 0 }}>
+                    <Text>{user.name}</Text>
+                </button>
+                {isOpen && (
+                    <div className={classes.menu} style={{ position: 'absolute', right: 0, top: '5%' }}>
+                        <ul className={classes.menuItems}>
+                            <button className={cx(classes.menuItem)} onClick={() => handleMenuItemClick('Liked polls')}>
                                 Liked polls
-                            </Menu.Item>
-                            <Menu.Divider/>
-                            <Menu.Item>
+                            </button>
+                            <br/>
+                            <button className={cx(classes.menuItem)} onClick={() => handleMenuItemClick('Complains')}>
                                 Complains
-                            </Menu.Item>
-                            <Menu.Item>
+                            </button>
+                            <br/>
+                            <button className={cx(classes.menuItem)} onClick={() => handleMenuItemClick('Your comments')}>
                                 Your comments
-                            </Menu.Item>
-
-                            <Menu.Label>Settings</Menu.Label>
-                            <Menu.Item>
-                                Account settings
-                            </Menu.Item>
-                            <Menu.Divider/>
-                            <Menu.Item>
-                                Change account
-                            </Menu.Item>
-                            <Menu.Divider/>
-                            <Menu.Item>
+                            </button>
+                            <br/>
+                            <button className={cx(classes.menuItem)} onClick={() => handleMenuItemClick('Logout')}>
                                 Logout
-                            </Menu.Item>
-
-                            <Menu.Divider/>
-
-                            <Menu.Label>Danger zone</Menu.Label>
-                            <Menu.Item>
-                                Delete account
-                            </Menu.Item>
-                        </Menu.Dropdown>
-                    </Menu>
-                </Group>
-            </Container>
-            <Container size="md">
-                <Tabs
-                    defaultValue="Home"
-                    variant="outline"
-                    visibleFrom="sm"
-                    classNames={{
-                        root: classes.tabs,
-                        list: classes.tabsList,
-                        tab: classes.tab,
-                    }}
-                >
-                    <Tabs.List>{items}</Tabs.List>
-                </Tabs>
-            </Container>
-        </div>
-    </MantineProvider>
-    )
+                            </button>
+                        </ul>
+                    </div>
+                )}
+            </div>
+        </MantineProvider>
+    );
 };
 
 export default Header
