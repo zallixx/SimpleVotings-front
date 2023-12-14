@@ -49,40 +49,60 @@ const Header = () => {
         if (path) {
             navigate(path);
         }
+        setActiveTab(item);
     };
 
-    const items = Object.keys(tabs).map((tab) => (
+    const items_tabs = Object.keys(tabs).map((tab) => (
         <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
                 onClick={() => handleTabClick(tab)}>
             {tab}
         </button>
     ))
+
+const items_menu = (
+    <div>
+        {Object.keys(menu_items).map((item) => (
+            <div key={item}>
+                {item !== 'Logout' && (
+                    <button
+                        className={`btn border-0 rounded-0 mb-1 tab ${activeTab === item ? 'active' : ''}`}
+                        onClick={() => handleMenuItemClick(item)}
+                        style={{ backgroundColor: '#ffffff' }}
+                    >
+                        {item}
+                    </button>
+                )}
+            </div>
+        ))}
+        <hr/>
+        {Object.keys(menu_items).map((item) => (
+            <div key={item}>
+                {item === 'Logout' && (
+                    <button
+                        className="btn mb-1 text-darkred"
+                        onClick={() => handleMenuItemClick(item)}
+                        style={{ backgroundColor: '#ffffff' }}
+                    >
+                        {item}
+                    </button>
+                )}
+            </div>
+        ))}
+    </div>
+);
+
     return (
         <MantineProvider>
             <div className="navbar fixed-top" style={{backgroundColor: '#ffffff', height: '3.2%'}}>
                 <button className="dropdown-toggle btn border-0 rounded-start-pill" onClick={handleButtonClick}
                     style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
-            >
+                >
                 {user_prop.name}
             </button>
             {isOpen && (
                 <div style={{position: 'absolute', right: 0, top: '100%'}}>
                     <ButtonGroup style={{ backgroundColor: '#ffffff', height: '100%', width: '100%'}} className="shadow">
-                        <ul>
-                            <button className="btn mb-1 my-1" onClick={() => handleMenuItemClick('Mine polls')}
-                                    style={{backgroundColor: '#ffffff',}}>
-                                Mine polls
-                            </button>
-                            <button className="btn mb-1 my-1" onClick={() => handleMenuItemClick('Vote history')}
-                                    style={{backgroundColor: '#ffffff',}}>
-                                Vote history
-                            </button>
-                            <hr/>
-                            <button className="btn mb-1" onClick={() => handleMenuItemClick('Logout')}
-                                    style={{backgroundColor: '#ffffff', color: 'darkred',}}>
-                                Logout
-                            </button>
-                        </ul>
+                        {items_menu}
                     </ButtonGroup>
                 </div>
             )}
@@ -90,7 +110,7 @@ const Header = () => {
                     <Container size="md">
                         <Tabs>
                         <Tabs.List>
-                            {items}
+                            {items_tabs}
                         </Tabs.List>
                     </Tabs>
                 </Container>
