@@ -79,37 +79,37 @@ const Header = () => {
         </button>
     ))
 
-const items_menu = (
-    <div>
-        {Object.keys(menu_items).map((item) => (
-            <div key={item}>
-                {item !== 'Logout' && (
-                    <button
-                        className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''}`}
-                        onClick={() => handleMenuItemClick(item)}
-                        style={{ backgroundColor: '#DFDFDE' }}
-                    >
-                        {item}
-                    </button>
-                )}
-            </div>
-        ))}
-        <hr/>
-        {Object.keys(menu_items).map((item) => (
-            <div key={item}>
-                {item === 'Logout' && (
-                    <button
-                        className="btn mb-0 text-darkred"
-                        onClick={() => handleMenuItemClick(item)}
-                        style={{ backgroundColor: '#DFDFDE' }}
-                    >
-                        {item}
-                    </button>
-                )}
-            </div>
-        ))}
-    </div>
-);
+    const items_menu = (
+        <div>
+            {Object.keys(menu_items).map((item) => (
+                <div key={item}>
+                    {item !== 'Logout' && (
+                        <button
+                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''}`}
+                            onClick={() => handleMenuItemClick(item)}
+                            style={{ backgroundColor: '#DFDFDE' }}
+                        >
+                            {item}
+                        </button>
+                    )}
+                </div>
+            ))}
+            <hr/>
+            {Object.keys(menu_items).map((item) => (
+                <div key={item}>
+                    {item === 'Logout' && (
+                        <button
+                            className="btn mb-0 text-darkred"
+                            onClick={() => handleMenuItemClick(item)}
+                            style={{ backgroundColor: '#DFDFDE' }}
+                        >
+                            {item}
+                        </button>
+                    )}
+                </div>
+            ))}
+        </div>
+    );
 
     return (
         <MantineProvider>
@@ -130,17 +130,13 @@ const items_menu = (
                 </div>
             )}
                 <div style={{position: 'absolute', marginTop: '0%', right: '40%', left: '40%'}}>
-                    <Container size="md">
-                        <Tabs>
-                        <Tabs.List>
+                    <ButtonGroup>
                         {user !== null ? items_tabs : unauthorized_items}
-                        </Tabs.List>
-                    </Tabs>
-                </Container>
-            </div>
+                    </ButtonGroup>
                 </div>
+            </div>
         </MantineProvider>
-);
+    );
 };
 
 export default Header
