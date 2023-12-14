@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import {useContext, useState} from 'react';
 import {
   Container,
   Text,
@@ -7,12 +7,7 @@ import {
 } from '@mantine/core';
 import {useNavigate} from "react-router-dom";
 import {ButtonGroup} from "react-bootstrap";
-
-const user = {
-  name: '',
-  email: '',
-  image: '',
-};
+import AuthContext from "../context/AuthContext";
 
 const tabs = {
     'Home': '/',
@@ -31,6 +26,13 @@ const menu_items = {
 const Header = () => {
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
+    let {user} = useContext(AuthContext)
+
+    const user_prop = {
+        name: user.username,
+        email: '',
+        image: '',
+    };
 
     const handleButtonClick = () => {
         setIsOpen(!isOpen);
@@ -58,7 +60,7 @@ const Header = () => {
             <button className="btn border-0 rounded-0" onClick={handleButtonClick}
                     style={{position: 'absolute', right: 0, backgroundColor: 'slategray', color: 'black', height: '3.2%'}}
             >
-                {user.name}
+                {user_prop.name}
             </button>
             {isOpen && (
                 <div style={{position: 'absolute', right: 0, top: '4%'}}>
