@@ -87,7 +87,7 @@ const items_menu = (
                     <button
                         className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''}`}
                         onClick={() => handleMenuItemClick(item)}
-                        style={{ backgroundColor: '#ffffff' }}
+                        style={{ backgroundColor: '#DFDFDE' }}
                     >
                         {item}
                     </button>
@@ -101,7 +101,7 @@ const items_menu = (
                     <button
                         className="btn mb-0 text-darkred"
                         onClick={() => handleMenuItemClick(item)}
-                        style={{ backgroundColor: '#ffffff' }}
+                        style={{ backgroundColor: '#DFDFDE' }}
                     >
                         {item}
                     </button>
@@ -113,10 +113,10 @@ const items_menu = (
 
     return (
         <MantineProvider>
-            <div className="navbar fixed-top" style={{backgroundColor: '#ffffff', height: '3.2%'}}>
+            <div className="navbar fixed-top" style={{backgroundColor: '#DFDFDE', height: '3.2%'}}>
                 {user !== null ?
-                    <button className="dropdown-toggle btn border-0 rounded-start-pill" onClick={handleButtonClick}
-                            style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
+                    <button className="dropdown-toggle btn border-0" onClick={handleButtonClick}
+                            style={{position: 'absolute', right: 0, backgroundColor: '#DFDFDE', color: 'black', height: '100%'}}
                     >
                         {user_prop.name}
                     </button>
@@ -124,7 +124,7 @@ const items_menu = (
                 }
             {isOpen && (
                 <div style={{position: 'absolute', right: 0, top: '100%'}}>
-                    <ButtonGroup style={{ backgroundColor: '#ffffff', height: '100%', width: '100%'}} className="shadow">
+                    <ButtonGroup style={{ backgroundColor: '#DFDFDE', height: '100%', width: '100%'}} className="shadow">
                         {user !== null ? items_menu : null}
                     </ButtonGroup>
                 </div>
