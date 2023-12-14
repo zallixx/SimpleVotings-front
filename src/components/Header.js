@@ -13,14 +13,13 @@ import './Header.css';
 const tabs = {
     'Home': '/',
     'Polls' : '/polls/',
-    'Support' : '/support/',
+    'Complains' : '/complains/',
     'Profile' : '/profile/',
 };
 
 const menu_items = {
-    'Liked polls': '/liked-polls/',
-    'Complains' : '/complains/',
-    'Your comments' : '/your-comments/',
+    'Vote history': '/vote-history/',
+    'Mine polls': '/mine-polls/',
     'Logout' : '/login/',
 };
 
@@ -71,30 +70,28 @@ const Header = () => {
             </button>
             {isOpen && (
                 <div style={{position: 'absolute', right: 0, top: '100%'}}>
-                    <ButtonGroup>
+                    <ButtonGroup style={{ backgroundColor: '#ffffff', height: '100%', width: '100%'}} className="shadow">
                         <ul>
-                            <button className="btn mb-2 " onClick={() => handleMenuItemClick('Liked polls')} style={{ backgroundColor: '#b7e9eb', }}>
-                                Liked polls
+                            <button className="btn mb-1 my-1" onClick={() => handleMenuItemClick('Mine polls')}
+                                    style={{backgroundColor: '#ffffff',}}>
+                                Mine polls
                             </button>
-                            <br/>
-                            <button className="btn mb-2"  onClick={() => handleMenuItemClick('Complains')} style={{ backgroundColor: '#b7e9eb', }}>
-                                Complains
+                            <button className="btn mb-1 my-1" onClick={() => handleMenuItemClick('Vote history')}
+                                    style={{backgroundColor: '#ffffff',}}>
+                                Vote history
                             </button>
-                            <br/>
-                            <button className="btn mb-2" onClick={() => handleMenuItemClick('Your comments')} style={{ backgroundColor: '#b7e9eb', }}>
-                                Your comments
-                            </button>
-                            <br/>
-                            <button className="btn btn-danger mb-2" onClick={() => handleMenuItemClick('Logout')}>
+                            <hr/>
+                            <button className="btn mb-1" onClick={() => handleMenuItemClick('Logout')}
+                                    style={{backgroundColor: '#ffffff', color: 'darkred',}}>
                                 Logout
                             </button>
                         </ul>
                     </ButtonGroup>
                 </div>
             )}
-            <div style={{position: 'absolute', marginTop: '0%', right: '40%', left: '40%'}}>
-                <Container size="md">
-                    <Tabs>
+                <div style={{position: 'absolute', marginTop: '0%', right: '40%', left: '40%'}}>
+                    <Container size="md">
+                        <Tabs>
                         <Tabs.List>
                             {items}
                         </Tabs.List>
