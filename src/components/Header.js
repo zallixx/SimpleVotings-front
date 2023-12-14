@@ -56,14 +56,15 @@ const Header = () => {
     };
 
     const items = Object.keys(tabs).map((tab) => (
-      <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'activeTab' : ''}`} value={tab} key={tab} onClick={() => handleTabClick(tab)}>
-        {tab}
-      </button>
+        <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
+                onClick={() => handleTabClick(tab)}>
+            {tab}
+        </button>
     ))
     return (
         <MantineProvider>
-            <div className="navbar fixed-top" style={{ backgroundColor: '#ffffff', height: '3.2%' }}>
-            <button className="btn border-0 rounded-start-pill" onClick={handleButtonClick}
+            <div className="navbar fixed-top" style={{backgroundColor: '#ffffff', height: '3.2%'}}>
+                <button className="btn border-0 rounded-start-pill" onClick={handleButtonClick}
                     style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
             >
                 {user_prop.name}
