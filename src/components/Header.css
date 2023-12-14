@@ -1,0 +1,15 @@
+.activeTab {
+  text-decoration: underline;
+  color: blue;
+}
+
+.tab {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.tab.activeTab:hover {
+  color: blue;
+}

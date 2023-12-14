@@ -8,6 +8,8 @@ import {useNavigate} from "react-router-dom";
 import {ButtonGroup} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
 
+import './Header.css';
+
 const tabs = {
     'Home': '/',
     'Polls' : '/polls/',
@@ -27,6 +29,7 @@ const Header = () => {
     const [isOpen, setIsOpen] = useState(false);
     let {user} = useContext(AuthContext)
     const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
+    const [activeTab, setActiveTab] = useState(null);
 
     useEffect(() => {
         if (user !== null) {
@@ -42,7 +45,8 @@ const Header = () => {
     };
 
     const handleTabClick = (tab) => {
-        navigate(tabs[tab])
+        navigate(tabs[tab]);
+        setActiveTab(tab);
     }
 
     const handleMenuItemClick = (item) => {
@@ -53,31 +57,31 @@ const Header = () => {
     };
 
     const items = Object.keys(tabs).map((tab) => (
-        <button className={`btn ${tab === 'Home' ? 'border-0 rounded-start-pill' : tab === 'Profile' ? 'border-0 rounded-end-pill' : 'border-0 rounded-0'}`} style={{backgroundColor: '#b6b8b9', color: 'black'}} value={tab} key={tab} onClick={() => handleTabClick(tab)}>
-            {tab}
-        </button>
-    ));
-
+      <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'activeTab' : ''}`} value={tab} key={tab} onClick={() => handleTabClick(tab)}>
+        {tab}
+      </button>
+    ))
     return (
         <MantineProvider>
+            <div className="navbar fixed-top" style={{ backgroundColor: '#ffffff', height: '3.2%' }}>
             <button className="btn border-0 rounded-start-pill" onClick={handleButtonClick}
-                    style={{position: 'absolute', right: 0, backgroundColor: '#b6b8b9', color: 'black', height: '3.2%'}}
+                    style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
             >
                 {user_prop.name}
             </button>
             {isOpen && (
-                <div style={{position: 'absolute', right: 0, top: '4%'}}>
+                <div style={{position: 'absolute', right: 0, top: '100%'}}>
                     <ButtonGroup>
                         <ul>
-                            <button className="btn mb-2 " onClick={() => handleMenuItemClick('Liked polls')} style={{ backgroundColor: '#e2e3e4', }}>
+                            <button className="btn mb-2 " onClick={() => handleMenuItemClick('Liked polls')} style={{ backgroundColor: '#b7e9eb', }}>
                                 Liked polls
                             </button>
                             <br/>
-                            <button className="btn mb-2"  onClick={() => handleMenuItemClick('Complains')} style={{ backgroundColor: '#e2e3e4', }}>
+                            <button className="btn mb-2"  onClick={() => handleMenuItemClick('Complains')} style={{ backgroundColor: '#b7e9eb', }}>
                                 Complains
                             </button>
                             <br/>
-                            <button className="btn mb-2" onClick={() => handleMenuItemClick('Your comments')} style={{ backgroundColor: '#e2e3e4', }}>
+                            <button className="btn mb-2" onClick={() => handleMenuItemClick('Your comments')} style={{ backgroundColor: '#b7e9eb', }}>
                                 Your comments
                             </button>
                             <br/>
@@ -97,6 +101,7 @@ const Header = () => {
                     </Tabs>
                 </Container>
             </div>
+                </div>
         </MantineProvider>
 );
 };
