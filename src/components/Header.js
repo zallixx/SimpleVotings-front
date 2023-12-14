@@ -1,5 +1,4 @@
 import {useContext, useEffect, useState} from 'react';
-import { Container, Tabs, MantineProvider, } from '@mantine/core';
 import {useNavigate} from "react-router-dom";
 import {ButtonGroup} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
@@ -112,16 +111,15 @@ const Header = () => {
     );
 
     return (
-        <MantineProvider>
-            <div className="navbar fixed-top" style={{backgroundColor: '#DFDFDE', height: '3.2%'}}>
-                {user !== null ?
-                    <button className="dropdown-toggle btn border-0" onClick={handleButtonClick}
-                            style={{position: 'absolute', right: 0, backgroundColor: '#DFDFDE', color: 'black', height: '100%'}}
-                    >
-                        {user_prop.name}
-                    </button>
+        <div className="navbar fixed-top" style={{backgroundColor: '#DFDFDE', height: '3.2%'}}>
+            {user !== null ?
+                <button className="dropdown-toggle btn border-0" onClick={handleButtonClick}
+                        style={{position: 'absolute', right: 0, backgroundColor: '#DFDFDE', color: 'black', height: '100%'}}
+                >
+                    {user_prop.name}
+                </button>
                     : null
-                }
+            }
             {isOpen && (
                 <div style={{position: 'absolute', right: 0, top: '100%'}}>
                     <ButtonGroup style={{ backgroundColor: '#DFDFDE', height: '100%', width: '100%'}} className="shadow">
@@ -129,13 +127,12 @@ const Header = () => {
                     </ButtonGroup>
                 </div>
             )}
-                <div style={{position: 'absolute', marginTop: '0%', right: '40%', left: '40%'}}>
-                    <ButtonGroup>
-                        {user !== null ? items_tabs : unauthorized_items}
-                    </ButtonGroup>
-                </div>
+            <div style={{position: 'absolute', marginTop: '0%', right: '40%', left: '40%'}}>
+                <ButtonGroup>
+                    {user !== null ? items_tabs : unauthorized_items}
+                </ButtonGroup>
             </div>
-        </MantineProvider>
+        </div>
     );
 };
 
