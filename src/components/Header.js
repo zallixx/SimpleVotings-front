@@ -53,15 +53,15 @@ const Header = () => {
     };
 
     const items = Object.keys(tabs).map((tab) => (
-        <button className="btn border-0 rounded-0" style={{backgroundColor: 'slategray', color: 'black', }} value={tab} key={tab} onClick={() => handleTabClick(tab)}>
+        <button className={`btn ${tab === 'Home' ? 'border-0 rounded-start-pill' : tab === 'Profile' ? 'border-0 rounded-end-pill' : 'border-0 rounded-0'}`} style={{backgroundColor: '#b6b8b9', color: 'black'}} value={tab} key={tab} onClick={() => handleTabClick(tab)}>
             {tab}
         </button>
-      ));
+    ));
 
     return (
         <MantineProvider>
-            <button className="btn border-0 rounded-0" onClick={handleButtonClick}
-                    style={{position: 'absolute', right: 0, backgroundColor: 'slategray', color: 'black', height: '3.2%'}}
+            <button className="btn border-0 rounded-start-pill" onClick={handleButtonClick}
+                    style={{position: 'absolute', right: 0, backgroundColor: '#b6b8b9', color: 'black', height: '3.2%'}}
             >
                 {user_prop.name}
             </button>
@@ -69,16 +69,15 @@ const Header = () => {
                 <div style={{position: 'absolute', right: 0, top: '4%'}}>
                     <ButtonGroup>
                         <ul>
-                            <button className="btn btn-info mb-2"
-                                    onClick={() => handleMenuItemClick('Liked polls')}>
+                            <button className="btn mb-2 " onClick={() => handleMenuItemClick('Liked polls')} style={{ backgroundColor: '#e2e3e4', }}>
                                 Liked polls
                             </button>
                             <br/>
-                            <button className="btn btn-info mb-2" onClick={() => handleMenuItemClick('Complains')}>
+                            <button className="btn mb-2"  onClick={() => handleMenuItemClick('Complains')} style={{ backgroundColor: '#e2e3e4', }}>
                                 Complains
                             </button>
                             <br/>
-                            <button className="btn btn-info mb-2" onClick={() => handleMenuItemClick('Your comments')}>
+                            <button className="btn mb-2" onClick={() => handleMenuItemClick('Your comments')} style={{ backgroundColor: '#e2e3e4', }}>
                                 Your comments
                             </button>
                             <br/>

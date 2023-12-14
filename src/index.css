@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  background: rgb(152, 230, 255);
+  background: #f7f7f8;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
