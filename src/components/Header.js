@@ -85,7 +85,7 @@ const items_menu = (
             <div key={item}>
                 {item !== 'Logout' && (
                     <button
-                        className={`btn border-0 rounded-0 mb-1 tab ${activeTab === item ? 'active' : ''}`}
+                        className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''}`}
                         onClick={() => handleMenuItemClick(item)}
                         style={{ backgroundColor: '#ffffff' }}
                     >
@@ -99,7 +99,7 @@ const items_menu = (
             <div key={item}>
                 {item === 'Logout' && (
                     <button
-                        className="btn mb-1 text-darkred"
+                        className="btn mb-0 text-darkred"
                         onClick={() => handleMenuItemClick(item)}
                         style={{ backgroundColor: '#ffffff' }}
                     >
