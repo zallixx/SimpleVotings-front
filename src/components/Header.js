@@ -6,12 +6,17 @@ import AuthContext from "../context/AuthContext";
 
 import './Header.css';
 
-const tabs = {
+const authorized_tabs = {
     'Home': '/',
     'Polls' : '/polls/',
     'Complains' : '/complains/',
     'Profile' : '/profile/',
 };
+
+const unauthorized_tabs = {
+    'Login' : '/login/',
+    'Register' : '/register/',
+}
 
 const menu_items = {
     'Vote history': '/vote-history/',
@@ -39,10 +44,15 @@ const Header = () => {
         setIsOpen(!isOpen);
     };
 
-    const handleTabClick = (tab) => {
-        navigate(tabs[tab]);
+    const handleAuthorizedTabClick = (tab) => {
+        navigate(authorized_tabs[tab]);
         setActiveTab(tab);
-    }
+    };
+
+    const handleUnAuthorizedTabClick = (tab) => {
+        navigate(unauthorized_tabs[tab]);
+        setActiveTab(tab);
+    };
 
     const handleMenuItemClick = (item) => {
         const path = menu_items[item];
@@ -52,9 +62,16 @@ const Header = () => {
         setActiveTab(item);
     };
 
-    const items_tabs = Object.keys(tabs).map((tab) => (
+    const items_tabs = Object.keys(authorized_tabs).map((tab) => (
         <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
-                onClick={() => handleTabClick(tab)}>
+                onClick={() => handleAuthorizedTabClick(tab)}>
+            {tab}
+        </button>
+    ))
+
+    const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
+        <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
+                onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
         </button>
     ))
@@ -94,15 +111,18 @@ const items_menu = (
     return (
         <MantineProvider>
             <div className="navbar fixed-top" style={{backgroundColor: '#ffffff', height: '3.2%'}}>
-                <button className="dropdown-toggle btn border-0 rounded-start-pill" onClick={handleButtonClick}
-                    style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
-                >
-                {user_prop.name}
-            </button>
+                {user !== null ?
+                    <button className="dropdown-toggle btn border-0 rounded-start-pill" onClick={handleButtonClick}
+                            style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
+                    >
+                        {user_prop.name}
+                    </button>
+                    : null
+                }
             {isOpen && (
                 <div style={{position: 'absolute', right: 0, top: '100%'}}>
                     <ButtonGroup style={{ backgroundColor: '#ffffff', height: '100%', width: '100%'}} className="shadow">
-                        {items_menu}
+                        {user !== null ? items_menu : null}
                     </ButtonGroup>
                 </div>
             )}
@@ -110,7 +130,7 @@ const items_menu = (
                     <Container size="md">
                         <Tabs>
                         <Tabs.List>
-                            {items_tabs}
+                        {user !== null ? items_tabs : unauthorized_items}
                         </Tabs.List>
                     </Tabs>
                 </Container>
