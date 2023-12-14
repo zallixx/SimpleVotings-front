@@ -14,5 +14,6 @@
 }
 
 .tab.active.btn {
+  text-decoration: underline;
   color: blue;
 }

@@ -1,9 +1,5 @@
 import {useContext, useEffect, useState} from 'react';
-import {
-  Container,
-  Tabs,
-  MantineProvider,
-} from '@mantine/core';
+import { Container, Tabs, MantineProvider, } from '@mantine/core';
 import {useNavigate} from "react-router-dom";
 import {ButtonGroup} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
@@ -64,7 +60,7 @@ const Header = () => {
     return (
         <MantineProvider>
             <div className="navbar fixed-top" style={{backgroundColor: '#ffffff', height: '3.2%'}}>
-                <button className="btn border-0 rounded-start-pill" onClick={handleButtonClick}
+                <button className="dropdown-toggle btn border-0 rounded-start-pill" onClick={handleButtonClick}
                     style={{position: 'absolute', right: 0, backgroundColor: '#ffffff', color: 'black', }}
             >
                 {user_prop.name}
