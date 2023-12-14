@@ -122,8 +122,8 @@ const PollsPage = () => {
     }, []);
     if (isLoading) {
         return (
-            <ReactLoading className="position-fixed top-50 start-50 translate-middle h1" height={'10%'} width={'10%'}
-                          type="bars" color="#0d6efd"/>
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
+                          type="bubbles" color="#505253"/>
         )
     }
 
