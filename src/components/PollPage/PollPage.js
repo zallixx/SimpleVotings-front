@@ -132,6 +132,24 @@ const PollsPage = () => {
         )
     }
 
+    let complain = (e) => {
+        e.preventDefault();
+            try {
+                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify({
+                        'text': e.target.text.value
+                    })
+                }).then(() => navigate('/polls'))
+            } catch (error) {
+                console.error(error);
+            }
+    }
+
     let deletePoll = () => {
         if (window.confirm('Вы уверены, что хотите удалить опрос?')) {
             try {
@@ -194,8 +212,17 @@ const PollsPage = () => {
                             </>
                         ) : (isComplainMode ? (
                             <>
-                                <h3 className="card-title mb-1">{poll.question}</h3>
-                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                <h3 className="card-title mb-1">Жалоба</h3>
+                                <Form onSubmit={complain}>
+                                    <textarea name="text" className="form-control mb-1" maxLength="500"/>
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                                Отправить
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
 
                             </>
                         ) : (
