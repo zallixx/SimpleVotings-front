@@ -153,7 +153,7 @@ const PollsPage = () => {
             <div key={poll.id} className="auth-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
-                        {user.username === author_name && !isEditMode && (
+                        {user.username === author_name && !isEditMode && !isComplainMode && (
                             <button className="btn btn-primary float-end" onClick={toggleEditMode}>
                                 Редактировать
                             </button>
@@ -233,7 +233,7 @@ const PollsPage = () => {
                                             </button>
                                         ) : (
                                             // eslint-disable-next-line
-                                            <a href="" onClick={() => setComplainMode(true)}
+                                            <a onClick={() => setComplainMode(true)}
                                                className="complain fs-5">Пожаловаться</a>
                                         )}
                                         <FormGroup>
