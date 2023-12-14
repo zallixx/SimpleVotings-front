@@ -27,9 +27,9 @@ const menu_items = {
 const Header = () => {
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
-    let {user} = useContext(AuthContext)
     const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
     const [activeTab, setActiveTab] = useState(null);
+    let {user, logoutUser} = useContext(AuthContext);
 
     useEffect(() => {
         if (user !== null) {
@@ -58,6 +58,9 @@ const Header = () => {
         const path = menu_items[item];
         if (path) {
             navigate(path);
+            if(item === 'Logout') {
+                logoutUser();
+            }
         }
         setActiveTab(item);
     };
