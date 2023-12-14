@@ -125,9 +125,9 @@ const PollsPage = () => {
     }
 
     return (
-        <div className="PollsPage" style={{ backgroundColor: "#f7f7f8" }}>
+        <div className="PollsPage" style={{ backgroundColor: "#f4f6fa" }}>
             <div className="auth-wrapper">
-                <div className="auth-inner h-100 w-75 position-relative" style={{ backgroundColor: "#a4a6a7" }}>
+                <div className="auth-inner h-100 w-75 position-relative" style={{ backgroundColor: "#ffffff" }}>
                     <input
                         type="search"
                         className="form-control rounded weak-orange"
