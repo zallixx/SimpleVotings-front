@@ -16,6 +16,7 @@ const PollsPage = () => {
     const [selected, setSelected] = useState('');
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
+    const [isComplainMode, setComplainMode] = useState(false);
 
     const fetchPoll = async () => {
         try {
@@ -113,6 +114,10 @@ const PollsPage = () => {
     const toggleEditMode = () => {
         setEditMode(!isEditMode);
     };
+    const toggleComplainMode = () => {
+        setComplainMode(!isComplainMode);
+    }
+
 
     useEffect(() => {
         fetchPoll().then(
@@ -187,6 +192,12 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
+                        ) : (isComplainMode ? (
+                            <>
+                                <h3 className="card-title mb-1">{poll.question}</h3>
+                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+
+                            </>
                         ) : (
                             <>
                                 <h3 className="card-title mb-1">{poll.question}</h3>
@@ -222,7 +233,7 @@ const PollsPage = () => {
                                             </button>
                                         ) : (
                                             // eslint-disable-next-line
-                                            <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
+                                            <a href="" onClick={() => setComplainMode(true)}
                                                className="complain fs-5">Пожаловаться</a>
                                         )}
                                         <FormGroup>
@@ -233,7 +244,7 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>
