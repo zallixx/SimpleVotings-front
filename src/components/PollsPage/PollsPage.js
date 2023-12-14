@@ -3,6 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import './PollsPage.css';
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import ReactLoading from "react-loading";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -23,7 +24,7 @@ const PollsPage = () => {
             if (response.status === 200) {
                 const authorNames = await getAuthorNames(data);
                 setPolls(data.map((poll) => {
-                    return { ...poll, created_by: authorNames[poll.created_by] };
+                    return {...poll, created_by: authorNames[poll.created_by]};
                 }));
                 setFilteredPolls(data)
             } else {
@@ -35,29 +36,29 @@ const PollsPage = () => {
     };
 
     const getAuthorNames = async (polls) => {
-            const authorNames = {};
-            try {
-                await Promise.all(polls.map(async (poll) => {
-                    // да.. данная асинхр. функия имеет в себе Promise.all. Ссылки, где я его нашел - https://doka.guide/js/promise/, https://learn.javascript.ru/promise, https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise
-                    const response = await fetch('http://127.0.0.1:8000/api/users/' + poll.created_by + '/username/', {
-                        method: 'GET',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + String(authTokens.access),
-                        },
-                    });
-                    const data = await response.json();
-                    if (response.status === 200) {
-                        authorNames[poll.created_by] = data;
-                    } else {
-                        alert('Something went wrong!');
-                    }
-                }));
-                return authorNames;
-            } catch (error) {
-                console.error(error);
-            }
+        const authorNames = {};
+        try {
+            await Promise.all(polls.map(async (poll) => {
+                // да.. данная асинхр. функия имеет в себе Promise.all. Ссылки, где я его нашел - https://doka.guide/js/promise/, https://learn.javascript.ru/promise, https://developer.mozilla.org/en-US/docs/web/javascript/reference/global_objects/promise
+                const response = await fetch('http://127.0.0.1:8000/api/users/' + poll.created_by + '/username/', {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                });
+                const data = await response.json();
+                if (response.status === 200) {
+                    authorNames[poll.created_by] = data;
+                } else {
+                    alert('Something went wrong!');
+                }
+            }));
+            return authorNames;
+        } catch (error) {
+            console.error(error);
         }
+    }
 
     useEffect(() => {
         fetchPolls().then(() => setLoading(false));
@@ -76,18 +77,17 @@ const PollsPage = () => {
                 const filtered = polls.filter((poll) =>
                     poll.created_by.toLowerCase().includes(value.toLowerCase().slice(1))
                 );
-            setFilteredPolls(filtered);
+                setFilteredPolls(filtered);
             } else {
                 const filtered = polls.filter((poll) =>
                     poll.question.toLowerCase().includes(value.toLowerCase())
                 );
                 setFilteredPolls(filtered);
             }
-        }
-        else {
+        } else {
             const filtered = polls.filter((poll) => " ");
             setFilteredPolls(filtered);
-            }
+        }
     };
 
     const formatTimeSinceCreation = (createdAt) => {
@@ -99,18 +99,29 @@ const PollsPage = () => {
         const diffInDays = Math.floor(diffInHours / 24);
         const diffInMonths = Math.floor(diffInDays / 30);
 
-        if (diffInMinutes < 20) { return "just now";}
-        else if (diffInHours < 1) { return `${diffInMinutes} minutes ago`; }
-        else if (diffInDays < 1) { return `${diffInHours} hours ago`; }
-        else if (diffInDays < 2) { return `${diffInDays} day ago`; }
-        else if (diffInDays < 30) { return `${diffInDays} days ago`; }
-        else if (diffInMonths < 2) { return `${diffInMonths} month ago`; }
-        else { return `${diffInMonths} months ago`; }
+        if (diffInMinutes < 20) {
+            return "just now";
+        } else if (diffInHours < 1) {
+            return `${diffInMinutes} minutes ago`;
+        } else if (diffInDays < 1) {
+            return `${diffInHours} hours ago`;
+        } else if (diffInDays < 2) {
+            return `${diffInDays} day ago`;
+        } else if (diffInDays < 30) {
+            return `${diffInDays} days ago`;
+        } else if (diffInMonths < 2) {
+            return `${diffInMonths} month ago`;
+        } else {
+            return `${diffInMonths} months ago`;
+        }
     };
 
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return (
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h1" height={'10%'} width={'10%'}
+                          type="bars" color="#0d6efd"/>
+        )
     }
 
     return (
@@ -125,7 +136,8 @@ const PollsPage = () => {
                         value={searchTerm}
                         onInput={handleSearch}
                     />
-                    <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                    <div
+                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
                             {filteredPolls.length === 0 ? (
                                 <div>
@@ -137,9 +149,9 @@ const PollsPage = () => {
                                 filteredPolls.map((poll) => (
                                     // eslint-disable-next-line jsx-a11y/anchor-is-valid
                                     <a
-                                    onClick={() => navigate(`/polls/${poll.id}`)}
-                                    key={poll.id}
-                                    className="list-group-item list-group-item-action weak_blue"
+                                        onClick={() => navigate(`/polls/${poll.id}`)}
+                                        key={poll.id}
+                                        className="list-group-item list-group-item-action weak_blue"
                                     >
                                         <div className="d-flex w-100 justify-content-between">
                                             <h5 className="mb-1">{poll.question}</h5>

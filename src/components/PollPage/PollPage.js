@@ -4,6 +4,7 @@ import './PollPage.css';
 import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import {Button, Form, FormGroup} from "react-bootstrap";
+import ReactLoading from 'react-loading';
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -120,7 +121,10 @@ const PollsPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h1" height={'10%'} width={'10%'}
+                          type="bars" color="#0d6efd"/>
+        )
     }
     return (
         <div className="PollsPage">

@@ -6,7 +6,9 @@
 .label {
   text-align: center;
   font-weight: 900;
-  font-size: 38px;
+  font-size: 300px;
+  /* font with the crossed 0 */
+  font-family: Broadway, var(--mantine-font-family);
   line-height: 1;
   margin-bottom: calc(1.5 * var(--mantine-spacing-xl));
   color: var(--mantine-color-gray-2);
