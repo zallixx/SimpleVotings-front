@@ -1,11 +1,23 @@
-.Header {
-    background-color: #3498db;
+.tab {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-.Link_color {
-    color: #ecf0f1 !important;
+.tab.active {
+  color: blue;
 }
 
-.Link_color:focus {
-    color: #bec2c3 !important;
+.tab.active:hover {
+  color: blue;
+}
+
+.tab.active.btn {
+  text-decoration: underline;
+  color: blue;
+}
+
+.btn.text-darkred {
+  color: darkred;
 }

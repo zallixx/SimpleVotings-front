@@ -14,7 +14,7 @@ const NotFoundPage = () => {
                 been moved to another URL.
             </Text>
             <Group justify="center">
-                <button className="btn btn-primary my-2" onClick={() => navigate('/')}>
+                <button className="btn my-2 rounded-pill shadow-lg" style={{ backgroundColor: '#ffffff', }} onClick={() => navigate('/')}>
                     Take me back to home page
                 </button>
             </Group>
