@@ -1,7 +1,6 @@
-import {useContext, useState} from 'react';
+import {useContext, useEffect, useState} from 'react';
 import {
   Container,
-  Text,
   Tabs,
   MantineProvider,
 } from '@mantine/core';
@@ -27,12 +26,16 @@ const Header = () => {
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
     let {user} = useContext(AuthContext)
+    const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
 
-    const user_prop = {
-        name: user.username,
-        email: '',
-        image: '',
-    };
+    useEffect(() => {
+        if (user !== null) {
+            setUserProp({
+                name: user.username,
+            });
+        }
+        }, [user]
+    );
 
     const handleButtonClick = () => {
         setIsOpen(!isOpen);
