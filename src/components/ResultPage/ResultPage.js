@@ -2,6 +2,7 @@ import React, {useContext, useEffect, useState} from "react";
 import "./ResultPage.css"
 import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import ReactLoading from "react-loading";
 
 const ResultPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -11,7 +12,7 @@ const ResultPage = () => {
 
     useEffect(() => {
         fetchResults().then(() => setLoading(false));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const fetchResults = async () => {
         try {
@@ -33,7 +34,10 @@ const ResultPage = () => {
         }
     };
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h1" height={'10%'} width={'10%'}
+                          type="bars" color="#0d6efd"/>
+        );
     }
 
     return (
@@ -43,12 +47,12 @@ const ResultPage = () => {
                 <div className="results auth-inner">
                     <h1>Results</h1>
                     {results.choices.map((result) => (
-                            <div
-                                className="result"
-                                key={result.id}>
-                                <h2>{result[0]}</h2>
-                                <p>{result[1]} votes</p>
-                            </div>
+                        <div
+                            className="result"
+                            key={result.id}>
+                            <h2>{result[0]}</h2>
+                            <p>{result[1]} votes</p>
+                        </div>
                     ))}
                 </div>
             </div>
