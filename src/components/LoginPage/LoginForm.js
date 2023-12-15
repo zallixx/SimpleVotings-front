@@ -21,7 +21,7 @@ const LoginForm = () => {
                         <FormControl type="password" name="password" className="form-control" placeholder="Password"/>
                     </FormGroup>
                     <FormGroup style={buttonStyle} controlId="formSubmit" className="d-grid">
-                        <Button bsStyle="primary" type="submit">
+                        <Button bsStyle="primary" type="submit" className="background_color_of_primary_btn">
                             Login
                         </Button>
                     </FormGroup>

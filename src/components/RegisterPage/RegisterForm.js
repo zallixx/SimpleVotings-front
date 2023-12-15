@@ -29,7 +29,7 @@ const RegisterPage = () => {
                         <FormControl type="password" name="password2" className="form-control" placeholder="Repeat Password"/>
                     </FormGroup>
                     <FormGroup style={buttonStyle} controlId="formSubmit" className="d-grid">
-                        <Button bsStyle="primary" type="submit">
+                        <Button bsStyle="primary" type="submit" className="background_color_of_primary_btn">
                             Register
                         </Button>
                     </FormGroup>
