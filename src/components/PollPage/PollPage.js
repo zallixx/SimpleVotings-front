@@ -149,7 +149,7 @@ const PollsPage = () => {
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
                         {user.username === author_name && !isEditMode && (
-                            <button className="btn btn-primary float-end" onClick={toggleEditMode}>
+                            <button className="btn btn-primary float-end background_color_of_primary_btn" onClick={toggleEditMode}>
                                 Редактировать
                             </button>
                         )}
@@ -180,7 +180,7 @@ const PollsPage = () => {
                                     ))}
                                     <div className="d-flex justify-content-between align-items-center mt-3">
                                         <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                            <Button type="submit" bsStyle="primary" className="fs-5 background_color_of_primary_btn">
                                                 Изменить опрос
                                             </Button>
                                         </FormGroup>
@@ -196,24 +196,22 @@ const PollsPage = () => {
                                 </p>
                                 <Form>
                                     {poll.choices.map((choice) => (
-                                        <div className="background_color_of_choice_btns">
-                                            <div
-                                                className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 d-flex"
-                                                key={choice.id}
-                                            >
-                                                <label className="form-check-label fs-5 fw-normal radio"
-                                                       htmlFor={choice.id}>
-                                                    <input
-                                                        className="form-check-input mx-2 border-1 border-dark"
-                                                        type="radio"
-                                                        name="choices"
-                                                        value={choice}
-                                                        onChange={(e) => setSelected(e.target.value)}
-                                                        id={choice.id}
-                                                    />
-                                                    {choice}
-                                                </label>
-                                            </div>
+                                        <div
+                                            className="form-check w-auto h-auto rounded p-1 mb-2 d-flex background_color_of_choice_btns"
+                                            key={choice.id}
+                                        >
+                                            <label className="form-check-label fs-5 fw-normal radio"
+                                                   htmlFor={choice.id}>
+                                                <input
+                                                    className="form-check-input mx-2 border-1 border-dark"
+                                                    type="radio"
+                                                    name="choices"
+                                                    value={choice}
+                                                    onChange={(e) => setSelected(e.target.value)}
+                                                    id={choice.id}
+                                                />
+                                                {choice}
+                                            </label>
                                         </div>
                                     ))}
                                     <div className="d-flex justify-content-between align-items-center mt-3">
@@ -228,7 +226,7 @@ const PollsPage = () => {
                                                className="complain fs-5">Пожаловаться</a>
                                         )}
                                         <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5" onClick={vote}>
+                                            <Button type="submit" bsStyle="primary" className="fs-5 background_color_of_primary_btn" onClick={vote}>
                                                 Отправить
                                             </Button>
                                         </FormGroup>

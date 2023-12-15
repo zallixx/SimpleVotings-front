@@ -106,7 +106,7 @@ html,
 
 #dark .background_color_of_btns {
     color: white;
-    background: #222220;
+    background: #333332;
 }
 
 #light .background_color_of_items_menu {
@@ -115,7 +115,7 @@ html,
 
 #dark .background_color_of_items_menu {
     color: white;
-    background: #191919;
+    background: #1a1917;
 }
 
 #light .navbar_params {
@@ -220,10 +220,15 @@ html,
 
 #light .background_color_of_choice_btns {
     background-color: #ffffff;
-    border-color: black;
+    border: 1px solid black;
 }
 
 #dark .background_color_of_choice_btns {
-    background-color: #0a0906;
-    border-color: white;
+    background-color: #2f2f2c;
+    border: 1px solid black;
+}
+
+#dark .background_color_of_primary_btn {
+    background-color: #0b53aa;
+    border: 0;
 }
