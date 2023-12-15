@@ -40,7 +40,7 @@ const ResultPage = () => {
     }
 
     return (
-        <div className="BasePageCss">
+        <div className="BasePageCss text_color">
             <div className="body-wrapper">
                 <div className="results body-inner">
                     <h1>Results</h1>

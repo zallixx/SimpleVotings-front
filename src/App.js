@@ -1,7 +1,7 @@
 import './App.css';
 
+import {createContext, useState} from "react";
 import HomePage from './pages/HomePage';
-
 import {AuthProvider} from "./context/AuthContext";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Header from "./components/Header";
@@ -15,46 +15,55 @@ import NewPollPage from "./components/NewPollPage/NewPollPage";
 import ResultPage from "./components/ResultPage/ResultPage";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 
-function App() {
-    return (
-        <div className="App">
-            <Router>
-                <AuthProvider>
-                    <Header/>
-                    <Routes>
-                        <Route path="/" element={
-                            <PrivateRoute>
-                                <HomePage/>
-                            </PrivateRoute>
-                        }/>
-                        <Route path="/polls" element={
-                            <PrivateRoute>
-                                <PollsPage/>
-                            </PrivateRoute>
-                        }/>
-                        <Route path="/polls/:id" element={
-                            <PrivateRoute>
-                                <PollPage/>
-                            </PrivateRoute>
-                        }/>
-                        <Route path="/polls/:id/results" element={
-                            <PrivateRoute>
-                                <ResultPage/>
-                            </PrivateRoute>
-                        }/>
-                        <Route path="/polls/new/" element={
-                            <PrivateRoute>
-                                <NewPollPage/>
-                            </PrivateRoute>
-                        }/>
-                        <Route element={<LoginPage/>} path="/login"/>
-                        <Route element={<RegisterPage/>} path="/register"/>
-                        <Route element={<NotFoundPage/>} path="*"/>
-                    </Routes>
-                </AuthProvider>
-            </Router>
+export const ThemeContext = createContext(null)
 
-        </div>
+function App() {
+    const [theme, setTheme] = useState('dark');
+
+    const toggleTheme = () => {
+        setTheme((curr) => (curr === 'light' ? 'dark' : 'light'));
+    };
+
+    return (
+        <ThemeContext.Provider value={{theme, toggleTheme}}>
+            <div className="App" id={theme}>
+                <Router>
+                    <AuthProvider>
+                        <Header/>
+                        <Routes>
+                            <Route path="/" element={
+                                <PrivateRoute>
+                                    <HomePage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/polls" element={
+                                <PrivateRoute>
+                                    <PollsPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/polls/:id" element={
+                                <PrivateRoute>
+                                    <PollPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/polls/:id/results" element={
+                                <PrivateRoute>
+                                    <ResultPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/polls/new/" element={
+                                <PrivateRoute>
+                                    <NewPollPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route element={<LoginPage/>} path="/login"/>
+                            <Route element={<RegisterPage/>} path="/register"/>
+                            <Route element={<NotFoundPage/>} path="*"/>
+                        </Routes>
+                    </AuthProvider>
+                </Router>
+            </div>
+        </ThemeContext.Provider>
     );
 }
 

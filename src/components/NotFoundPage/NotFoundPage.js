@@ -6,6 +6,7 @@ const NotFoundPage = () => {
     const navigate = useNavigate()
     return (
     <MantineProvider>
+        <div className="text_color">
         <Container className={classes.root}>
             <div className={classes.label}>404</div>
             <Title className={classes.title}>You have found a secret place.</Title>
@@ -14,11 +15,12 @@ const NotFoundPage = () => {
                 been moved to another URL.
             </Text>
             <Group justify="center">
-                <button className="btn my-2 rounded-pill shadow-lg background_color_of_btns" onClick={() => navigate('/')}>
+                <button className="btn my-2 rounded-pill shadow-lg background_color_of_btns my-3" onClick={() => navigate('/')}>
                     Take me back to home page
                 </button>
             </Group>
         </Container>
+        </div>
     </MantineProvider>
     );
 }
