@@ -44,7 +44,7 @@ html,
 }
 
 #dark {
-  background-color: #05070A;
+  background-color: #0a0906;
 }
 
 #dark .body-inner {
@@ -125,7 +125,7 @@ html,
 }
 
 #dark .navbar_params {
-  background: #051215;
+  background: #1a1917;
   height: 3.2%;
 }
 
@@ -154,7 +154,7 @@ html,
   right: 0;
   height: 100%;
   color: white;
-  background: #051215;
+  background: #1A1917;
 }
 
 #light .change_theme_btn {
@@ -168,7 +168,7 @@ html,
 #dark .change_theme_btn {
   position: absolute;
   left: 0;
-  background: #051215;
+  background: #1A1917;
   color: white;
   height: 100%;
 }
@@ -202,7 +202,7 @@ html,
 #dark .weak-orange {
     background-color: #222220;
     color: #eaeaea;
-    border: 1px solid black;
+    border: 1.5px solid black;
 }
 
 #dark .weak-orange::placeholder {
