@@ -44,44 +44,43 @@ html,
 }
 
 #dark {
-  background-color: #0a0906;
+  background-color: #1e1e1d;
 }
 
 #dark .body-inner {
-  width: 450px;
-  margin: auto;
-  background: #222220;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  transition: all 0.3s;
+    width: 450px;
+    margin: auto;
+    background: #222220;
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    transition: all 0.3s;
 }
 
 
 #light .body-inner {
-  width: 450px;
-  margin: auto;
-  background: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-  padding: 40px 55px 45px 55px;
-  border-radius: 15px;
-  transition: all 0.3s;
+    width: 450px;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    transition: all 0.3s;
 }
 
 .body-wrapper .form-control:focus {
-  border-color: #167bff;
-  box-shadow: none;
+    border-color: #167bff;
+    box-shadow: none;
 }
 
 .body-wrapper h3 {
-  text-align: center;
-  margin: 0;
-  line-height: 1;
-  padding-bottom: 20px;
+    text-align: center;
+    margin: 0;
+    line-height: 1;
+    padding-bottom: 20px;
 }
 
 #dark .BasePageCss {
-    background-color: #0A0906;
+    background-color: #1e1e1d;
     min-height: 100%;
     min-height: 100vh;
     display: flex;
@@ -89,7 +88,7 @@ html,
     align-items: center;
     justify-content: center;
 }
-/* 05070A */
+
 #light .BasePageCss {
     background-color: #f4f6fa;
     min-height: 100%;
@@ -101,76 +100,76 @@ html,
 }
 
 #light .background_color_of_btns {
-  background: #ffffff;
-  color: black;
+    background: #ffffff;
+    color: black;
 }
 
 #dark .background_color_of_btns {
-  color: white;
-  background: #222220;
+    color: white;
+    background: #222220;
 }
 
 #light .background_color_of_items_menu {
-  background: #DFDFDE;
+    background: #DFDFDE;
 }
 
 #dark .background_color_of_items_menu {
-  color: white;
-  background: #191919;
+    color: white;
+    background: #191919;
 }
 
 #light .navbar_params {
-  background: #DFDFDE;
-  height: 3.2%;
+    background: #DFDFDE;
+    height: 3.2%;
 }
 
 #dark .navbar_params {
-  background: #1a1917;
-  height: 3.2%;
+    background: #1a1917;
+    height: 3.2%;
 }
 
 #light .navbar_items {
-  position: absolute;
-  right: 40%;
-  left: 40%;
+    position: absolute;
+    right: 40%;
+    left: 40%;
 }
 
 #dark .navbar_items {
-  position: absolute;
-  right: 40%;
-  left: 40%;
+    position: absolute;
+    right: 40%;
+    left: 40%;
 }
 
 #light .username_btn {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  color: black;
-  background: #DFDFDE;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    color: black;
+    background: #DFDFDE;
 }
 
 #dark .username_btn {
-  position: absolute;
-  right: 0;
-  height: 100%;
-  color: white;
-  background: #1A1917;
+    position: absolute;
+    right: 0;
+    height: 100%;
+    color: white;
+    background: #1A1917;
 }
 
 #light .change_theme_btn {
-  position: absolute;
-  left: 0;
-  background: #DFDFDE;
-  color: black;
-  height: 100%;
+    position: absolute;
+    left: 0;
+    background: #DFDFDE;
+    color: black;
+    height: 100%;
 }
 
 #dark .change_theme_btn {
-  position: absolute;
-  left: 0;
-  background: #1A1917;
-  color: white;
-  height: 100%;
+    position: absolute;
+    left: 0;
+    background: #1A1917;
+    color: white;
+    height: 100%;
 }
 
 #light .text_color {
@@ -182,9 +181,9 @@ html,
 }
 
 .dropdown_menu {
-  position: absolute;
-  right: 0;
-  top: 100%;
+    position: absolute;
+    right: 0;
+    top: 100%;
 }
 
 #light .weak-orange {
@@ -200,7 +199,7 @@ html,
 }
 
 #dark .weak-orange {
-    background-color: #222220;
+    background-color: #333330;
     color: #eaeaea;
     border: 1.5px solid black;
 }
@@ -210,7 +209,7 @@ html,
 }
 
 #dark .weak_blue {
-    background-color: #161614;
+    background-color: #333332;
     color: #eaeaea;
     border-color: black;
 }
