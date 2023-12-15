@@ -106,7 +106,7 @@ html,
 
 #dark .background_color_of_btns {
     color: white;
-    background: #222220;
+    background: #1a1a1a;
 }
 
 #light .background_color_of_items_menu {
@@ -224,6 +224,6 @@ html,
 }
 
 #dark .background_color_of_choice_btns {
-    background-color: #0a0906;
+    background-color: #1a1a1a;
     border-color: white;
 }

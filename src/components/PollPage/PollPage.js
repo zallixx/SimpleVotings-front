@@ -196,7 +196,7 @@ const PollsPage = () => {
                                 </p>
                                 <Form>
                                     {poll.choices.map((choice) => (
-                                        <div className="background_color_of_choice_btns">
+                                        <div className="background_color_of_choice_btns" >
                                             <div
                                                 className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 d-flex"
                                                 key={choice.id}
