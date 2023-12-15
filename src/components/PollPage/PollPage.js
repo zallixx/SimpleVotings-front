@@ -148,7 +148,7 @@ const PollsPage = () => {
             <div key={poll.id} className="body-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
-                        {user.username === author_name && !isEditMode && (
+                        {user.username === author_name && !isEditMode && !isComplainMode &&(
                             <button className="btn btn-primary float-end background_color_of_primary_btn" onClick={toggleEditMode}>
                                 Редактировать
                             </button>
