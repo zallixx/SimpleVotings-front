@@ -2,7 +2,7 @@ import React from "react";
 
 const HomePage = () => {
     return (
-        <div className="PollsPage">
+        <div className="BasePageCss">
             <p>You are logged to this page</p>
         </div>
     )

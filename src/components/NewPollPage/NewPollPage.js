@@ -1,7 +1,6 @@
 import React, {useContext, useState} from 'react';
 import { useNavigate } from "react-router-dom";
 
-import './NewPollPage.css';
 import AuthContext from "../../context/AuthContext";
 
 const NewPollPage = () => {
@@ -70,8 +69,8 @@ const NewPollPage = () => {
         }};
 
     return (
-        <div className="PollsPage">
-            <div className="auth-inner rounded-5">
+        <div className="BasePageCss">
+            <div className="body-inner rounded-5">
                 <div className="mb-1">
                     <div className="card-body text-lg-start">
                         <input

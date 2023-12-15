@@ -144,8 +144,8 @@ const PollsPage = () => {
     }
 
     return (
-        <div className="PollsPage">
-            <div key={poll.id} className="auth-inner rounded-5">
+        <div className="BasePageCss">
+            <div key={poll.id} className="body-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
                         {user.username === author_name && !isEditMode && (

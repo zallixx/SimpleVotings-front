@@ -121,13 +121,13 @@ const PollsPage = () => {
         return (
             <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
                           type="bubbles" color="#505253"/>
-        )
+        );
     }
 
     return (
-        <div className="PollsPage" style={{ backgroundColor: "#f4f6fa" }}>
-            <div className="auth-wrapper">
-                <div className="auth-inner h-100 w-75 position-relative" style={{ backgroundColor: "#ffffff" }}>
+        <div className="BasePageCss">
+            <div className="body-wrapper">
+                <div className="body-inner h-100 w-75 position-relative">
                     <input
                         type="search"
                         className="form-control rounded weak-orange"
