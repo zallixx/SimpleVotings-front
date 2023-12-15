@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import {ButtonGroup} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
 
+import {ThemeContext} from "../App";
+
 import './Header.css';
 
 const authorized_tabs = {
@@ -29,6 +31,8 @@ const Header = () => {
     const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
     const [activeTab, setActiveTab] = useState(null);
     let {user, logoutUser} = useContext(AuthContext);
+    // eslint-disable-next-line
+    const {theme, toggleTheme} = useContext(ThemeContext);
 
     useEffect(() => {
         if (user !== null) {
@@ -65,14 +69,14 @@ const Header = () => {
     };
 
     const items_tabs = Object.keys(authorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
+        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
                 onClick={() => handleAuthorizedTabClick(tab)}>
             {tab}
         </button>
     ))
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
+        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
         </button>
@@ -97,7 +101,7 @@ const Header = () => {
                 <div key={item}>
                     {item === 'Logout' && (
                         <button
-                            className="btn mb-0 text-darkred background_color_of_items_menu"
+                            className="btn text-darkred mb-xxl-3"
                             onClick={() => handleMenuItemClick(item)}
                         >
                             {item}
@@ -110,7 +114,7 @@ const Header = () => {
 
     return (
         <div className="navbar fixed-top navbar_params">
-            <button className="btn border-0 change_theme_btn" onClick={() => alert(1)}>
+            <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
                 Change Theme
             </button>
             {user !== null ?

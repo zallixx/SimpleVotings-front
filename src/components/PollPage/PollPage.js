@@ -144,7 +144,7 @@ const PollsPage = () => {
     }
 
     return (
-        <div className="BasePageCss">
+        <div className="BasePageCss text_color">
             <div key={poll.id} className="body-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
@@ -196,22 +196,24 @@ const PollsPage = () => {
                                 </p>
                                 <Form>
                                     {poll.choices.map((choice) => (
-                                        <div
-                                            className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 border-dark d-flex"
-                                            key={choice.id}
-                                        >
-                                            <label className="form-check-label fs-5 fw-normal radio"
-                                                   htmlFor={choice.id}>
-                                                <input
-                                                    className="form-check-input mx-2 border-1 border-dark"
-                                                    type="radio"
-                                                    name="choices"
-                                                    value={choice}
-                                                    onChange={(e) => setSelected(e.target.value)}
-                                                    id={choice.id}
-                                                />
-                                                {choice}
-                                            </label>
+                                        <div className="background_color_of_choice_btns">
+                                            <div
+                                                className="form-check w-auto h-auto rounded p-1 mb-2 border border-opacity-100 d-flex"
+                                                key={choice.id}
+                                            >
+                                                <label className="form-check-label fs-5 fw-normal radio"
+                                                       htmlFor={choice.id}>
+                                                    <input
+                                                        className="form-check-input mx-2 border-1 border-dark"
+                                                        type="radio"
+                                                        name="choices"
+                                                        value={choice}
+                                                        onChange={(e) => setSelected(e.target.value)}
+                                                        id={choice.id}
+                                                    />
+                                                    {choice}
+                                                </label>
+                                            </div>
                                         </div>
                                     ))}
                                     <div className="d-flex justify-content-between align-items-center mt-3">

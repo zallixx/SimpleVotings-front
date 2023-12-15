@@ -1,6 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
 
-import './PollsPage.css';
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
@@ -140,7 +139,7 @@ const PollsPage = () => {
                         className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
                             {filteredPolls.length === 0 ? (
-                                <div>
+                                <div className="text_color">
                                     <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
                                     {' '}
                                     <a href={`/polls/new/`}>создайте новый опрос</a>.

@@ -12,11 +12,11 @@ const LoginForm = () => {
         <div className="body-wrapper">
             <div className="body-inner">
                 <Form horizontal className="LoginForm" id="loginForm" onSubmit={loginUser}>
-                    <FormGroup controlId="formUsername" className="mb-3">
+                    <FormGroup controlId="formUsername" className="mb-3 text_color">
                         <FormLabel>Username</FormLabel>
                         <FormControl type="text" name="username" className="form-control" placeholder="Username"/>
                     </FormGroup>
-                    <FormGroup controlId="formPassword" className="mb-3">
+                    <FormGroup controlId="formPassword" className="mb-3 text_color">
                         <FormLabel>Password</FormLabel>
                         <FormControl type="password" name="password" className="form-control" placeholder="Password"/>
                     </FormGroup>
