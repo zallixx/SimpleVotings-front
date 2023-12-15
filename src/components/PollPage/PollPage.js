@@ -16,6 +16,7 @@ const PollsPage = () => {
     const [selected, setSelected] = useState('');
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
+    const [isComplainMode, setComplainMode] = useState(false);
 
     const fetchPoll = async () => {
         try {
@@ -113,6 +114,10 @@ const PollsPage = () => {
     const toggleEditMode = () => {
         setEditMode(!isEditMode);
     };
+    const toggleComplainMode = () => {
+        setComplainMode(!isComplainMode);
+    }
+
 
     useEffect(() => {
         fetchPoll().then(
@@ -125,6 +130,24 @@ const PollsPage = () => {
             <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
                           type="bubbles" color="#505253"/>
         )
+    }
+
+    let complain = (e) => {
+        e.preventDefault();
+            try {
+                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify({
+                        'text': e.target.text.value
+                    })
+                }).then(() => navigate('/polls'))
+            } catch (error) {
+                console.error(error);
+            }
     }
 
     let deletePoll = () => {
@@ -187,6 +210,21 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
+                        ) : (isComplainMode ? (
+                            <>
+                                <h3 className="card-title mb-1">Жалоба</h3>
+                                <Form onSubmit={complain}>
+                                    <textarea name="text" className="form-control mb-1" maxLength="500"/>
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                                Отправить
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
+
+                            </>
                         ) : (
                             <>
                                 <h3 className="card-title mb-1">{poll.question}</h3>
@@ -222,7 +260,7 @@ const PollsPage = () => {
                                             </button>
                                         ) : (
                                             // eslint-disable-next-line
-                                            <a href="" onClick={() => navigate('/polls/' + params.id + '/complain/')}
+                                            <a onClick={() => setComplainMode(true)}
                                                className="complain fs-5">Пожаловаться</a>
                                         )}
                                         <FormGroup>
@@ -233,7 +271,7 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
-                        )}
+                        ))}
                     </div>
                 </div>
             </div>
