@@ -1,5 +1,4 @@
 import React, {useContext, useEffect, useState} from "react";
-import "./ResultPage.css"
 import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
@@ -35,16 +34,15 @@ const ResultPage = () => {
     };
     if (isLoading) {
         return (
-            <ReactLoading className="position-fixed top-50 start-50 translate-middle h1" height={'10%'} width={'10%'}
-                          type="bars" color="#0d6efd"/>
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
+                          type="bubbles" color="#505253"/>
         );
     }
 
     return (
-        <div className="ResultPage">
-
-            <div className="auth-wrapper">
-                <div className="results auth-inner">
+        <div className="BasePageCss">
+            <div className="body-wrapper">
+                <div className="results body-inner">
                     <h1>Results</h1>
                     {results.choices.map((result) => (
                         <div

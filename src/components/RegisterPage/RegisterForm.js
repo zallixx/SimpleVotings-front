@@ -9,8 +9,8 @@ const buttonStyle = {
 const RegisterPage = () => {
     let {registerUser} = useContext(AuthContext);
     return (
-        <div className="auth-wrapper">
-            <div className="auth-inner">
+        <div className="body-wrapper">
+            <div className="body-inner">
                 <Form horizontal className="LoginForm" id="loginForm" onSubmit={registerUser}>
                     <FormGroup controlId="formUsername" className="mb-3">
                         <FormLabel>Username</FormLabel>

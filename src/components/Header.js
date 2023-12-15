@@ -84,9 +84,8 @@ const Header = () => {
                 <div key={item}>
                     {item !== 'Logout' && (
                         <button
-                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''}`}
+                            className={`btn border-0 rounded-0 tab background_color_of_items_menu ${activeTab === item ? 'active' : ''}`}
                             onClick={() => handleMenuItemClick(item)}
-                            style={{ backgroundColor: '#DFDFDE' }}
                         >
                             {item}
                         </button>
@@ -98,9 +97,8 @@ const Header = () => {
                 <div key={item}>
                     {item === 'Logout' && (
                         <button
-                            className="btn mb-0 text-darkred"
+                            className="btn mb-0 text-darkred background_color_of_items_menu"
                             onClick={() => handleMenuItemClick(item)}
-                            style={{ backgroundColor: '#DFDFDE' }}
                         >
                             {item}
                         </button>
@@ -111,23 +109,24 @@ const Header = () => {
     );
 
     return (
-        <div className="navbar fixed-top" style={{backgroundColor: '#DFDFDE', height: '3.2%'}}>
+        <div className="navbar fixed-top navbar_params">
+            <button className="btn border-0 change_theme_btn" onClick={() => alert(1)}>
+                Change Theme
+            </button>
             {user !== null ?
-                <button className="dropdown-toggle btn border-0" onClick={handleButtonClick}
-                        style={{position: 'absolute', right: 0, backgroundColor: '#DFDFDE', color: 'black', height: '100%'}}
-                >
+                <button className="dropdown-toggle btn border-0 username_btn" onClick={handleButtonClick}>
                     {user_prop.name}
                 </button>
                     : null
             }
             {isOpen && (
-                <div style={{position: 'absolute', right: 0, top: '100%'}}>
-                    <ButtonGroup style={{ backgroundColor: '#DFDFDE', height: '100%', width: '100%'}} className="shadow">
+                <div className="dropdown_menu">
+                    <ButtonGroup className="shadow background_color_of_items_menu">
                         {user !== null ? items_menu : null}
                     </ButtonGroup>
                 </div>
             )}
-            <div style={{position: 'absolute', marginTop: '0%', right: '40%', left: '40%'}}>
+            <div className="navbar_items">
                 <ButtonGroup>
                     {user !== null ? items_tabs : unauthorized_items}
                 </ButtonGroup>
