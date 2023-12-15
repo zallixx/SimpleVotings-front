@@ -130,7 +130,7 @@ const PollsPage = () => {
                     <input
                         type="search"
                         className="form-control rounded weak-orange"
-                        placeholder="Поиск голосований..."
+                        placeholder="Введите название опроса..."
                         aria-label="Search"
                         value={searchTerm}
                         onInput={handleSearch}
