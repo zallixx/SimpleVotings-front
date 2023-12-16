@@ -2,15 +2,18 @@ import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
+import { BsCheckCircleFill } from "react-icons/bs";
+
 
 const ResultPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [results, setResults] = useState([]);
-    let {authTokens} = useContext(AuthContext);
+    let {user, authTokens} = useContext(AuthContext);
     const params = useParams();
+    const [num_of_votes, setNumOfVotes] = useState(0);
 
     useEffect(() => {
-        fetchResults().then(() => setLoading(false));
+        fetchResults();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const fetchResults = async () => {
@@ -25,6 +28,12 @@ const ResultPage = () => {
             const data = await response.json();
             if (response.status === 200) {
                 setResults(data);
+                let num = 0
+                for (let i = 0; i < data.choices.length; i++) {
+                    num += data.choices[i][1];
+                }
+                setNumOfVotes(num);
+                setLoading(false);
             } else {
                 alert('Something went wrong!');
             }
@@ -48,10 +57,68 @@ const ResultPage = () => {
                         <div
                             className="result"
                             key={result.id}>
-                            <h2>{result[0]}</h2>
-                            <p>{result[1]} votes</p>
+                            <div className="result-item">
+                                {result[2].includes(user.user_id) ? (
+                                    <div>
+                                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                                            <div className="result-percent">
+                                                {Math.round(result[1] / num_of_votes * 100)}%
+                                            </div>
+                                            <div className="result-name" style={{marginLeft: '5px'}}>
+                                                {result[0]}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div className="result-checkmark">
+                                                    <BsCheckCircleFill/>
+                                                </div>
+                                                <div className="progress" style={{marginLeft: '10px', flex: '1'}}>
+                                                    <div
+                                                        className="progress-bar"
+                                                        role="progressbar"
+                                                        style={{width: Math.round(result[1] / num_of_votes * 100) + '%'}}
+                                                        aria-valuenow={Math.round(result[1] / num_of_votes * 100)}
+                                                        aria-valuemin="0"
+                                                        aria-valuemax="100"
+                                                    >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <div>
+                                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                                            <div className="result-percent">
+                                                {Math.round(result[1] / num_of_votes * 100)}%
+                                            </div>
+                                            <div className="result-name" style={{marginLeft: '5px'}}>
+                                                {result[0]}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div className="progress" style={{flex: '1'}}>
+                                                    <div
+                                                        className="progress-bar"
+                                                        role="progressbar"
+                                                        style={{width: Math.round(result[1] / num_of_votes * 100) + '%'}}
+                                                        aria-valuenow={Math.round(result[1] / num_of_votes * 100)}
+                                                        aria-valuemin="0"
+                                                        aria-valuemax="100"
+                                                    >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
                         </div>
+
                     ))}
+
                 </div>
             </div>
         </div>
