@@ -37,6 +37,8 @@ const ComplainsPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner h-100 w-75 position-relative">
+                    <div
+                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                     {complains.map((complain) => (
                       <a className="list-group-item list-group-item-action weak_blue rounded">
                         <div className="d-flex w-100 justify-content-between">
@@ -46,6 +48,7 @@ const ComplainsPage = () => {
                       </a>
                     ))
                     }
+                    </div>
                 </div>
             </div>
         </div>
