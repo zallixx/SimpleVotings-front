@@ -52,7 +52,7 @@ const ResultPage = () => {
         <div className="BasePageCss text_color">
             <div className="body-wrapper">
                 <div className="results body-inner">
-                    <h1>Results</h1>
+                    <h1>Результаты</h1>
                     {results.choices.map((result) => (
                         <div
                             className="result"
@@ -99,7 +99,7 @@ const ResultPage = () => {
                                         </div>
                                         <div>
                                             <div style={{display: 'flex', alignItems: 'center'}}>
-                                                <div className="progress" style={{flex: '1'}}>
+                                                <div className="progress" style={{marginLeft: '26px', flex: '1'}}>
                                                     <div
                                                         className="progress-bar"
                                                         role="progressbar"
