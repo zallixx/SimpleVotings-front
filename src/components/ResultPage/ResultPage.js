@@ -2,6 +2,8 @@ import React, {useContext, useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
+import { BsCheckCircleFill } from "react-icons/bs";
+
 
 const ResultPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -56,35 +58,62 @@ const ResultPage = () => {
                             className="result"
                             key={result.id}>
                             <div className="result-item">
-                                <div className="result-name">
-                                    {result[0]}
-                                </div>
-                                <div className="result-percent">
-                                    {Math.round(result[1] / num_of_votes * 100)}%
-                                </div>
                                 {result[2].includes(user.user_id) ? (
-                                    <div className="result-checkmark">
-                                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-check"
-                                             fill="currentColor"
-                                             xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd"
-                                                  d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06l-4.5 4.5z"/>
-                                        </svg>
+                                    <div>
+                                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                                            <div className="result-percent">
+                                                {Math.round(result[1] / num_of_votes * 100)}%
+                                            </div>
+                                            <div className="result-name" style={{marginLeft: '5px'}}>
+                                                {result[0]}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div className="result-checkmark">
+                                                    <BsCheckCircleFill/>
+                                                </div>
+                                                <div className="progress" style={{marginLeft: '10px', flex: '1'}}>
+                                                    <div
+                                                        className="progress-bar"
+                                                        role="progressbar"
+                                                        style={{width: Math.round(result[1] / num_of_votes * 100) + '%'}}
+                                                        aria-valuenow={Math.round(result[1] / num_of_votes * 100)}
+                                                        aria-valuemin="0"
+                                                        aria-valuemax="100"
+                                                    >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 ) : (
-                                    <></>
-                                )}
-                                <div
-                                    className="progress">
-                                    <div
-                                        className="progress-bar"
-                                        role="progressbar"
-                                        style={{width: Math.round(result[1] / num_of_votes * 100) + '%'}}
-                                        aria-valuenow={Math.round(result[1] / num_of_votes * 100)}
-                                        aria-valuemin="0"
-                                        aria-valuemax="100">
+                                    <div>
+                                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                                            <div className="result-percent">
+                                                {Math.round(result[1] / num_of_votes * 100)}%
+                                            </div>
+                                            <div className="result-name" style={{marginLeft: '5px'}}>
+                                                {result[0]}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div className="progress" style={{flex: '1'}}>
+                                                    <div
+                                                        className="progress-bar"
+                                                        role="progressbar"
+                                                        style={{width: Math.round(result[1] / num_of_votes * 100) + '%'}}
+                                                        aria-valuenow={Math.round(result[1] / num_of_votes * 100)}
+                                                        aria-valuemin="0"
+                                                        aria-valuemax="100"
+                                                    >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                )}
                             </div>
                         </div>
 
