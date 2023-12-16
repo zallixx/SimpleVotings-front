@@ -14,6 +14,8 @@ import PollPage from "./components/PollPage/PollPage";
 import NewPollPage from "./components/NewPollPage/NewPollPage";
 import ResultPage from "./components/ResultPage/ResultPage";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
+import ComplainsPage from "./components/ComplainsPage/ComplainsPage";
+import AnswerForComplainPage from "./components/AnswerForComplainPage/AnswerForComplainPage";
 
 export const ThemeContext = createContext(null)
 
@@ -57,6 +59,16 @@ function App() {
                             <Route path="/polls/new/" element={
                                 <PrivateRoute>
                                     <NewPollPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/complains/" element={
+                                <PrivateRoute>
+                                    <ComplainsPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/complains/:id" element={
+                                <PrivateRoute>
+                                    <AnswerForComplainPage/>
                                 </PrivateRoute>
                             }/>
                             <Route element={<LoginPage/>} path="/login"/>
