@@ -18,10 +18,13 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 export const ThemeContext = createContext(null)
 
 function App() {
-    const [theme, setTheme] = useState('dark');
+    const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
+    localStorage.setItem('theme', theme);
 
     const toggleTheme = () => {
-        setTheme((curr) => (curr === 'light' ? 'dark' : 'light'));
+        let themeToSet = (curr) => curr === 'light' ? 'dark' : 'light';
+        setTheme(themeToSet(theme));
+        localStorage.setItem('theme', themeToSet(theme));
     };
 
     return (
