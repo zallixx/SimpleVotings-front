@@ -1,17 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
-import "./ResultPage.css"
-import {useNavigate, useParams} from "react-router-dom";
+import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import ReactLoading from "react-loading";
 
 const ResultPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [results, setResults] = useState([]);
-    const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
     const params = useParams();
 
     useEffect(() => {
         fetchResults().then(() => setLoading(false));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const fetchResults = async () => {
         try {
@@ -33,22 +33,24 @@ const ResultPage = () => {
         }
     };
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
+                          type="bubbles" color="#505253"/>
+        );
     }
 
     return (
-        <div className="ResultPage">
-
-            <div className="auth-wrapper">
-                <div className="results auth-inner">
+        <div className="BasePageCss text_color">
+            <div className="body-wrapper">
+                <div className="results body-inner">
                     <h1>Results</h1>
                     {results.choices.map((result) => (
-                            <div
-                                className="result"
-                                key={result.id}>
-                                <h2>{result[0]}</h2>
-                                <p>{result[1]} votes</p>
-                            </div>
+                        <div
+                            className="result"
+                            key={result.id}>
+                            <h2>{result[0]}</h2>
+                            <p>{result[1]} votes</p>
+                        </div>
                     ))}
                 </div>
             </div>

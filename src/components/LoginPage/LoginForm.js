@@ -9,19 +9,19 @@ const buttonStyle = {
 const LoginForm = () => {
     let {loginUser} = useContext(AuthContext);
     return (
-        <div className="auth-wrapper">
-            <div className="auth-inner">
+        <div className="body-wrapper">
+            <div className="body-inner">
                 <Form horizontal className="LoginForm" id="loginForm" onSubmit={loginUser}>
-                    <FormGroup controlId="formUsername" className="mb-3">
+                    <FormGroup controlId="formUsername" className="mb-3 text_color">
                         <FormLabel>Username</FormLabel>
                         <FormControl type="text" name="username" className="form-control" placeholder="Username"/>
                     </FormGroup>
-                    <FormGroup controlId="formPassword" className="mb-3">
+                    <FormGroup controlId="formPassword" className="mb-3 text_color">
                         <FormLabel>Password</FormLabel>
                         <FormControl type="password" name="password" className="form-control" placeholder="Password"/>
                     </FormGroup>
                     <FormGroup style={buttonStyle} controlId="formSubmit" className="d-grid">
-                        <Button bsStyle="primary" type="submit">
+                        <Button bsStyle="primary" type="submit" className="background_color_of_primary_btn">
                             Login
                         </Button>
                     </FormGroup>

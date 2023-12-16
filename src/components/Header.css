@@ -1,0 +1,23 @@
+.tab {
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.tab.active {
+  color: blue;
+}
+
+.tab.active:hover {
+  color: blue;
+}
+
+.tab.active.btn {
+  text-decoration: underline;
+  color: blue;
+}
+
+.btn.text-darkred {
+  color: darkred;
+}

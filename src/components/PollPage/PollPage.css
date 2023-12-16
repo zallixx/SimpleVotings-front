@@ -1,9 +1,20 @@
-.PollsPage {
-    background-color: rgb(152, 230, 255);
-    min-height: 100%;
-    min-height: 100vh;
-    display: flex;
-    background-size: cover;
-    align-items: center;
-    justify-content: center;
+.radio input[type="radio"]:checked+span {
+  border-color: #0b76ef;
+  background-color: #0b76ef;
+}
+
+.radio input[type="radio"]:not(:checked):hover {
+    background-color: #b3d7ff;
+}
+
+.complain {
+    color: #FF0B0B;
+    opacity: 51%;
+    text-underline-offset: 0.1px;
+    text-underline-position: under;
+}
+
+.author {
+    text-underline-offset: 0.1px;
+    text-underline-position: under;
 }

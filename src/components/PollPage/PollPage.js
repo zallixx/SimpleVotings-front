@@ -3,16 +3,20 @@ import React, {useContext, useEffect, useState} from "react";
 import './PollPage.css';
 import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Answer, Poll} from "../../components/PollsPage/utils_for_polls/PollClass";
 import {Button, Form, FormGroup} from "react-bootstrap";
+import ReactLoading from 'react-loading';
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [poll, setPoll] = useState([]);
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
+    let {user} = useContext(AuthContext)
     const params = useParams();
     const [selected, setSelected] = useState('');
+    const [author_name, setAuthorName] = useState('');
+    const [isEditMode, setEditMode] = useState(false);
+    const [isComplainMode, setComplainMode] = useState(false);
 
     const fetchPoll = async () => {
         try {
@@ -26,6 +30,7 @@ const PollsPage = () => {
             const data = await response.json();
             if (response.status === 200) {
                 setPoll(data);
+                setAuthorName(await get_author_name(data.created_by));
             } else {
                 alert('Something went wrong!');
             }
@@ -34,8 +39,30 @@ const PollsPage = () => {
         }
     };
 
+    const get_author_name = async (id) => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/users/' + id + '/username/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+            });
+            const data = await response.json();
+            if (response.status === 200) {
+                return data;
+            } else {
+                alert('Something went wrong!');
+            }
+            return data;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     const vote = async (e) => {
         e.preventDefault();
+        const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
         try {
             const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
                 method: 'POST',
@@ -44,7 +71,7 @@ const PollsPage = () => {
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
                 body: JSON.stringify({
-                    'choices': selected
+                    'choices': choices
                 })
             });
             const data = await response.json();
@@ -58,42 +85,198 @@ const PollsPage = () => {
         }
     };
 
+    const handleFormSubmit = async () => {
+        let toServer = {};
+        if (poll.question) {
+            toServer.question = poll.question
+        }
+        if (poll.choices) {
+            toServer.choices = poll.choices
+        }
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify(toServer),
+            });
+            if (response.status === 200) {
+                alert("0");
+            } else {
+                alert("-1");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const toggleEditMode = () => {
+        setEditMode(!isEditMode);
+    };
+    const toggleComplainMode = () => {
+        setComplainMode(!isComplainMode);
+    }
+
+
     useEffect(() => {
         fetchPoll().then(
             () => setLoading(false)
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (isLoading) {
-        return <p>Loading...</p>;
+        return (
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
+                          type="bubbles" color="#505253"/>
+        )
     }
+
+    let complain = (e) => {
+        e.preventDefault();
+            try {
+                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify({
+                        'text': e.target.text.value
+                    })
+                }).then(() => navigate('/polls'))
+            } catch (error) {
+                console.error(error);
+            }
+    }
+
+    let deletePoll = () => {
+        if (window.confirm('Вы уверены, что хотите удалить опрос?')) {
+            try {
+                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/delete/', {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                }).then(() => navigate('/polls/'))
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }
+
     return (
-        <div className="PollsPage">
-            <div key={poll.id} className="auth-inner">
-                <p>{poll.question}</p>
-                <Form onSubmit={vote}>
-                    {poll.choices.map((choice) => (
-                        <div className="form-check">
-                            <input
-                                className="form-check-input"
-                                type="radio"
-                                name="choices"
-                                value={choice}
-                                onChange={(e) => setSelected(e.target.value)}
-                                id={choice.id}
-                            />
-                            <label className="form-check-label" htmlFor={choice.id}>{choice}</label>
-                        </div>
-                    ))}
-                    <FormGroup>
-                        <Button type="submit" bsStyle="primary">
-                            Vote
-                        </Button>
-                    </FormGroup>
-                </Form>
+        <div className="BasePageCss text_color">
+            <div key={poll.id} className="body-inner rounded-5">
+                <div className="mb-3">
+                    <div className="card-body text-lg-start">
+                        {user.username === author_name && !isEditMode && !isComplainMode &&(
+                            <button className="btn btn-primary float-end background_color_of_primary_btn" onClick={toggleEditMode}>
+                                Редактировать
+                            </button>
+                        )}
+                        {isEditMode ? (
+                            <>
+                                <Form onSubmit={handleFormSubmit}>
+                                    <input
+                                        type="text"
+                                        value={poll.question}
+                                        className="form-control mb-2"
+                                        onChange={(e) => setPoll((prevPoll) => ({
+                                            ...prevPoll,
+                                            question: e.target.value
+                                        }))}
+                                    />
+                                    {poll.choices.map((choice, index) => (
+                                        <input
+                                            type="text"
+                                            key={index}
+                                            value={choice}
+                                            className="form-control mb-1"
+                                            onChange={(e) => {
+                                                const updatedChoices = [...poll.choices];
+                                                updatedChoices[index] = e.target.value;
+                                                setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
+                                            }}
+                                        />
+                                    ))}
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5 background_color_of_primary_btn">
+                                                Изменить опрос
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
+                            </>
+                        ) : (isComplainMode ? (
+                            <>
+                                <h3 className="card-title mb-1">Жалоба</h3>
+                                <Form onSubmit={complain}>
+                                    <textarea name="text" className="form-control mb-1" maxLength="500"/>
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5">
+                                                Отправить
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
+
+                            </>
+                        ) : (
+                            <>
+                                <h3 className="card-title mb-1">{poll.question}</h3>
+                                {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                <p className="card-text">Автор: <a className="author" href=""
+                                                                   onClick={() => navigate('/users/' + poll.created_by + '/')}>{author_name}</a>
+                                </p>
+                                <Form>
+                                    {poll.choices.map((choice) => (
+                                        <div
+                                            className="form-check w-auto h-auto rounded p-1 mb-2 d-flex background_color_of_choice_btns"
+                                            key={choice.id}
+                                        >
+                                            <label className="form-check-label fs-5 fw-normal radio"
+                                                   htmlFor={choice.id}>
+                                                <input
+                                                    className="form-check-input mx-2 border-1 border-dark"
+                                                    type={poll.type_voting === 0 ? "radio" : poll.type_voting === 1 ? "checkbox" : "radio"}
+                                                    name="choices"
+                                                    value={choice}
+                                                    id={choice.id}
+                                                />
+                                                {choice}
+                                            </label>
+                                        </div>
+                                    ))}
+                                    <div className="d-flex justify-content-between align-items-center mt-3">
+                                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                                        {user.username === author_name ? (
+                                            <button className="btn btn-danger float-end" onClick={deletePoll}>
+                                                Удалить
+                                            </button>
+                                        ) : (
+                                            // eslint-disable-next-line
+                                            <a onClick={() => setComplainMode(true)}
+                                               className="complain fs-5">Пожаловаться</a>
+                                        )}
+                                        <FormGroup>
+                                            <Button type="submit" bsStyle="primary" className="fs-5 background_color_of_primary_btn" onClick={vote}>
+                                                Отправить
+                                            </Button>
+                                        </FormGroup>
+                                    </div>
+                                </Form>
+                            </>
+                        ))}
+                    </div>
+                </div>
             </div>
         </div>
     );
-
 }
 
 export default PollsPage;
