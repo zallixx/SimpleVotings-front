@@ -12,6 +12,9 @@ const ProfilePage = () => {
     const [isLoading, setLoading] = useState(true);
     const [show, setShow] = useState(false);
     const [title_of_modal, setTitleOfModal] = useState('');
+    const [new_param, setNewParam] = useState('');
+    const [old_param, setOldParam] = useState('');
+
 
     const handleClose = () => setShow(false);
 
@@ -74,6 +77,30 @@ const ProfilePage = () => {
         setTitleOfModal('Изменение пароля');
     }
 
+    const handleUpdatePassword = async () => {
+        try {
+            const payload = {
+                old_password: old_param,
+                new_password: new_param,
+            }
+            const response = await fetch('http://127.0.0.1:8000/api/change_password/', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify(payload),
+            });
+            if (response.status === 200) {
+                alert("0");
+            } else {
+                alert("-1");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className="BasePageCss">
             <div className="body-wrapper">
@@ -104,7 +131,7 @@ const ProfilePage = () => {
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
-                        <h5>
+                        <h5> {/* eslint-disable-next-line */}
                             <a onClick={handleChangePassword} style={{color: '#2980b9', cursor: 'pointer'}}> Сменить пароль </a>
                         </h5>
                     </div>
@@ -113,17 +140,38 @@ const ProfilePage = () => {
                     <Modal.Header className="rounded-top-1 border-0">
                         <Modal.Title>{title_of_modal}</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body>
-                        <input type="text" className="form-control" placeholder="Новое значение"/>
-                    </Modal.Body>
-                    <Modal.Footer closeButton className="rounded-bottom-1 border-0">
-                        <Button variant="primary" onClick={handleClose}>
-                            Изменить
-                        </Button>
-                        <Button variant="secondary" onClick={handleClose}>
-                            Отмена
-                        </Button>
-                    </Modal.Footer>
+                    {title_of_modal === 'Изменение пароля' ? (
+                        <div>
+                            <Modal.Body>
+                                <input type="text" className="form-control" placeholder="Старое значение"
+                                       onInput={(e) => setOldParam(e.target.value)}/>
+                                <input type="text" className="form-control my-4" placeholder="Новое значение"
+                                       onInput={(e) => setNewParam(e.target.value)}/>
+                            </Modal.Body>
+                            <Modal.Footer closeButton className="rounded-bottom-1 border-0">
+                                <Button variant="primary" onClick={handleUpdatePassword}>
+                                    Изменить
+                                </Button>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Отмена
+                                </Button>
+                            </Modal.Footer>
+                        </div>
+                    ) : (
+                        <div>
+                            <Modal.Body>
+                                <input type="text" className="form-control" placeholder="Новое значение" onInput={(e) => setNewParam(e.target.value)}/>
+                            </Modal.Body>
+                            <Modal.Footer closeButton className="rounded-bottom-1 border-0">
+                                <Button variant="primary">
+                                    Изменить
+                                </Button>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Отмена
+                                </Button>
+                            </Modal.Footer>
+                        </div>
+                    )}
                 </Modal>
             </div>
         </div>
