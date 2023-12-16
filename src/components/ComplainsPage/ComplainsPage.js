@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
+import ReactLoading from "react-loading";
 
 const ComplainsPage = () => {
     let {authTokens} = useContext(AuthContext);
     const [complains, setComplains] = useState([]);
+    const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     const fetchComplains = async () => {
@@ -28,8 +30,18 @@ const ComplainsPage = () => {
     };
 
     useEffect(() => {
-        fetchComplains();
-    })
+        fetchComplains().then(
+            () => setLoading(false)
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    if (isLoading) {
+        return (
+            <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
+                          type="bubbles" color="#505253"/>
+        )
+    }
 
     return (
         <div className="BasePageCss">
