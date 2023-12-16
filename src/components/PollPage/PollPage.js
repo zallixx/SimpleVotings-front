@@ -62,6 +62,7 @@ const PollsPage = () => {
 
     const vote = async (e) => {
         e.preventDefault();
+        const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
         try {
             const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
                 method: 'POST',
@@ -70,7 +71,7 @@ const PollsPage = () => {
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
                 body: JSON.stringify({
-                    'choices': selected
+                    'choices': choices
                 })
             });
             const data = await response.json();
@@ -159,7 +160,7 @@ const PollsPage = () => {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
-                }).then(() => navigate('/polls'))
+                }).then(() => navigate('/polls/'))
             } catch (error) {
                 console.error(error);
             }
@@ -242,10 +243,9 @@ const PollsPage = () => {
                                                    htmlFor={choice.id}>
                                                 <input
                                                     className="form-check-input mx-2 border-1 border-dark"
-                                                    type="radio"
+                                                    type={poll.type_voting === 0 ? "radio" : poll.type_voting === 1 ? "checkbox" : "radio"}
                                                     name="choices"
                                                     value={choice}
-                                                    onChange={(e) => setSelected(e.target.value)}
                                                     id={choice.id}
                                                 />
                                                 {choice}
