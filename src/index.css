@@ -233,3 +233,13 @@ html,
     background-color: #0b53aa;
     border: 0;
 }
+
+.custom-modal-dark {
+    background-color: #222220;
+    color: white;
+}
+
+.custom-modal-light {
+    background-color: #ffffff;
+    color: black;
+}

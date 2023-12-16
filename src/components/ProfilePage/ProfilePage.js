@@ -3,10 +3,18 @@ import AuthContext from "../../context/AuthContext";
 import { BsFeather } from "react-icons/bs";
 import ReactLoading from "react-loading";
 
+import { BsFillXSquareFill } from "react-icons/bs";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+
 const ProfilePage = () => {
     let {authTokens} = useContext(AuthContext);
     const [userInfo, setUserInfo] = useState({});
     const [isLoading, setLoading] = useState(true);
+    const [show, setShow] = useState(false);
+    const [title_of_modal, setTitleOfModal] = useState('');
+
+    const handleClose = () => setShow(false);
 
     const fetchUser = async () => {
             try {
@@ -43,23 +51,28 @@ const ProfilePage = () => {
     }
 
     function handleChangeUsername() {
-        alert('В разработке');
+        setShow(true);
+        setTitleOfModal('Изменение логина');
     }
 
     const handleChangeEmail = () => {
-        alert('В разработке');
+        setShow(true);
+        setTitleOfModal('Изменение почты');
     }
 
     function handleChangeFirstName() {
-        alert('В разработке');
+        setShow(true);
+        setTitleOfModal('Изменение имени');
     }
 
     function handleChangeLastName() {
-        alert('В разработке');
+        setShow(true);
+        setTitleOfModal('Изменение фамилии');
     }
 
     function handleChangePassword() {
-        alert('В разработке');
+        setShow(true);
+        setTitleOfModal('Изменение пароля');
     }
 
     return (
@@ -97,6 +110,27 @@ const ProfilePage = () => {
                         </h5>
                     </div>
                 </div>
+                <Modal show={show} onHide={handleClose} centered bsPrefix="" className="rounded-1">
+                    <Modal.Header bsPrefix={"custom-modal-" + localStorage.getItem("theme")}>
+                        <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'space-between'}}>
+                            <Modal.Title>{title_of_modal}</Modal.Title>
+                            <div style={{color: '#2980b9', cursor: 'pointer', marginTop: '-4px'}}>
+                                <BsFillXSquareFill onClick={handleClose}/>
+                            </div>
+                        </div>
+                        <hr/>
+                    </Modal.Header>
+                    <Modal.Body bsPrefix={"custom-modal-" + localStorage.getItem("theme")}>
+                    </Modal.Body>
+                    <Modal.Footer bsPrefix={"custom-modal-" + localStorage.getItem("theme")}>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Close
+                        </Button>
+                        <Button variant="primary" onClick={handleClose}>
+                            Save Changes
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         </div>
     );
