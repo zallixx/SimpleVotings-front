@@ -16,6 +16,7 @@ import ResultPage from "./components/ResultPage/ResultPage";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import ComplainsPage from "./components/ComplainsPage/ComplainsPage";
 import AnswerForComplainPage from "./components/AnswerForComplainPage/AnswerForComplainPage";
+import VoteHistoryPage from "./components/VoteHistoryPage/VoteHistoryPage";
 
 export const ThemeContext = createContext(null)
 
@@ -69,6 +70,11 @@ function App() {
                             <Route path="/complains/:id" element={
                                 <PrivateRoute>
                                     <AnswerForComplainPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/vote-history/" element={
+                                <PrivateRoute>
+                                    <VoteHistoryPage/>
                                 </PrivateRoute>
                             }/>
                             <Route element={<LoginPage/>} path="/login"/>
