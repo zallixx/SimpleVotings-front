@@ -84,9 +84,9 @@ const NewPollPage = () => {
                     <label>
                         Тип опроса:
                         <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
-                            <option value={1}>Тип 1</option>
-                            <option value={2}>Тип 2</option>
-                            <option value={3}>Тип 3</option>
+                            <option value={0}>Один из многих</option>
+                            <option value={1}>Несколько из многих</option>
+                            <option value={2}>Дискретный</option>
                         </select>
                     </label>
                     <br/>
