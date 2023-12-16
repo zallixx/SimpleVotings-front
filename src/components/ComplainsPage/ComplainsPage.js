@@ -1,13 +1,11 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
-import {Button, Form, FormGroup} from "react-bootstrap";
-import ReactLoading from 'react-loading';
-
 
 const ComplainsPage = () => {
     let {authTokens} = useContext(AuthContext);
     const [complains, setComplains] = useState([]);
+    const navigate = useNavigate();
 
     const fetchComplains = async () => {
         try {
@@ -39,15 +37,28 @@ const ComplainsPage = () => {
                 <div className="body-inner h-100 w-75 position-relative">
                     <div
                         className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                    {complains.map((complain) => (
-                      <a className="list-group-item list-group-item-action weak_blue rounded">
-                        <div className="d-flex w-100 justify-content-between">
-                          <h5 className="mb-1">{complain.text}</h5>
-                          <small> {complain.status}</small>
-                        </div>
-                      </a>
-                    ))
-                    }
+                        {complains.map((complain) => (
+                            <div     className="list-group-item list-group-item-action weak_blue rounded">
+                                {complain.status === "Рассмотрена" ? (
+                                    // eslint-disable-next-line
+                                    <a onClick={() => navigate(`/complains/${complain.id}`)}>
+                                        <div className="d-flex w-100 justify-content-between">
+                                            <h5 className="mb-1">{complain.text}</h5>
+                                            <small> {complain.status + ". Нажми, чтобы посмотреть"}</small>
+                                        </div>
+                                    </a>
+                                ) : (
+                                    // eslint-disable-next-line
+                                    <a>
+                                        <div className="d-flex w-100 justify-content-between">
+                                            <h5 className="mb-1">{complain.text}</h5>
+                                            <small> {complain.status}</small>
+                                        </div>
+                                    </a>
+                                )}
+                            </div>
+                        ))
+                        }
                     </div>
                 </div>
             </div>

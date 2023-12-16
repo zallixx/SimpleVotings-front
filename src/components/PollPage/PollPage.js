@@ -13,7 +13,6 @@ const PollsPage = () => {
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext)
     const params = useParams();
-    const [selected, setSelected] = useState('');
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
     const [isComplainMode, setComplainMode] = useState(false);
@@ -115,10 +114,6 @@ const PollsPage = () => {
     const toggleEditMode = () => {
         setEditMode(!isEditMode);
     };
-    const toggleComplainMode = () => {
-        setComplainMode(!isComplainMode);
-    }
-
 
     useEffect(() => {
         fetchPoll().then(
