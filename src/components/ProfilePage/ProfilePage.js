@@ -42,6 +42,26 @@ const ProfilePage = () => {
         )
     }
 
+    function handleChangeUsername() {
+        alert('В разработке');
+    }
+
+    const handleChangeEmail = () => {
+        alert('В разработке');
+    }
+
+    function handleChangeFirstName() {
+        alert('В разработке');
+    }
+
+    function handleChangeLastName() {
+        alert('В разработке');
+    }
+
+    function handleChangePassword() {
+        alert('В разработке');
+    }
+
     return (
         <div className="BasePageCss">
             <div className="body-wrapper">
@@ -50,30 +70,30 @@ const ProfilePage = () => {
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5> Ваш логин: {userInfo.username} </h5>
                         <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
-                            <BsFeather onClick={() => null}/>
+                            <BsFeather onClick={handleChangeUsername}/>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5> Ваша почта: {userInfo.email} </h5>
                         <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
-                            <BsFeather onClick={() => null}/>
+                            <BsFeather onClick={handleChangeEmail}/>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5> Ваше имя: {userInfo.first_name !== null ? userInfo.first_name : "Не установлено"} </h5>
                         <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
-                            <BsFeather onClick={() => null}/>
+                            <BsFeather onClick={handleChangeFirstName}/>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5> Ваша фамилия: {userInfo.last_name !== null ? userInfo.last_name : "Не установлено"} </h5>
                         <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
-                            <BsFeather onClick={() => null}/>
+                            <BsFeather onClick={handleChangeLastName}/>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5>
-                            <a href="#"> Сменить пароль </a>
+                            <a onClick={handleChangePassword} style={{color: '#2980b9', cursor: 'pointer'}}> Сменить пароль </a>
                         </h5>
                     </div>
                 </div>
