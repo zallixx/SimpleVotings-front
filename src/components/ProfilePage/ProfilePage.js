@@ -14,13 +14,15 @@ const ProfilePage = () => {
     const [title_of_modal, setTitleOfModal] = useState('');
     const [new_param, setNewParam] = useState('');
     const [old_param, setOldParam] = useState('');
+    const [type_modal, setTypeModal] = useState('');
+    const [payload, setPayload] = useState({});
 
 
     const handleClose = () => setShow(false);
 
     const fetchUser = async () => {
             try {
-                const response = await fetch('http://127.0.0.1:8000/api/profile/', {
+                const response = await fetch('http://127.0.0.1:8000/api/settings/', {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -54,21 +56,25 @@ const ProfilePage = () => {
 
     function handleChangeUsername() {
         setShow(true);
+        setTypeModal('username');
         setTitleOfModal('Изменение логина');
     }
 
     const handleChangeEmail = () => {
         setShow(true);
+        setTypeModal('email');
         setTitleOfModal('Изменение почты');
     }
 
     function handleChangeFirstName() {
         setShow(true);
+        setTypeModal('first_name');
         setTitleOfModal('Изменение имени');
     }
 
     function handleChangeLastName() {
         setShow(true);
+        setTypeModal('last_name');
         setTitleOfModal('Изменение фамилии');
     }
 
@@ -100,6 +106,44 @@ const ProfilePage = () => {
             console.error(error);
         }
     };
+
+    const handleChangeParam = async () => {
+        try {
+            if(type_modal === 'username') {
+                setPayload({
+                    username: new_param
+                })
+            } else if(type_modal === 'email') {
+                setPayload({
+                    email: new_param
+                })
+            } else if(type_modal === 'first_name') {
+                setPayload({
+                    first_name: new_param
+                })
+            } else if(type_modal === 'last_name') {
+                setPayload({
+                    last_name: new_param
+                })
+            }
+            const response = await fetch('http://127.0.0.1:8000/api/settings/edit/', {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify(payload),
+            });
+            if (response.status === 200) {
+                alert("0");
+            } else {
+                alert("-1");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
 
     return (
         <div className="BasePageCss">
@@ -163,7 +207,7 @@ const ProfilePage = () => {
                                 <input type="text" className="form-control" placeholder="Новое значение" onInput={(e) => setNewParam(e.target.value)}/>
                             </Modal.Body>
                             <Modal.Footer closeButton className="rounded-bottom-1 border-0">
-                                <Button variant="primary">
+                                <Button variant="primary" onClick={handleChangeParam}>
                                     Изменить
                                 </Button>
                                 <Button variant="secondary" onClick={handleClose}>
