@@ -24,9 +24,7 @@ const ComplainsPage = () => {
             if (response.status === 200) {
                 setUser(data);
                 if (data.show_history === true) {
-                    fetchVotes();
-                } else {
-                    setLoading(false);
+                    await fetchVotes();
                 }
             } else {
                 alert('Something went wrong!');
@@ -72,7 +70,6 @@ const ComplainsPage = () => {
                     ...prevQuestions,
                     [data.id]: {question: data.question, id: data.id}
                 }));
-                setLoading(false);
             } else {
                 alert('Something went wrong!');
             }
@@ -82,10 +79,12 @@ const ComplainsPage = () => {
     };
 
     useEffect(() => {
-        fetchUser()
+        fetchUser().then(r => {
+            setLoading(false);
+        })
     }, []);
 
-    if (isLoading && !user) {
+    if (isLoading) {
         return (
             <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
                           type="bubbles" color="#505253"/>
@@ -159,7 +158,7 @@ const ComplainsPage = () => {
                             </div>
                         )
                         : (
-                            <h5 style={{justifyContent: 'center', display: 'flex'}}> Кажется, {user.username}, скрыл
+                            <h5 style={{justifyContent: 'center', display: 'flex'}}> Кажется, {user.username} скрыл
                                 свой профиль.</h5>
                         )}
                 </div>
