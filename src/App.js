@@ -17,7 +17,7 @@ import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 import ComplainsPage from "./components/ComplainsPage/ComplainsPage";
 import AnswerForComplainPage from "./components/AnswerForComplainPage/AnswerForComplainPage";
 import VoteHistoryPage from "./components/VoteHistoryPage/VoteHistoryPage";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
+import SettingsPage from "./components/SettingsPage/SettingsPage";
 
 export const ThemeContext = createContext(null)
 
@@ -78,9 +78,9 @@ function App() {
                                     <VoteHistoryPage/>
                                 </PrivateRoute>
                             }/>
-                            <Route path="/profile/" element={
+                            <Route path="/settings/" element={
                                 <PrivateRoute>
-                                    <ProfilePage/>
+                                    <SettingsPage/>
                                 </PrivateRoute>
                             }/>
                             <Route element={<LoginPage/>} path="/login"/>

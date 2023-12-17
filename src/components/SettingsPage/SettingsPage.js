@@ -6,7 +6,7 @@ import ReactLoading from "react-loading";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-const ProfilePage = () => {
+const SettingsPage = () => {
     let {authTokens} = useContext(AuthContext);
     const [userInfo, setUserInfo] = useState({});
     const [isLoading, setLoading] = useState(true);
@@ -224,4 +224,4 @@ const ProfilePage = () => {
     );
 }
 
-export default ProfilePage;
+export default SettingsPage;

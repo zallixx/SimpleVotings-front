@@ -21,7 +21,7 @@ const unauthorized_tabs = {
 
 const menu_items = {
     'Vote history': '/vote-history/',
-    'Mine polls': '/mine-polls/',
+    'Settings': '/settings/',
     'Logout' : '/login/',
 };
 
