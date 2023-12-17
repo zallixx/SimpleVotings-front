@@ -18,6 +18,7 @@ import ComplainsPage from "./components/ComplainsPage/ComplainsPage";
 import AnswerForComplainPage from "./components/AnswerForComplainPage/AnswerForComplainPage";
 import VoteHistoryPage from "./components/VoteHistoryPage/VoteHistoryPage";
 import SettingsPage from "./components/SettingsPage/SettingsPage";
+import ProfilePage from "./components/ProfilePage/ProfilePage";
 
 export const ThemeContext = createContext(null)
 
@@ -81,6 +82,11 @@ function App() {
                             <Route path="/settings/" element={
                                 <PrivateRoute>
                                     <SettingsPage/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/users/:id" element={
+                                <PrivateRoute>
+                                    <ProfilePage/>
                                 </PrivateRoute>
                             }/>
                             <Route element={<LoginPage/>} path="/login"/>
