@@ -126,6 +126,10 @@ const SettingsPage = () => {
                 paramPayload = {
                     last_name: new_param
                 }
+            } else if(type_modal === 'quote') {
+                paramPayload = {
+                    quote: new_param
+                }
             }
             const response = await fetch('http://127.0.0.1:8000/api/settings/edit/', {
                 method: "PATCH",
@@ -228,10 +232,10 @@ const SettingsPage = () => {
                                     <input type="file" name="avatar" accept="image/png, image/jpeg"/>
                                 </div>
                             )}
-                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                        <div style={{display: 'flex', flexDirection: 'row', marginTop: '10px'}}>
                             <h5> Ваша цитата: {userInfo.quote !== null ? userInfo.quote : "Не установлено"}</h5>
                             <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
-                                <BsFeather onClick={() => alert("Цитаты и аватарки не работают")}/>
+                                <BsFeather onClick={() => {setShow(true); setTypeModal('quote'); setTitleOfModal('Изменение цитаты');}}/>
                             </div>
                         </div>
                         <hr/>
