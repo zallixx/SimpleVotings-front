@@ -15,6 +15,7 @@ const SettingsPage = () => {
     const [new_param, setNewParam] = useState('');
     const [old_param, setOldParam] = useState('');
     const [type_modal, setTypeModal] = useState('');
+    const [isSwitchClicked, setIsSwitchClicked] = useState(false);
 
 
     const handleClose = () => setShow(false);
@@ -147,6 +148,68 @@ const SettingsPage = () => {
     };
 
 
+    const SetPublicStatus = async (checked) => {
+        try {
+            let paramPayload = {};
+            if(checked === true) {
+                paramPayload = {
+                    is_public: 1
+                }
+            } else {
+                paramPayload = {
+                    is_public: 0
+                }
+            }
+            const response = await fetch('http://127.0.0.1:8000/api/settings/edit/', {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify(paramPayload),
+            });
+            if (response.status === 200) {
+                alert("Параметр изменен");
+                window.location.reload();
+            } else {
+                alert("-1");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const SetShowHistory = async (checked) => {
+        try {
+            let paramPayload = {};
+            if(checked === true) {
+                paramPayload = {
+                    show_history: 1
+                }
+            } else {
+                paramPayload = {
+                    show_history: 0
+                }
+            }
+            const response = await fetch('http://127.0.0.1:8000/api/settings/edit/', {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify(paramPayload),
+            });
+            if (response.status === 200) {
+                alert("Параметр изменен");
+                window.location.reload();
+            } else {
+                alert("-1");
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className="BasePageCss">
             <div className="body-wrapper">
@@ -179,8 +242,8 @@ const SettingsPage = () => {
                             <h5> Публичный профиль - {userInfo.is_public ? 'Да' : 'Нет'} </h5>
                             <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
                                 <div className="form-check form-switch">
-                                    <input className="form-check-input" type="checkbox" role="switch" disabled={true}
-                                           id="flexSwitchCheckDefault" onChange={() => alert("История голосования третьим лицам не работает")}/>
+                                    <input className="form-check-input" type="checkbox" role="switch" checked = {userInfo.is_public}
+                                           id="flexSwitchCheckChecked" onChange={(e) => {setIsSwitchClicked(true); SetPublicStatus(e.target.checked); }} disabled={isSwitchClicked}/>
                                 </div>
                             </div>
                         </div>
@@ -189,8 +252,8 @@ const SettingsPage = () => {
                                     <h5> Показывать историю голосования третьим лицам - {userInfo.show_history ? 'Да' : 'Нет'} </h5>
                                     <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
                                         <div className="form-check form-switch">
-                                            <input className="form-check-input" type="checkbox" role="switch" disabled={true}
-                                                   id="flexSwitchCheckDefault" onChange={() => alert("История голосования третьим лицам не работает")}/>
+                                            <input className="form-check-input" type="checkbox" role="switch" checked = {userInfo.show_history}
+                                                   id="flexSwitchCheckChecked" onChange={(e) => {setIsSwitchClicked(true); SetShowHistory(e.target.checked); }} disabled={isSwitchClicked}/>
                                         </div>
                                     </div>
                                 </div>
