@@ -11,7 +11,6 @@ const authorized_tabs = {
     'Home': '/',
     'Polls' : '/polls/',
     'Complains' : '/complains/',
-    'Profile' : '/profile/',
 };
 
 const unauthorized_tabs = {
