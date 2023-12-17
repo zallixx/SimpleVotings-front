@@ -151,11 +151,58 @@ const SettingsPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner h-100 w-75">
-                    <h4 style={{ justifyContent: 'center', display: 'flex' }}>Настройки</h4>
+                    <div>
+                        <h4 style={{justifyContent: 'center', display: 'flex'}}>Настройки публичной информации</h4>
+                        {userInfo.avatar ? (
+                                <div>
+                                    <img src={userInfo.avatar} style={{width: '100px', height: '100px'}}/>
+                                </div>
+                            )
+                            : (
+                                <div>
+                                    <label>Похоже вы не загрузили аватар. Давайте загрузим его!</label>
+                                    <br/>
+                                    <input type="file" name="avatar" accept="image/png, image/jpeg"/>
+                                </div>
+                            )}
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <h5> Ваша цитата: {userInfo.quote !== null ? userInfo.quote : "Не установлено"}</h5>
+                            <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
+                                <BsFeather onClick={() => alert("Цитаты и аватарки не работают")}/>
+                            </div>
+                        </div>
+                        <hr/>
+                    </div>
+                    <div>
+                        <h4 style={{justifyContent: 'center', display: 'flex'}}>Настройки приватности</h4>
+                        <div style={{display: 'flex', flexDirection: 'row'}}>
+                            <h5> Публичный профиль - {userInfo.is_public ? 'Да' : 'Нет'} </h5>
+                            <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
+                                <div className="form-check form-switch">
+                                    <input className="form-check-input" type="checkbox" role="switch" disabled={true}
+                                           id="flexSwitchCheckDefault" onChange={() => alert("История голосования третьим лицам не работает")}/>
+                                </div>
+                            </div>
+                        </div>
+                            {userInfo.is_public ? (
+                                <div style={{display: 'flex', flexDirection: 'row'}}>
+                                    <h5> Показывать историю голосования третьим лицам - {userInfo.show_history ? 'Да' : 'Нет'} </h5>
+                                    <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
+                                        <div className="form-check form-switch">
+                                            <input className="form-check-input" type="checkbox" role="switch" disabled={true}
+                                                   id="flexSwitchCheckDefault" onChange={() => alert("История голосования третьим лицам не работает")}/>
+                                        </div>
+                                    </div>
+                                </div>
+                            )
+                                : null}
+                        <hr/>
+                    </div>
+                    <h4 style={{justifyContent: 'center', display: 'flex'}}>Настройки</h4>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5> Ваш логин: {userInfo.username} </h5>
                         <div style={{marginLeft: '10px', color: '#2980b9', cursor: 'pointer'}}>
-                            <BsFeather onClick={handleChangeUsername}/>
+                        <BsFeather onClick={handleChangeUsername}/>
                         </div>
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
@@ -178,12 +225,14 @@ const SettingsPage = () => {
                     </div>
                     <div style={{display: 'flex', flexDirection: 'row'}}>
                         <h5> {/* eslint-disable-next-line */}
-                            <a onClick={handleChangePassword} style={{color: '#2980b9', cursor: 'pointer'}}> Сменить пароль </a>
+                            <a onClick={handleChangePassword} style={{color: '#2980b9', cursor: 'pointer'}}> Сменить
+                                пароль </a>
                         </h5>
                     </div>
                 </div>
-                <Modal show={show} onHide={handleClose} centered className={"custom-modal-" + localStorage.getItem("theme")}>
-                    <Modal.Header className="rounded-top-1 border-0">
+                <Modal show={show} onHide={handleClose} centered
+                       className={"custom-modal-" + localStorage.getItem("theme")}>
+                <Modal.Header className="rounded-top-1 border-0">
                         <Modal.Title>{title_of_modal}</Modal.Title>
                     </Modal.Header>
                     {title_of_modal === 'Изменение пароля' ? (
