@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
 
@@ -9,6 +9,7 @@ const ComplainsPage = () => {
     const params = useParams();
     const [user, setUser] = useState({});
     const [questions, setQuestions] = useState({});
+    const navigate = useNavigate();
 
     const fetchUser = async () => {
         try {
