@@ -15,7 +15,6 @@ const ProfilePage = () => {
     const [new_param, setNewParam] = useState('');
     const [old_param, setOldParam] = useState('');
     const [type_modal, setTypeModal] = useState('');
-    const [payload, setPayload] = useState({});
 
 
     const handleClose = () => setShow(false);
@@ -109,22 +108,23 @@ const ProfilePage = () => {
 
     const handleChangeParam = async () => {
         try {
+            let paramPayload = {};
             if(type_modal === 'username') {
-                setPayload({
+                paramPayload = {
                     username: new_param
-                })
+                }
             } else if(type_modal === 'email') {
-                setPayload({
+                paramPayload = {
                     email: new_param
-                })
+                }
             } else if(type_modal === 'first_name') {
-                setPayload({
+                paramPayload = {
                     first_name: new_param
-                })
+                }
             } else if(type_modal === 'last_name') {
-                setPayload({
+                paramPayload = {
                     last_name: new_param
-                })
+                }
             }
             const response = await fetch('http://127.0.0.1:8000/api/settings/edit/', {
                 method: "PATCH",
@@ -132,10 +132,12 @@ const ProfilePage = () => {
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(paramPayload),
             });
             if (response.status === 200) {
-                alert("0");
+                alert("Параметр изменен");
+                setShow(false);
+                window.location.reload();
             } else {
                 alert("-1");
             }
