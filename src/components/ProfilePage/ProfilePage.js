@@ -23,6 +23,11 @@ const ComplainsPage = () => {
             const data = await response.json();
             if (response.status === 200) {
                 setUser(data);
+                if (data.show_history === true) {
+                    fetchVotes();
+                } else {
+                    setLoading(false);
+                }
             } else {
                 alert('Something went wrong!');
             }
@@ -67,6 +72,7 @@ const ComplainsPage = () => {
                     ...prevQuestions,
                     [data.id]: {question: data.question, id: data.id}
                 }));
+                setLoading(false);
             } else {
                 alert('Something went wrong!');
             }
@@ -76,16 +82,7 @@ const ComplainsPage = () => {
     };
 
     useEffect(() => {
-        fetchUser().then(() => {
-            if (user.show_history === true) {
-                fetchVotes().then(() => {
-                    setLoading(false);
-                });
-            } else {
-                setLoading(false);
-            }
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        fetchUser()
     }, []);
 
     if (isLoading) {
@@ -120,25 +117,26 @@ const ComplainsPage = () => {
                         <hr/>
                         <div>
                             {user.show_history === true ? (
-                                <div>
-                                    <h5> История голосования пользователя</h5>
-                                    <div
-                                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                                        <div className="list-group list-group-checkable h-100 w-100 rounded">
-                                            {Object.values(questions).map((question) => (
-                                                <div className="list-group-item list-group-item-action weak_blue rounded">
-                                                    {/* eslint-disable-next-line  */}
-                                                    <a onClick={() => navigate(`/polls/${question.id}/results/`)}>
-                                                        <div className="d-flex w-100 justify-content-between">
-                                                            <h5 className="mb-1">{'Принял участние в опросе: ' + question.question}</h5>
-                                                            <small>Нажмите, чтобы посмотреть результат</small>
-                                                        </div>
-                                                    </a>
-                                                </div>
-                                            ))}
+                                    <div>
+                                        <h5> История голосования пользователя</h5>
+                                        <div
+                                            className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                                            <div className="list-group list-group-checkable h-100 w-100 rounded">
+                                                {Object.values(questions).map((question) => (
+                                                    <div
+                                                        className="list-group-item list-group-item-action weak_blue rounded">
+                                                        {/* eslint-disable-next-line  */}
+                                                        <a onClick={() => navigate(`/polls/${question.id}/results/`)}>
+                                                            <div className="d-flex w-100 justify-content-between">
+                                                                <h5 className="mb-1">{'Принял участние в опросе: ' + question.question}</h5>
+                                                                <small>Нажмите, чтобы посмотреть результат</small>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
                                 )
                                 : (
                                     <div>
