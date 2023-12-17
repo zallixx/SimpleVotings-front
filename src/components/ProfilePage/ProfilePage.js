@@ -32,7 +32,7 @@ const ComplainsPage = () => {
 
     const fetchVotes = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/?anotherUser=' + params.id + '/', {
+            const response = await fetch('http://127.0.0.1:8000/api/vote-history/?anotherUser=' + params.id, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -53,7 +53,7 @@ const ComplainsPage = () => {
 
     const fetchQuestion = async (id) => {
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/polls/${id}/`, {
+            const response = await fetch(`http://127.0.0.1:8000/api/polls/` + id + '/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
