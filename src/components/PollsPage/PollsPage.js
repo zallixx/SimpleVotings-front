@@ -25,7 +25,8 @@ const PollsPage = () => {
                 setPolls(data.map((poll) => {
                     return {...poll, created_by: authorNames[poll.created_by]};
                 }));
-                setFilteredPolls(data)
+                setFilteredPolls(data);
+                setLoading(false)
             } else {
                 alert('Something went wrong!');
             }
@@ -60,7 +61,7 @@ const PollsPage = () => {
     }
 
     useEffect(() => {
-        fetchPolls().then(() => setLoading(false));
+        fetchPolls();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -84,7 +85,7 @@ const PollsPage = () => {
                 setFilteredPolls(filtered);
             }
         } else {
-            const filtered = polls.filter((poll) => " ");
+            const filtered = polls.filter((poll) => " ")
             setFilteredPolls(filtered);
         }
     };
