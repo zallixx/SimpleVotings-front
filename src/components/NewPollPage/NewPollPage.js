@@ -1,15 +1,14 @@
 import React, {useContext, useState} from 'react';
-import { useNavigate } from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 import AuthContext from "../../context/AuthContext";
 
 const NewPollPage = () => {
-    const [pollType, setPollType] = useState(1);
+    const [pollType, setPollType] = useState(0);
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState(['', '']);
     let {authTokens} = useContext(AuthContext);
     const navigate = useNavigate();
-
     const handlePollTypeChange = (event) => {
         setPollType(event.target.value);
     };
@@ -27,8 +26,7 @@ const NewPollPage = () => {
     const handleAddAnswer = () => {
         if (answers.length < 11) {
             setAnswers([...answers, '']);
-        }
-        else {
+        } else {
             alert('Максимум 10 вариантов ответа!');
         }
     };
@@ -36,8 +34,7 @@ const NewPollPage = () => {
     const handleDelAnswer = () => {
         if (answers.length > 2) {
             setAnswers(answers.slice(0, -1));
-        }
-        else {
+        } else {
             alert('Минимум 2 варианта ответа!');
         }
     };
@@ -45,15 +42,15 @@ const NewPollPage = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (event.target.type === "submit") {
-            if(question === '') {
+            if (question === '') {
                 alert('Заполните вопрос!');
-            }
-            else {
+            } else {
                 alert("Опрос создан!");
+                const discreteAnswers = ['Да','Нет']
                 const payload = {
                     type_voting: pollType,
                     question: question,
-                    choices: answers,
+                    choices: (pollType == 2 ? discreteAnswers : answers),
                 };
                 fetch('http://127.0.0.1:8000/api/polls/new/', {
                     method: 'POST',
@@ -62,11 +59,12 @@ const NewPollPage = () => {
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
                     body: JSON.stringify(payload),
-                 }).then(() => {
+                }).then(() => {
                     navigate('/polls/');
                 });
             }
-        }};
+        }
+    };
 
     return (
         <div className="BasePageCss">
@@ -90,26 +88,50 @@ const NewPollPage = () => {
                         </select>
                     </label>
                     <br/>
-                    <label>
-                        Ответы:
-                        {answers.map((answer, index) => (
-                            <div key={index}>
+                    {pollType == 2 ? (
+                        <label>
+                            Варианты ответов:
+                            <div>
                                 <input
                                     type="text"
-                                    className="form-control mb-1 rounded"
+                                    className="form-control mb-1 rounded disabled"
                                     placeholder="Ответ"
-                                    value={answer}
-                                    onChange={(event) => handleAnswerChange(index, event)}
+                                    value="Да"
                                 />
                             </div>
-                        ))}
-                        <button className="btn btn-primary" onClick={handleAddAnswer}>
-                            +
-                        </button>
-                        <button className="btn btn-primary" onClick={handleDelAnswer}>
-                            -
-                        </button>
-                    </label>
+                            <div>
+                                <input
+                                    type="text"
+                                    className="form-control mb-1 rounded disabled"
+                                    placeholder="Ответ"
+                                    value="Нет"
+                                />
+                            </div>
+                        </label>
+                    ) : (
+
+                        <label>
+                            Варианты ответов:
+                            {answers.map((answer, index) => (
+                                <div key={index}>
+                                    <input
+                                        type="text"
+                                        className="form-control mb-1 rounded"
+                                        placeholder="Ответ"
+                                        value={answer}
+                                        onChange={(event) => handleAnswerChange(index, event)}
+                                    />
+                                </div>
+                            ))}
+                            <button className="btn btn-primary" onClick={handleAddAnswer}>
+                                +
+                            </button>
+                            <button className="btn btn-primary" onClick={handleDelAnswer}>
+                                -
+                            </button>
+                        </label>
+                    )}
+
                 </div>
                 <br/>
                 <button className="btn btn-primary" onClick={handleSubmit}>Создать опрос</button>

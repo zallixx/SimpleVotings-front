@@ -47,14 +47,15 @@ const ComplainsPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner h-100 w-75 position-relative">
-                    <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                    <div
+                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
                             {complains.length === 0 ? (
                                 <label>У вас нет жалоб </label>
                             ) : (
                                 <>
                                     {complains.map((complain) => (
-                                        <div     className="list-group-item list-group-item-action weak_blue rounded">
+                                        <div className="list-group-item list-group-item-action weak_blue rounded">
                                             {complain.status === "Рассмотрена" ? (
                                                 // eslint-disable-next-line
                                                 <a onClick={() => navigate(`/complains/${complain.id}`)}>

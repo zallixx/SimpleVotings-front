@@ -30,11 +30,12 @@ const PollsPage = () => {
             if (response.status === 200) {
                 setPoll(data);
                 setAuthorName(await get_author_name(data.created_by));
+                setLoading(false);
             } else {
-                alert('Something went wrong!');
+                navigate('/polls');
             }
         } catch (error) {
-            console.error(error);
+            alert(error)
         }
     };
 
@@ -116,9 +117,7 @@ const PollsPage = () => {
     };
 
     useEffect(() => {
-        fetchPoll().then(
-            () => setLoading(false)
-        );
+        fetchPoll()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (isLoading) {
@@ -131,7 +130,7 @@ const PollsPage = () => {
     let complain = (e) => {
         e.preventDefault();
             try {
-                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
+                 fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -146,16 +145,21 @@ const PollsPage = () => {
             }
     }
 
-    let deletePoll = () => {
+    let deletePoll = async () => {
         if (window.confirm('Вы уверены, что хотите удалить опрос?')) {
             try {
-                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/delete/', {
+                const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/delete/', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
-                }).then(() => navigate('/polls/'))
+                });
+                const data = await response.json();
+                console.log(response)
+                if (response.status === 200) {
+                    navigate('/polls');
+                }
             } catch (error) {
                 console.error(error);
             }
