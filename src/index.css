@@ -176,24 +176,23 @@ html,
     position: absolute;
     right: 0;
     top: 100%;
-    background-color: red !important;
 }
 
 .light-background {
-  background-color: #DFDFDE !important;
+  background-color: #DFDFDE;
 }
 
 .dark-background {
-  color: white !important;
-  background-color: #1a1917 !important;
+  color: white;
+  background-color: #1a1917;
 }
 
 .light-background .popover-arrow::after {
-  border-bottom-color: #DFDFDE !important;
+  border-bottom-color: #DFDFDE;
 }
 
 .dark-background .popover-arrow::after {
-  border-bottom-color: #1a1917 !important;
+  border-bottom-color: #1a1917;
 }
 
 #light .weak-orange {
