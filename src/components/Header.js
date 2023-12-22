@@ -1,6 +1,6 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
-import {ButtonGroup} from "react-bootstrap";
+import {ButtonGroup, Overlay, Tooltip} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
 
 import {ThemeContext} from "../App";
@@ -32,6 +32,7 @@ const Header = () => {
     let {user, logoutUser} = useContext(AuthContext);
     // eslint-disable-next-line
     const {theme, toggleTheme} = useContext(ThemeContext);
+    const target = useRef(null);
 
     useEffect(() => {
         if (user !== null) {
@@ -117,17 +118,19 @@ const Header = () => {
                 Change Theme
             </button>
             {user !== null ?
-                <button className="dropdown-toggle btn border-0 username_btn" onClick={handleButtonClick}>
+                <button className="dropdown-toggle btn border-0 username_btn" onClick={handleButtonClick} ref={target}>
                     {user_prop.name}
                 </button>
                     : null
             }
             {isOpen && (
-                <div className="dropdown_menu">
-                    <ButtonGroup className="shadow background_color_of_items_menu">
-                        {user !== null ? items_menu : null}
-                    </ButtonGroup>
-                </div>
+              <Overlay target={target.current} show={isOpen} placement="bottom" rootClose rootCloseEvent="click">
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    {user !== null ? items_menu : null}
+                  </Tooltip>
+                )}
+              </Overlay>
             )}
             <div className="navbar_items">
                 <ButtonGroup>
