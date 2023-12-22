@@ -1,10 +1,13 @@
 import {useContext, useEffect, useState, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
-import {ButtonGroup, Overlay, Popover} from "react-bootstrap";
+import {ButtonGroup, Col, Overlay, Popover, Row} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
 import { BsBrightnessHigh } from "react-icons/bs";
 import { MdOutlineBrightness2 } from "react-icons/md";
 import {ThemeContext} from "../App";
+import { MdHistory } from "react-icons/md";
+import { MdSettings } from "react-icons/md";
+import {MdLogout} from "react-icons/md";
 
 import './Header.css';
 
@@ -84,30 +87,68 @@ const Header = () => {
     ))
 
     const items_menu = (
-        <div>
+        <div style={{textAlign: 'right'}}>
             {Object.keys(menu_items).map((item) => (
                 <div key={item}>
-                    {item !== 'Logout' && (
-                        <button
-                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
-                            onClick={() => handleMenuItemClick(item)}
-                        >
-                            {item}
-                        </button>
-                    )}
-                </div>
-            ))}
-            <hr/>
-            {Object.keys(menu_items).map((item) => (
-                <div key={item}>
-                    {item === 'Logout' && (
-                        <button
-                            className="btn text-darkred mb-xxl-3"
-                            onClick={() => handleMenuItemClick(item)}
-                        >
-                            {item}
-                        </button>
-                    )}
+                    <Row xs={1} md={1} className="d-flex justify-content-end">
+                        <Col>
+                            <Row xs={1} md={2} className="align-items-center">
+                                <Col>
+                                    {item === 'Vote history' && (
+                                        <MdHistory size={29}/>
+                                    )}
+                                </Col>
+                                <Col>
+                                    {item === 'Vote history' && (
+                                        <button
+                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ?                                             'light-background' : 'dark-background'}`}
+                                            onClick={() => handleMenuItemClick(item)}
+                                        >
+                                            {item}
+                                        </button>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row xs={1} md={2} className="align-items-center">
+                                <Col>
+                                    {item === 'Settings' && (
+                                        <MdSettings size={29} />
+                                    )}
+                                </Col>
+                                <Col>
+                                    {item === 'Settings' && (
+                                        <button
+                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                            onClick={() => handleMenuItemClick(item)}
+                                        >
+                                            {item}
+                                        </button>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row xs={1} md={2} className="align-items-center">
+                                <Col>
+                                    {item === 'Logout' && (
+                                        <MdLogout size={29} />
+                                    )}
+                                </Col>
+                                <Col>
+                                    {item === 'Logout' && (
+                                        <button
+                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                            onClick={() => handleMenuItemClick(item)}
+                                        >
+                                            {item}
+                                        </button>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
             ))}
         </div>
