@@ -110,15 +110,6 @@ html,
     background: #333332;
 }
 
-#light .background_color_of_items_menu {
-    background: #DFDFDE;
-}
-
-#dark .background_color_of_items_menu {
-    color: white;
-    background: #1a1917;
-}
-
 #light .navbar_params {
     background: #DFDFDE;
     height: 3.2%;
@@ -185,6 +176,24 @@ html,
     position: absolute;
     right: 0;
     top: 100%;
+    background-color: red !important;
+}
+
+.light-background {
+  background-color: #DFDFDE !important;
+}
+
+.dark-background {
+  color: white !important;
+  background-color: #1a1917 !important;
+}
+
+.light-background .popover-arrow::after {
+  border-bottom-color: #DFDFDE !important;
+}
+
+.dark-background .popover-arrow::after {
+  border-bottom-color: #1a1917 !important;
 }
 
 #light .weak-orange {

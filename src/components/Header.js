@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
-import {ButtonGroup, Overlay, Tooltip} from "react-bootstrap";
+import {ButtonGroup, Overlay, Popover, Tooltip} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
 
 import {ThemeContext} from "../App";
@@ -76,7 +76,7 @@ const Header = () => {
     ))
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
+        <button className={`btn border-0 rounded-0 tab  ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
         </button>
@@ -88,7 +88,7 @@ const Header = () => {
                 <div key={item}>
                     {item !== 'Logout' && (
                         <button
-                            className={`btn border-0 rounded-0 tab background_color_of_items_menu ${activeTab === item ? 'active' : ''}`}
+                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                             onClick={() => handleMenuItemClick(item)}
                         >
                             {item}
@@ -124,13 +124,11 @@ const Header = () => {
                     : null
             }
             {isOpen && (
-              <Overlay target={target.current} show={isOpen} placement="bottom" rootClose rootCloseEvent="click">
-                {(props) => (
-                  <Tooltip id="overlay-example" {...props}>
+            <Overlay target={target.current} show={isOpen} placement="bottom" rootClose rootCloseEvent="click" onHide={e => setIsOpen(false)}>
+                <Popover id="popover-contained" className={`rounded-6 ${theme === 'light' ? 'light-background' : 'dark-background'}`}>
                     {user !== null ? items_menu : null}
-                  </Tooltip>
-                )}
-              </Overlay>
+                </Popover>
+            </Overlay>
             )}
             <div className="navbar_items">
                 <ButtonGroup>
