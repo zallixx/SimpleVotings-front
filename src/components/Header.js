@@ -1,8 +1,9 @@
 import {useContext, useEffect, useState, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
-import {ButtonGroup, Overlay, Popover, Tooltip} from "react-bootstrap";
+import {ButtonGroup, Overlay, Popover} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
-
+import { BsBrightnessHigh } from "react-icons/bs";
+import { MdOutlineBrightness2 } from "react-icons/md";
 import {ThemeContext} from "../App";
 
 import './Header.css';
@@ -114,9 +115,15 @@ const Header = () => {
 
     return (
         <div className="navbar fixed-top navbar_params">
-            <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
-                Change Theme
-            </button>
+            {theme !== 'light' ?
+                    <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                        <BsBrightnessHigh/>
+                    </button>
+                    :
+                    <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                        <MdOutlineBrightness2/>
+                    </button>
+                }
             {user !== null ?
                 <button className="dropdown-toggle btn border-0 username_btn" onClick={handleButtonClick} ref={target}>
                     {user_prop.name}

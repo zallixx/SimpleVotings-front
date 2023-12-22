@@ -50,7 +50,7 @@ const NewPollPage = () => {
                 const payload = {
                     type_voting: pollType,
                     question: question,
-                    choices: (pollType == 2 ? discreteAnswers : answers),
+                    choices: (pollType === 2 ? discreteAnswers : answers),
                 };
                 fetch('http://127.0.0.1:8000/api/polls/new/', {
                     method: 'POST',
@@ -88,7 +88,7 @@ const NewPollPage = () => {
                         </select>
                     </label>
                     <br/>
-                    {pollType == 2 ? (
+                    {pollType === 2 ? (
                         <label>
                             Варианты ответов:
                             <div>
