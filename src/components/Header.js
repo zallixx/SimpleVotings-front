@@ -76,7 +76,7 @@ const Header = () => {
     ))
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab  ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
+        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab} key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
         </button>
