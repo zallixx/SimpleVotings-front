@@ -87,15 +87,15 @@ const Header = () => {
     ))
 
     const items_menu = (
-        <div style={{textAlign: 'right'}}>
+        <div>
             {Object.keys(menu_items).map((item) => (
                 <div key={item}>
-                    <Row xs={1} md={1} className="d-flex justify-content-end">
+                    <Row xs={1} md={1} style={{display: 'flex'}}>
                         <Col>
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
                                     {item === 'Vote history' && (
-                                        <MdHistory size={29}/>
+                                        <MdHistory size={29} style={{textAlign: 'left'}}/>
                                     )}
                                 </Col>
                                 <Col>
@@ -103,6 +103,7 @@ const Header = () => {
                                         <button
                                             className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ?                                             'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
+                                            style={{marginLeft: '-55px'}}
                                         >
                                             {item}
                                         </button>
@@ -114,7 +115,7 @@ const Header = () => {
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
                                     {item === 'Settings' && (
-                                        <MdSettings size={29} />
+                                        <MdSettings size={29} style={{textAlign: 'left'}}/>
                                     )}
                                 </Col>
                                 <Col>
@@ -122,6 +123,7 @@ const Header = () => {
                                         <button
                                             className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
+                                            style={{marginLeft: '-55px'}}
                                         >
                                             {item}
                                         </button>
@@ -133,14 +135,15 @@ const Header = () => {
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
                                     {item === 'Logout' && (
-                                        <MdLogout size={29} />
+                                        <MdLogout size={29} style={{textAlign: 'left', color: 'darkred'}}/>
                                     )}
                                 </Col>
                                 <Col>
                                     {item === 'Logout' && (
                                         <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                            className={`btn border-0 rounded-0 tab text-darkred ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
+                                            style={{marginLeft: '-55px'}}
                                         >
                                             {item}
                                         </button>
@@ -173,7 +176,7 @@ const Header = () => {
             }
             {isOpen && (
             <Overlay target={target.current} show={isOpen} placement="bottom" rootClose rootCloseEvent="click" onHide={e => setIsOpen(false)}>
-                <Popover id="popover-contained" className={`rounded-6 ${theme === 'light' ? 'light-background' : 'dark-background'}`}>
+                <Popover id="popover-contained" className={`rounded-6 ${theme === 'light' ? 'light-background' : 'dark-background'}`} style={{overflow: 'hidden', width: '145px'}}>
                     {user !== null ? items_menu : null}
                 </Popover>
             </Overlay>
