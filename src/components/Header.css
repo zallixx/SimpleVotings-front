@@ -5,19 +5,15 @@
   cursor: pointer;
 }
 
-.tab.active {
-  color: blue;
-}
-
-.tab.active:hover {
-  color: blue;
-}
-
 .tab.active.btn {
   text-decoration: underline;
-  color: blue;
 }
 
 .btn.text-darkred {
   color: darkred;
+}
+
+.btn.text-darkred:hover {
+  text-decoration: underline;
+  color: red;
 }

@@ -1,9 +1,13 @@
-import {useContext, useEffect, useState} from 'react';
+import {useContext, useEffect, useState, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
-import {ButtonGroup} from "react-bootstrap";
+import {ButtonGroup, Col, Overlay, Popover, Row} from "react-bootstrap";
 import AuthContext from "../context/AuthContext";
-
+import { BsBrightnessHigh } from "react-icons/bs";
+import { MdOutlineBrightness2 } from "react-icons/md";
 import {ThemeContext} from "../App";
+import { MdHistory } from "react-icons/md";
+import { MdSettings } from "react-icons/md";
+import {MdLogout} from "react-icons/md";
 
 import './Header.css';
 
@@ -32,6 +36,7 @@ const Header = () => {
     let {user, logoutUser} = useContext(AuthContext);
     // eslint-disable-next-line
     const {theme, toggleTheme} = useContext(ThemeContext);
+    const target = useRef(null);
 
     useEffect(() => {
         if (user !== null) {
@@ -85,27 +90,68 @@ const Header = () => {
         <div>
             {Object.keys(menu_items).map((item) => (
                 <div key={item}>
-                    {item !== 'Logout' && (
-                        <button
-                            className={`btn border-0 rounded-0 tab background_color_of_items_menu ${activeTab === item ? 'active' : ''}`}
-                            onClick={() => handleMenuItemClick(item)}
-                        >
-                            {item}
-                        </button>
-                    )}
-                </div>
-            ))}
-            <hr/>
-            {Object.keys(menu_items).map((item) => (
-                <div key={item}>
-                    {item === 'Logout' && (
-                        <button
-                            className="btn text-darkred mb-xxl-3"
-                            onClick={() => handleMenuItemClick(item)}
-                        >
-                            {item}
-                        </button>
-                    )}
+                    <Row xs={1} md={1} style={{display: 'flex'}}>
+                        <Col>
+                            <Row xs={1} md={2} className="align-items-center">
+                                <Col>
+                                    {item === 'Vote history' && (
+                                        <MdHistory size={27} style={{textAlign: 'left', cursor: 'pointer'}} onClick={() => handleMenuItemClick(item)}/>
+                                    )}
+                                </Col>
+                                <Col>
+                                    {item === 'Vote history' && (
+                                        <button
+                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ?                                             'light-background' : 'dark-background'}`}
+                                            onClick={() => handleMenuItemClick(item)}
+                                            style={{marginLeft: '-59px'}}
+                                        >
+                                            {item}
+                                        </button>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row xs={1} md={2} className="align-items-center">
+                                <Col>
+                                    {item === 'Settings' && (
+                                        <MdSettings size={27} style={{textAlign: 'left', cursor: 'pointer'}} onClick={() => handleMenuItemClick(item)}/>
+                                    )}
+                                </Col>
+                                <Col>
+                                    {item === 'Settings' && (
+                                        <button
+                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                            onClick={() => handleMenuItemClick(item)}
+                                            style={{marginLeft: '-59px'}}
+                                        >
+                                            {item}
+                                        </button>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                        <Col>
+                            <Row xs={1} md={2} className="align-items-center">
+                                <Col>
+                                    {item === 'Logout' && (
+                                        <MdLogout size={27} style={{textAlign: 'left', color: 'darkred', cursor: 'pointer'}} onClick={() => handleMenuItemClick(item)}/>
+                                    )}
+                                </Col>
+                                <Col>
+                                    {item === 'Logout' && (
+                                        <button
+                                            className={`btn border-0 rounded-0 text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                            onClick={() => handleMenuItemClick(item)}
+                                            style={{marginLeft: '-59px'}}
+                                        >
+                                            {item}
+                                        </button>
+                                    )}
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </div>
             ))}
         </div>
@@ -113,21 +159,27 @@ const Header = () => {
 
     return (
         <div className="navbar fixed-top navbar_params">
-            <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
-                Change Theme
-            </button>
+            {theme !== 'light' ?
+                    <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                        <BsBrightnessHigh/>
+                    </button>
+                    :
+                    <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                        <MdOutlineBrightness2/>
+                    </button>
+                }
             {user !== null ?
-                <button className="dropdown-toggle btn border-0 username_btn" onClick={handleButtonClick}>
+                <button className="dropdown-toggle btn border-0 username_btn" onClick={handleButtonClick} ref={target}>
                     {user_prop.name}
                 </button>
                     : null
             }
             {isOpen && (
-                <div className="dropdown_menu">
-                    <ButtonGroup className="shadow background_color_of_items_menu">
-                        {user !== null ? items_menu : null}
-                    </ButtonGroup>
-                </div>
+            <Overlay target={target.current} show={isOpen} placement="bottom" rootClose rootCloseEvent="click" onHide={e => setIsOpen(false)}>
+                <Popover id="popover-contained" className={`rounded-6 ${theme === 'light' ? 'light-background' : 'dark-background'}`} style={{overflow: 'hidden', width: '145px'}}>
+                    {user !== null ? items_menu : null}
+                </Popover>
+            </Overlay>
             )}
             <div className="navbar_items">
                 <ButtonGroup>

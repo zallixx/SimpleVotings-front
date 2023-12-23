@@ -110,15 +110,6 @@ html,
     background: #333332;
 }
 
-#light .background_color_of_items_menu {
-    background: #DFDFDE;
-}
-
-#dark .background_color_of_items_menu {
-    color: white;
-    background: #1a1917;
-}
-
 #light .navbar_params {
     background: #DFDFDE;
     height: 3.2%;
@@ -184,7 +175,23 @@ html,
 .dropdown_menu {
     position: absolute;
     right: 0;
-    top: 100%;
+}
+
+.light-background {
+  background-color: #DFDFDE;
+}
+
+.dark-background {
+  color: white;
+  background-color: #1a1917;
+}
+
+.light-background .popover-arrow::after {
+  border-bottom-color: #DFDFDE;
+}
+
+.dark-background .popover-arrow::after {
+  border-bottom-color: #1a1917;
 }
 
 #light .weak-orange {
