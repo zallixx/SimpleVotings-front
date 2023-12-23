@@ -51,7 +51,9 @@ const ComplainsPage = () => {
                         className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
                             {complains.length === 0 ? (
-                                <label>У вас нет жалоб </label>
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <label>У вас нет жалоб </label>
+                                </div>
                             ) : (
                                 <>
                                     {complains.map((complain) => (
