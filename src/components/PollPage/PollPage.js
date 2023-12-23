@@ -5,6 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import {Button, Form, FormGroup} from "react-bootstrap";
 import ReactLoading from 'react-loading';
+import Modal from "react-bootstrap/Modal";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -16,6 +17,7 @@ const PollsPage = () => {
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
     const [isComplainMode, setComplainMode] = useState(false);
+    const [complainText, setComplainText] = useState('');
 
     const fetchPoll = async () => {
         try {
@@ -137,7 +139,7 @@ const PollsPage = () => {
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
                     body: JSON.stringify({
-                        'text': e.target.text.value
+                        'text': complainText
                     })
                 }).then(() => navigate('/polls'))
             } catch (error) {
@@ -165,6 +167,8 @@ const PollsPage = () => {
             }
         }
     }
+
+    const handleClose = () => setComplainMode(false);
 
     return (
         <div className="BasePageCss text_color">
@@ -210,22 +214,7 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
-                        ) : (isComplainMode ? (
-                            <>
-                                <h3 className="card-title mb-1">Жалоба</h3>
-                                <Form onSubmit={complain}>
-                                    <textarea name="text" className="form-control mb-1" maxLength="500"/>
-                                    <div className="d-flex justify-content-between align-items-center mt-3">
-                                        <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5">
-                                                Отправить
-                                            </Button>
-                                        </FormGroup>
-                                    </div>
-                                </Form>
-
-                            </>
-                        ) : (
+                        )  : (
                             <>
                                 <h3 className="card-title mb-1">{poll.question}</h3>
                                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -270,10 +259,26 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
-                        ))}
+                        )}
                     </div>
                 </div>
             </div>
+            <Modal show={isComplainMode} centered className={"custom-modal-" + localStorage.getItem("theme")} onHide={handleClose}>
+                <Modal.Header className="rounded-top-1 border-0">
+                    <Modal.Title>Составление жалобы</Modal.Title>
+                </Modal.Header>
+                    <Modal.Body>
+                        <input type="text" className="form-control" placeholder="Текст жалобы" onInput={(e) => setComplainText(e.target.value)}/>
+                    </Modal.Body>
+                    <Modal.Footer closeButton className="rounded-bottom-1 border-0">
+                        <Button variant="danger" onClick={complain}>
+                            Отрпавить жалобу
+                        </Button>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Отмена
+                        </Button>
+                    </Modal.Footer>
+            </Modal>
         </div>
     );
 }

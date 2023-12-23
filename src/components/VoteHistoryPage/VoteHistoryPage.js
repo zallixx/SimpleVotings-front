@@ -73,17 +73,25 @@ const VoteHistoryPage = () => {
                 <div className="body-inner h-100 w-75 position-relative">
                     <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
-                            {Object.values(questions).map((question) => (
-                                <div className="list-group-item list-group-item-action weak_blue rounded">
-                                    {/* eslint-disable-next-line  */}
-                                    <a onClick={() => navigate(`/polls/${question.id}/results/`)}>
-                                        <div className="d-flex w-100 justify-content-between">
-                                            <h5 className="mb-1">{'Вы приняли участние в опросе: ' + question.question}</h5>
-                                            <small>Нажмите, чтобы посмотреть результат</small>
-                                        </div>
-                                    </a>
+                            {Object.keys(questions).length === 0 ? (
+                                <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                                    <label>Вы ещё не приняли участие в опросах</label>
                                 </div>
-                            ))}
+                            ) : (
+                                <>
+                                    {Object.values(questions).map((question) => (
+                                        <div className="list-group-item list-group-item-action weak_blue rounded">
+                                        {/* eslint-disable-next-line  */}
+                                        <a onClick={() => navigate(`/polls/${question.id}/results/`)}>
+                                            <div className="d-flex w-100 justify-content-between">
+                                                <h5 className="mb-1">{'Вы приняли участние в опросе: ' + question.question}</h5>
+                                                <small>Нажмите, чтобы посмотреть результат</small>
+                                            </div>
+                                        </a>
+                                    </div>
+                                ))}
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

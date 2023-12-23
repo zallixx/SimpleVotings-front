@@ -128,44 +128,51 @@ const PollsPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner h-100 w-75 position-relative">
-                    <input
-                        type="search"
-                        className="form-control rounded weak-orange"
-                        placeholder="Введите название опроса..."
-                        aria-label="Search"
-                        value={searchTerm}
-                        onInput={handleSearch}
-                    />
-                    <div
-                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                        <div className="list-group list-group-checkable h-100 w-100 rounded">
-                            {filteredPolls.length === 0 ? (
-                                <div className="text_color">
-                                    <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
-                                    {' '}
-                                    <a href={`/polls/new/`}>создайте новый опрос</a>.
-                                </div>
-                            ) : (
-                                filteredPolls.map((poll) => (
-                                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                                    <a
-                                        onClick={() => navigate(`/polls/${poll.id}`)}
-                                        key={poll.id}
-                                        className="list-group-item list-group-item-action weak_blue"
-                                    >
-                                        <div className="d-flex w-100 justify-content-between">
-                                            <h5 className="mb-1">{poll.question}</h5>
-                                            <small>{formatTimeSinceCreation(poll.created_at)}</small>
-                                        </div>
-                                    </a>
-                                ))
-                            )}
-                        </div>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                        <input
+                            type="search"
+                            className="form-control rounded weak-orange"
+                            style={{flex: 1}}
+                            placeholder="Введите название опроса..."
+                            aria-label="Search"
+                            value={searchTerm}
+                            onInput={handleSearch}
+                        />
+                        <button className="btn btn-primary background_color_of_primary_btn" onClick={event => navigate(`/polls/new/`)} style={{marginLeft: '10px', maxHeight: '40px', fontSize: '14px'}}>
+                            Создать опрос
+                        </button>
+                    </div>
+                <div
+                    className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                    <div className="list-group list-group-checkable h-100 w-100 rounded">
+                        {filteredPolls.length === 0 ? (
+                            <div className="text_color">
+                                <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
+                                {' '}
+                                <a href={`/polls/new/`}>создайте новый опрос</a>.
+                            </div>
+                        ) : (
+                            filteredPolls.map((poll) => (
+                                // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                                <a
+                                    onClick={() => navigate(`/polls/${poll.id}`)}
+                                    key={poll.id}
+                                    className="list-group-item list-group-item-action weak_blue"
+                                >
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">{poll.question}</h5>
+                                        <small>{formatTimeSinceCreation(poll.created_at)}</small>
+                                    </div>
+                                </a>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>
         </div>
-    );
+</div>
+)
+    ;
 
 }
 
