@@ -142,38 +142,36 @@ const PollsPage = () => {
                             Создать опрос
                         </button>
                     </div>
-                <div
-                    className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                    <div className="list-group list-group-checkable h-100 w-100 rounded">
-                        {filteredPolls.length === 0 ? (
-                            <div className="text_color">
-                                <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
-                                {' '}
-                                <a href={`/polls/new/`}>создайте новый опрос</a>.
-                            </div>
-                        ) : (
-                            filteredPolls.map((poll) => (
-                                // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                                <a
-                                    onClick={() => navigate(`/polls/${poll.id}`)}
-                                    key={poll.id}
-                                    className="list-group-item list-group-item-action weak_blue"
-                                >
-                                    <div className="d-flex w-100 justify-content-between">
-                                        <h5 className="mb-1">{poll.question}</h5>
-                                        <small>{formatTimeSinceCreation(poll.created_at)}</small>
-                                    </div>
-                                </a>
-                            ))
-                        )}
+                    <div
+                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                        <div className="list-group list-group-checkable h-100 w-100 rounded">
+                            {filteredPolls.length === 0 ? (
+                                <div className="text_color">
+                                    <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
+                                    {' '}
+                                    <a href={`/polls/new/`}>создайте новый опрос</a>.
+                                </div>
+                            ) : (
+                                filteredPolls.map((poll) => (
+                                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                                    <a
+                                        onClick={() => navigate(`/polls/${poll.id}`)}
+                                        key={poll.id}
+                                        className="list-group-item list-group-item-action weak_blue"
+                                    >
+                                        <div className="d-flex w-100 justify-content-between">
+                                            <h5 className="mb-1">{poll.question}</h5>
+                                            <small>{formatTimeSinceCreation(poll.created_at)}</small>
+                                        </div>
+                                    </a>
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
-)
-    ;
-
+    );
 }
 
 export default PollsPage;

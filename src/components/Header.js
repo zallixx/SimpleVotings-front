@@ -101,7 +101,7 @@ const Header = () => {
                                 <Col>
                                     {item === 'Vote history' && (
                                         <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ?                                             'light-background' : 'dark-background'}`}
+                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
                                             style={{marginLeft: '-59px'}}
                                         >
