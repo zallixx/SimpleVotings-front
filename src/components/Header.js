@@ -95,7 +95,7 @@ const Header = () => {
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
                                     {item === 'Vote history' && (
-                                        <MdHistory size={29} style={{textAlign: 'left'}}/>
+                                        <MdHistory size={27} style={{textAlign: 'left', cursor: 'pointer'}} onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
@@ -103,7 +103,7 @@ const Header = () => {
                                         <button
                                             className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ?                                             'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-55px'}}
+                                            style={{marginLeft: '-59px'}}
                                         >
                                             {item}
                                         </button>
@@ -115,7 +115,7 @@ const Header = () => {
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
                                     {item === 'Settings' && (
-                                        <MdSettings size={29} style={{textAlign: 'left'}}/>
+                                        <MdSettings size={27} style={{textAlign: 'left', cursor: 'pointer'}} onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
@@ -123,7 +123,7 @@ const Header = () => {
                                         <button
                                             className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-55px'}}
+                                            style={{marginLeft: '-59px'}}
                                         >
                                             {item}
                                         </button>
@@ -135,15 +135,15 @@ const Header = () => {
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
                                     {item === 'Logout' && (
-                                        <MdLogout size={29} style={{textAlign: 'left', color: 'darkred'}}/>
+                                        <MdLogout size={27} style={{textAlign: 'left', color: 'darkred', cursor: 'pointer'}} onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
                                     {item === 'Logout' && (
                                         <button
-                                            className={`btn border-0 rounded-0 tab text-darkred ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                            className={`btn border-0 rounded-0 text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-55px'}}
+                                            style={{marginLeft: '-59px'}}
                                         >
                                             {item}
                                         </button>
