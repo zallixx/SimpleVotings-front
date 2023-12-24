@@ -16,7 +16,7 @@
 ## Установка
 
 1. ```commandline
-   https://gitlab.informatics.ru/s_saasha/front_votings.git
+   git clone https://gitlab.informatics.ru/s_saasha/front_votings.git
 2. Если у вас нет nvm - [Установить nvm](https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-setup.exe)
 3. ```commandline 
    nvm install 21.3.0
@@ -24,7 +24,6 @@
    nvm use 21.3.0
 5. ```commandline
    npm install
-
 ## Использование
 
 1. ```npm start```
