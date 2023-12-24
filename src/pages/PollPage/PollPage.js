@@ -31,7 +31,7 @@ const PollsPage = () => {
             const data = await response.json();
             if (response.status === 200) {
                 setPoll(data);
-                setAuthorName(await get_author_name(data.created_by));
+                setAuthorName(data.author_name);
                 setLoading(false);
             } else {
                 navigate('/polls');
@@ -40,27 +40,6 @@ const PollsPage = () => {
             alert(error)
         }
     };
-
-    const get_author_name = async (id) => {
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/users/' + id + '/username/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-            });
-            const data = await response.json();
-            if (response.status === 200) {
-                return data;
-            } else {
-                alert('Something went wrong!');
-            }
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     const vote = async (e) => {
         e.preventDefault();
