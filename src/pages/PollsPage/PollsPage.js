@@ -90,6 +90,22 @@ const PollsPage = () => {
         }
     };
 
+    const formatRemainingTime = (Time) => {
+        const now = new Date();
+        const RemainingTime = new Date(Time);
+
+        const diffInMinutes = Math.floor((RemainingTime - now) / (1000 * 60));
+        const diffInHours = Math.floor(diffInMinutes / 60);
+        const diffInDays = Math.floor(diffInHours / 24);
+
+        if (diffInMinutes < 60) {
+            return `Осталось ${diffInMinutes} минут`;
+        } else if (diffInHours < 24) {
+            return `Осталось ${diffInHours} часов`;
+        } else if (diffInDays < 30) {
+            return `Осталось ${diffInDays} дней`;
+        }
+    };
 
     if (isLoading) {
         return (
@@ -137,8 +153,25 @@ const PollsPage = () => {
                                             <div style={{display: 'flex', flexDirection: 'row'}}>
                                                 <h5 className="mb-1">{poll.question}</h5>
                                                 <small style={{marginLeft: '5px'}}>
-                                                    <MdAccessAlarm size={22} style={{color: '#910000'}}/>
-                                                    <MdPerson size={22} style={{color: '#910000'}}/>
+                                                    {poll.special == 2 ?
+                                                        (
+                                                            <>
+                                                                <MdAccessAlarm size={22} style={{color: '#910000'}}/>
+                                                                <small style={{color: '#910000', marginLeft: '5px'}}>
+                                                                    {formatRemainingTime(poll.remaining_time)}
+                                                                </small>
+                                                            </>
+                                                        )
+                                                        : poll.special == 1 ?
+                                                            (
+                                                                <>
+                                                                    <MdPerson size={22} style={{color: '#910000'}}/>
+                                                                    <small
+                                                                        style={{color: '#910000', marginLeft: '5px'}}>
+                                                                        {`Осталось ${poll.amount_participants-poll.participants_amount_voted} голосов`}
+                                                                    </small>
+                                                                </>
+                                                            ) : null}
                                                 </small>
                                             </div>
                                             <small>{formatTimeSinceCreation(poll.created_at)}</small>
