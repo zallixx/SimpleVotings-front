@@ -56,6 +56,10 @@ const NewPollPage = () => {
         if (event.target.type === "submit") {
             if (question === '') {
                 alert('Заполните вопрос!');
+            } else if (specialConditionValue < 0) {
+                alert('Значение не может быть отрицательным');
+            } else if (specialConditionValue > 100 && specialCondition == 2) {
+                alert('Значение не может быть больше 100');
             } else {
                 alert("Опрос создан!");
                 const discreteAnswers = ['Да','Нет']
