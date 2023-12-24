@@ -1,10 +1,10 @@
 import {useContext, useEffect, useState, useRef} from 'react';
 import {useNavigate} from "react-router-dom";
 import {ButtonGroup, Col, Overlay, Popover, Row} from "react-bootstrap";
-import AuthContext from "../context/AuthContext";
+import AuthContext from "../../context/AuthContext";
 import { BsBrightnessHigh } from "react-icons/bs";
 import { MdOutlineBrightness2 } from "react-icons/md";
-import {ThemeContext} from "../App";
+import {ThemeContext} from "../../App";
 import { MdHistory } from "react-icons/md";
 import { MdSettings } from "react-icons/md";
 import {MdLogout} from "react-icons/md";

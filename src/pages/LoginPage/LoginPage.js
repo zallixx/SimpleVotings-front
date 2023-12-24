@@ -11,12 +11,10 @@ const LoginPage = () => {
         return;
     }
     return (
-      <div className="BasePageCss">
-
-        <LoginForm/>
-      </div>
+        <div className="BasePageCss">
+            <LoginForm/>
+        </div>
     );
-
 }
 
 export default LoginPage;
