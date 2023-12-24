@@ -1,70 +1,49 @@
-# Getting Started with Create React App
+# Simple_votings -- front
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Описание
 
-## Available Scripts
+- Мы создали этот проект с целью разработать и представить веб-приложение для проведения голосований, чтобы предоставить пользователям удобный сервис с простым интерфейсом.
+- Фронт проекта Simple_votings решает задачу для связи интерфейса с бэком нашего проекта, также предоставляя простой механизм для сбора голосов.
+- В течении разработки фронта нашего проекта, мы освоили JavaScript и библиотеку React. Благодаря новым знаниям, мы расширили наши знания в создании интерфейсов и взаимодействии с бэкендом.
 
-In the project directory, you can run:
+## Таблица ссылок
 
-### `npm start`
+- [Установка](#установка)
+- [Использование](#использование)
+- [Благодарности](#благодарности)
+- [Лицензия](#лицензия)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Установка
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+1. ```commandline
+   https://gitlab.informatics.ru/s_saasha/front_votings.git
+2. Если у вас нет nvm - [Установить nvm](https://github.com/coreybutler/nvm-windows/releases/download/1.1.12/nvm-setup.exe)
+3. ```commandline 
+   nvm install 21.3.0
+4. ```commandline
+   nvm use 21.3.0
+5. ```commandline
+   npm install
 
-### `npm test`
+## Использование
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+1. ```npm start```
 
-### `npm run build`
+## Благодарности
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [В написании кода участвовали участники группы s_101_03_01](https://gitlab.informatics.ru/s_saasha/front_votings/-/project_members)
+- [React-icons](https://react-icons.github.io/react-icons/)
+- [Bootscrap-icons](https://icons.getbootstrap.com/)
+- [Bootscrap](https://getbootstrap.com/)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Лицензия
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [Лицензия]()
 
-### `npm run eject`
+## Badges
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+* Сделать badges(или удалить)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Features
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* Сделать Features(или удалить)
