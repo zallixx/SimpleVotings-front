@@ -8,6 +8,7 @@ const NewPollPage = () => {
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState(['', '']);
     let {authTokens} = useContext(AuthContext);
+    let {user} = useContext(AuthContext);
     const navigate = useNavigate();
     const handlePollTypeChange = (event) => {
         setPollType(event.target.value);
@@ -50,7 +51,8 @@ const NewPollPage = () => {
                 const payload = {
                     type_voting: pollType,
                     question: question,
-                    choices: (pollType === 2 ? discreteAnswers : answers),
+                    choices: (pollType == 2 ? discreteAnswers : answers),
+                    author_name: user.username
                 };
                 fetch('http://127.0.0.1:8000/api/polls/new/', {
                     method: 'POST',
@@ -88,7 +90,7 @@ const NewPollPage = () => {
                         </select>
                     </label>
                     <br/>
-                    {pollType === 2 ? (
+                    {pollType == 2 ? (
                         <label>
                             Варианты ответов:
                             <div>
@@ -131,7 +133,6 @@ const NewPollPage = () => {
                             </button>
                         </label>
                     )}
-
                 </div>
                 <br/>
                 <button className="btn btn-primary" onClick={handleSubmit}>Создать опрос</button>
