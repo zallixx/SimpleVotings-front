@@ -1,24 +1,24 @@
 import './App.css';
 
 import {createContext, useState} from "react";
-import HomePage from './pages/HomePage';
+import HomePage from './pages/HomePage/HomePage';
 import {AuthProvider} from "./context/AuthContext";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 import PrivateRoute from "./utils/PrivateRoute";
-import LoginPage from './components/LoginPage/LoginPage';
+import LoginPage from './pages/LoginPage/LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import RegisterPage from "./components/RegisterPage/RegisterPage";
-import PollsPage from "./components/PollsPage/PollsPage";
-import PollPage from "./components/PollPage/PollPage";
-import NewPollPage from "./components/NewPollPage/NewPollPage";
-import ResultPage from "./components/ResultPage/ResultPage";
+import RegisterPage from "./pages/RegisterPage/RegisterPage";
+import PollsPage from "./pages/PollsPage/PollsPage";
+import PollPage from "./pages/PollPage/PollPage";
+import NewPollPage from "./pages/NewPollPage/NewPollPage";
+import ResultPage from "./pages/ResultPage/ResultPage";
 import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
-import ComplainsPage from "./components/ComplainsPage/ComplainsPage";
-import AnswerForComplainPage from "./components/AnswerForComplainPage/AnswerForComplainPage";
-import VoteHistoryPage from "./components/VoteHistoryPage/VoteHistoryPage";
-import SettingsPage from "./components/SettingsPage/SettingsPage";
-import ProfilePage from "./components/ProfilePage/ProfilePage";
+import ComplainsPage from "./pages/ComplainsPage/ComplainsPage";
+import AnswerForComplainPage from "./pages/AnswerForComplainPage/AnswerForComplainPage";
+import VoteHistoryPage from "./pages/VoteHistoryPage/VoteHistoryPage";
+import SettingsPage from "./pages/SettingsPage/SettingsPage";
+import ProfilePage from "./pages/ProfilePage/ProfilePage";
 
 export const ThemeContext = createContext(null)
 
