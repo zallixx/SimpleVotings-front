@@ -10,6 +10,9 @@ const NewPollPage = () => {
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext);
     const navigate = useNavigate();
+    const [specialCondition, setSpecialCondition] = useState(0);
+    const [specialConditionValue, setSpecialConditionValue] = useState(0);
+
     const handlePollTypeChange = (event) => {
         setPollType(event.target.value);
     };
@@ -22,6 +25,14 @@ const NewPollPage = () => {
         const newAnswers = [...answers];
         newAnswers[index] = event.target.value;
         setAnswers(newAnswers);
+    };
+
+    const handleSpecialConditionChange = (event) => {
+        setSpecialCondition(event.target.value);
+    };
+
+    const handleSpecialConditionValueChange = (event) => {
+        setSpecialConditionValue(event.target.value);
     };
 
     const handleAddAnswer = () => {
@@ -54,6 +65,16 @@ const NewPollPage = () => {
                     choices: (pollType == 2 ? discreteAnswers : answers),
                     author_name: user.username
                 };
+                if (specialCondition == 1) {
+                    payload.amount_participants = specialConditionValue;
+                    payload.special = specialCondition;
+                } else if (specialCondition == 2) {
+                    let hours = parseInt(specialConditionValue);
+                    let currentDate = new Date();
+                    currentDate.setHours(currentDate.getHours() + hours);
+                    payload.remaining_time = currentDate.toUTCString();
+                    payload.special = specialCondition;
+                }
                 fetch('http://127.0.0.1:8000/api/polls/new/', {
                     method: 'POST',
                     headers: {
@@ -81,6 +102,30 @@ const NewPollPage = () => {
                             onChange={handleQuestionChange}
                         />
                     </div>
+                    <label>
+                        Специальное условие:
+                        <select className="form-select mb-1 rounded" value={specialCondition} onChange={handleSpecialConditionChange}>
+                            <option value={0}>Нет</option>
+                            <option value={1}>Ограниченное кол-во голосов</option>
+                            <option value={2}>Ограниченное время</option>
+                        </select>
+                    </label>
+                    <br/>
+                    {specialCondition == 2 ? (
+                        <input
+                            type="text"
+                            className="form-control mb-1 rounded"
+                            placeholder="Введите кол-во часов"
+                            onChange={handleSpecialConditionValueChange}
+                        />
+                    ) : specialCondition == 1 ? (
+                        <input
+                            type="text"
+                            className="form-control mb-1 rounded"
+                            placeholder="Введите кол-во голосов"
+                            onChange={handleSpecialConditionValueChange}
+                        />
+                    ) : null}
                     <label>
                         Тип опроса:
                         <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
