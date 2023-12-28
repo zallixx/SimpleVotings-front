@@ -251,7 +251,7 @@ const PollsPage = () => {
                     </Modal.Body>
                     <Modal.Footer closeButton className="rounded-bottom-1 border-0">
                         <Button variant="danger" onClick={complain}>
-                            Отрпавить жалобу
+                            Отправить жалобу
                         </Button>
                         <Button variant="secondary" onClick={handleClose}>
                             Отмена

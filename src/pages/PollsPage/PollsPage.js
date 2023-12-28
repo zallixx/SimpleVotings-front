@@ -101,11 +101,38 @@ const PollsPage = () => {
         if (diffInMinutes < 60) {
             return `Осталось ${diffInMinutes} минут`;
         } else if (diffInHours < 24) {
-            return `Осталось ${diffInHours} часов`;
+            if (diffInHours>11 && diffInHours<20){
+                return `Осталось ${diffInHours} часов`;
+            } else if (diffInHours % 10 === 1) {
+                return `Остался ${diffInHours} час`;
+            } else if (diffInHours % 10 === 2 || diffInHours % 10 === 3 || diffInHours % 10 === 4) {
+                return `Осталось ${diffInHours} часа`;
+            } else {
+                return `Осталось ${diffInHours} часов`;
+            }
         } else if (diffInDays < 30) {
-            return `Осталось ${diffInDays} дней`;
+            if (diffInDays>11 && diffInDays<20){
+                return `Осталось ${diffInDays} дней`;
+            } else if (diffInDays % 10 === 1) {
+                return `Остался ${diffInDays} день`;
+            } else if (diffInDays % 10 === 2 || diffInDays % 10 === 3 || diffInDays % 10 === 4) {
+                return `Осталось ${diffInDays} дня`;
+            } else {
+                return `Осталось ${diffInDays} дней`;
+            }
         }
     };
+    const formatVoteNumber = (voteNumber) => {
+        if (voteNumber>11 && voteNumber<20) {
+            return `Осталось ${voteNumber} голосов`;
+        } else if (voteNumber % 10 === 1) {
+            return `Остался ${voteNumber} голос`;
+        } else if (voteNumber % 10 === 2 || voteNumber % 10 === 3 || voteNumber % 10 === 4) {
+            return `Осталось ${voteNumber} голоса`;
+        } else {
+            return `Осталось ${voteNumber} голосов`;
+        }
+    }
 
     if (isLoading) {
         return (
@@ -168,7 +195,7 @@ const PollsPage = () => {
                                                                     <MdPerson size={22} style={{color: '#910000'}}/>
                                                                     <small
                                                                         style={{color: '#910000', marginLeft: '5px'}}>
-                                                                        {`Осталось ${poll.amount_participants-poll.participants_amount_voted} голосов`}
+                                                                        {formatVoteNumber(poll.amount_participants-poll.participants_amount_voted)}
                                                                     </small>
                                                                 </>
                                                             ) : null}
