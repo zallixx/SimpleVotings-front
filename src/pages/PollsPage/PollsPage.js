@@ -3,8 +3,7 @@ import React, {useContext, useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
-import { MdAccessAlarm } from "react-icons/md";
-import { MdPerson } from "react-icons/md";
+import {MdAccessAlarm, MdPerson} from "react-icons/md";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -101,7 +100,7 @@ const PollsPage = () => {
         if (diffInMinutes < 60) {
             return `Осталось ${diffInMinutes} минут`;
         } else if (diffInHours < 24) {
-            if (diffInHours>11 && diffInHours<20){
+            if (diffInHours > 11 && diffInHours < 20) {
                 return `Осталось ${diffInHours} часов`;
             } else if (diffInHours % 10 === 1) {
                 return `Остался ${diffInHours} час`;
@@ -111,7 +110,7 @@ const PollsPage = () => {
                 return `Осталось ${diffInHours} часов`;
             }
         } else if (diffInDays < 30) {
-            if (diffInDays>11 && diffInDays<20){
+            if (diffInDays > 11 && diffInDays < 20) {
                 return `Осталось ${diffInDays} дней`;
             } else if (diffInDays % 10 === 1) {
                 return `Остался ${diffInDays} день`;
@@ -123,7 +122,7 @@ const PollsPage = () => {
         }
     };
     const formatVoteNumber = (voteNumber) => {
-        if (voteNumber>11 && voteNumber<20) {
+        if (voteNumber > 11 && voteNumber < 20) {
             return `Осталось ${voteNumber} голосов`;
         } else if (voteNumber % 10 === 1) {
             return `Остался ${voteNumber} голос`;
@@ -155,7 +154,9 @@ const PollsPage = () => {
                             value={searchTerm}
                             onInput={handleSearch}
                         />
-                        <button className="btn btn-primary background_color_of_primary_btn" onClick={event => navigate(`/polls/new/`)} style={{marginLeft: '10px', maxHeight: '40px', fontSize: '14px'}}>
+                        <button className="btn btn-primary background_color_of_primary_btn"
+                                onClick={event => navigate(`/polls/new/`)}
+                                style={{marginLeft: '10px', maxHeight: '40px', fontSize: '14px'}}>
                             Создать опрос
                         </button>
                     </div>
@@ -176,28 +177,32 @@ const PollsPage = () => {
                                         key={poll.id}
                                         className="list-group-item list-group-item-action weak_blue"
                                     >
-                                        <div className="d-flex w-100 justify-content-between align-items-center">
-                                            <div style={{display: 'flex', flexDirection: 'row'}}>
-                                                <h5 className="mb-1">{poll.question}</h5>
-                                                <small style={{marginLeft: '5px'}}>
+                                        <div className="d-flex w-100 justify-content-between align-items-center container">
+                                            <div className="row" style={{display: 'flex', flexDirection: 'row'}}>
+                                                <h5 className="mb-1 row">{poll.question}</h5>
+                                                <small className="row">
                                                     {poll.special == 2 ?
                                                         (
-                                                            <>
-                                                                <MdAccessAlarm size={22} style={{color: '#910000'}}/>
-                                                                <small style={{color: '#910000', marginLeft: '5px'}}>
+                                                            <div>
+                                                                <MdAccessAlarm size={22}
+                                                                               style={{color: '#910000', marginLeft: '-11px'}}/>
+                                                                <small
+                                                                       style={{color: '#910000', marginLeft: '5px'}}>
                                                                     {formatRemainingTime(poll.remaining_time)}
                                                                 </small>
-                                                            </>
+                                                            </div>
                                                         )
                                                         : poll.special == 1 ?
                                                             (
-                                                                <>
-                                                                    <MdPerson size={22} style={{color: '#910000'}}/>
+                                                                <div>
+                                                                    <MdPerson className="col" size={22}
+                                                                              style={{color: '#910000', marginLeft: '-12px'}}/>
                                                                     <small
+                                                                        className="col"
                                                                         style={{color: '#910000', marginLeft: '5px'}}>
-                                                                        {formatVoteNumber(poll.amount_participants-poll.participants_amount_voted)}
+                                                                        {formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)}
                                                                     </small>
-                                                                </>
+                                                                </div>
                                                             ) : null}
                                                 </small>
                                             </div>
