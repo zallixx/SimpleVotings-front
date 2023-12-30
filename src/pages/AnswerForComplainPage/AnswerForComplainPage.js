@@ -1,21 +1,17 @@
 import React, {useContext, useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
+import {useParams} from "react-router-dom";
 
-const ResultPage = () => {
-    const [isLoading, setLoading] = useState(true);
-    const [results, setResults] = useState([]);
+const AnswerForComplainPage = () => {
     let {authTokens} = useContext(AuthContext);
+    const [isLoading, setLoading] = useState(true);
+    const [complain, setComplain] = useState();
     const params = useParams();
 
-    useEffect(() => {
-        fetchResults().then(() => setLoading(false));
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
-    const fetchResults = async () => {
+    const fetchComplain = async () => {
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/results/', {
+            const response = await fetch('http://127.0.0.1:8000/api/complains/' + params.id + '/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -24,7 +20,7 @@ const ResultPage = () => {
             });
             const data = await response.json();
             if (response.status === 200) {
-                setResults(data);
+                setComplain(data);
             } else {
                 alert('Something went wrong!');
             }
@@ -32,30 +28,35 @@ const ResultPage = () => {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        fetchComplain().then(
+            () => setLoading(false)
+        );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     if (isLoading) {
         return (
             <ReactLoading className="position-fixed top-50 start-50 translate-middle h3" height={'6%'} width={'6%'}
                           type="bubbles" color="#505253"/>
-        );
+        )
     }
 
     return (
-        <div className="BasePageCss text_color">
+        <div className="BasePageCss">
             <div className="body-wrapper">
-                <div className="results body-inner">
-                    <h1>Results</h1>
-                    {results.choices.map((result) => (
-                        <div
-                            className="result"
-                            key={result.id}>
-                            <h2>{result[0]}</h2>
-                            <p>{result[1]} votes</p>
-                        </div>
-                    ))}
+                <div className="body-inner h-100 w-75 position-relative">
+                    <h3 className="mb-1">{complain[0].text}</h3>
+                    <hr/>
+                    <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
+                        <h6>Ответ:</h6>
+                        <p className="mb-2">{complain[0].response}</p>
+                    </div>
                 </div>
             </div>
         </div>
     );
-};
+}
 
-export default ResultPage;
+export default AnswerForComplainPage;

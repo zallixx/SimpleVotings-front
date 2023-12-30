@@ -51,6 +51,7 @@ html,
     width: 450px;
     margin: auto;
     background: #222220;
+    color: #ffffff;
     padding: 40px 55px 45px 55px;
     border-radius: 15px;
     transition: all 0.3s;
@@ -107,15 +108,6 @@ html,
 #dark .background_color_of_btns {
     color: white;
     background: #333332;
-}
-
-#light .background_color_of_items_menu {
-    background: #DFDFDE;
-}
-
-#dark .background_color_of_items_menu {
-    color: white;
-    background: #1a1917;
 }
 
 #light .navbar_params {
@@ -183,7 +175,23 @@ html,
 .dropdown_menu {
     position: absolute;
     right: 0;
-    top: 100%;
+}
+
+.light-background {
+  background-color: #DFDFDE;
+}
+
+.dark-background {
+  color: white;
+  background-color: #1a1917;
+}
+
+.light-background .popover-arrow::after {
+  border-bottom-color: #DFDFDE;
+}
+
+.dark-background .popover-arrow::after {
+  border-bottom-color: #1a1917;
 }
 
 #light .weak-orange {
@@ -229,6 +237,35 @@ html,
 }
 
 #dark .background_color_of_primary_btn {
+    background-color: #0b53aa;
+    border: 0;
+}
+
+.custom-modal-dark .modal-header {
+    color: white;
+    background-color: #222220;
+}
+
+.custom-modal-dark .modal-body {
+    background-color: #222220;
+
+}
+
+.custom-modal-dark .close {
+    background-color: #222220;
+
+}
+
+.custom-modal-dark .form-control {
+    color: black;
+    background-color: #e8f0fe;
+}
+
+.custom-modal-dark .modal-footer {
+    background-color: #222220;
+}
+
+.custom-modal-dark .btn-primary {
     background-color: #0b53aa;
     border: 0;
 }

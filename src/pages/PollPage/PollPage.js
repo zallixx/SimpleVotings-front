@@ -5,6 +5,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import {Button, Form, FormGroup} from "react-bootstrap";
 import ReactLoading from 'react-loading';
+import Modal from "react-bootstrap/Modal";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -13,10 +14,10 @@ const PollsPage = () => {
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext)
     const params = useParams();
-    const [selected, setSelected] = useState('');
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
     const [isComplainMode, setComplainMode] = useState(false);
+    const [complainText, setComplainText] = useState('');
 
     const fetchPoll = async () => {
         try {
@@ -30,35 +31,15 @@ const PollsPage = () => {
             const data = await response.json();
             if (response.status === 200) {
                 setPoll(data);
-                setAuthorName(await get_author_name(data.created_by));
+                setAuthorName(data.author_name);
+                setLoading(false);
             } else {
-                alert('Something went wrong!');
+                navigate('/polls');
             }
         } catch (error) {
-            console.error(error);
+            alert(error)
         }
     };
-
-    const get_author_name = async (id) => {
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/users/' + id + '/username/', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-            });
-            const data = await response.json();
-            if (response.status === 200) {
-                return data;
-            } else {
-                alert('Something went wrong!');
-            }
-            return data;
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
     const vote = async (e) => {
         e.preventDefault();
@@ -115,15 +96,9 @@ const PollsPage = () => {
     const toggleEditMode = () => {
         setEditMode(!isEditMode);
     };
-    const toggleComplainMode = () => {
-        setComplainMode(!isComplainMode);
-    }
-
 
     useEffect(() => {
-        fetchPoll().then(
-            () => setLoading(false)
-        );
+        fetchPoll()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (isLoading) {
@@ -136,14 +111,14 @@ const PollsPage = () => {
     let complain = (e) => {
         e.preventDefault();
             try {
-                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
+                 fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
                     body: JSON.stringify({
-                        'text': e.target.text.value
+                        'text': complainText
                     })
                 }).then(() => navigate('/polls'))
             } catch (error) {
@@ -151,21 +126,28 @@ const PollsPage = () => {
             }
     }
 
-    let deletePoll = () => {
+    let deletePoll = async () => {
         if (window.confirm('Вы уверены, что хотите удалить опрос?')) {
             try {
-                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/delete/', {
+                const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/delete/', {
                     method: 'DELETE',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
-                }).then(() => navigate('/polls/'))
+                });
+                const data = await response.json();
+                console.log(response)
+                if (response.status === 200) {
+                    navigate('/polls');
+                }
             } catch (error) {
                 console.error(error);
             }
         }
     }
+
+    const handleClose = () => setComplainMode(false);
 
     return (
         <div className="BasePageCss text_color">
@@ -211,22 +193,7 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
-                        ) : (isComplainMode ? (
-                            <>
-                                <h3 className="card-title mb-1">Жалоба</h3>
-                                <Form onSubmit={complain}>
-                                    <textarea name="text" className="form-control mb-1" maxLength="500"/>
-                                    <div className="d-flex justify-content-between align-items-center mt-3">
-                                        <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5">
-                                                Отправить
-                                            </Button>
-                                        </FormGroup>
-                                    </div>
-                                </Form>
-
-                            </>
-                        ) : (
+                        )  : (
                             <>
                                 <h3 className="card-title mb-1">{poll.question}</h3>
                                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
@@ -271,10 +238,26 @@ const PollsPage = () => {
                                     </div>
                                 </Form>
                             </>
-                        ))}
+                        )}
                     </div>
                 </div>
             </div>
+            <Modal show={isComplainMode} centered className={"custom-modal-" + localStorage.getItem("theme")} onHide={handleClose}>
+                <Modal.Header className="rounded-top-1 border-0">
+                    <Modal.Title>Составление жалобы</Modal.Title>
+                </Modal.Header>
+                    <Modal.Body>
+                        <input type="text" className="form-control" placeholder="Текст жалобы" onInput={(e) => setComplainText(e.target.value)}/>
+                    </Modal.Body>
+                    <Modal.Footer closeButton className="rounded-bottom-1 border-0">
+                        <Button variant="danger" onClick={complain}>
+                            Отправить жалобу
+                        </Button>
+                        <Button variant="secondary" onClick={handleClose}>
+                            Отмена
+                        </Button>
+                    </Modal.Footer>
+            </Modal>
         </div>
     );
 }
