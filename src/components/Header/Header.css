@@ -102,31 +102,42 @@
 
 /* Стиль для поп-овера в хедере(с перезаписью цветов ) */
 .light-background {
-  background-color: #DFDFDE !important;
+    color: black !important;
+    background-color: #DFDFDE !important;
 }
 
 .dark-background {
-  color: white;
-  background-color: #1a1917 !important;
+    color: white !important;
+    background-color: #1a1917 !important;
 }
 
 .light-background .popover-arrow::after {
-  border-bottom-color: #DFDFDE !important;
+    border-bottom-color: #DFDFDE !important;
 }
 
 .dark-background .popover-arrow::after {
-  border-bottom-color: #1a1917 !important;
+    border-bottom-color: #1a1917 !important;
 }
 
 
-/* Стиль для кнопки выхода в хедере */
-.btn.text-darkred {
-  color: darkred;
+/* Стиль для ссылок, которые находятся в поп-овере в хедере */
+.item_on_menu {
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 10px;
+    cursor: pointer;
 }
 
-.btn.text-darkred:hover {
-  text-decoration: underline;
-  color: red;
+/* Стиль для кнопки выхода в поп-овере в хедере */
+.text-darkred {
+    color: darkred !important;
+}
+
+.text-darkred:hover {
+    text-decoration: underline;
+    color: red !important;
 }
 
 

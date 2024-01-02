@@ -101,13 +101,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Vote history' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -122,13 +122,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Settings' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -143,13 +143,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Profile' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => {navigate('/users/' + user.user_id); setActiveTab(item)}}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -165,13 +165,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Logout' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
