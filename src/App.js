@@ -19,6 +19,7 @@ import AnswerForComplainPage from "./pages/AnswerForComplainPage/AnswerForCompla
 import VoteHistoryPage from "./pages/VoteHistoryPage/VoteHistoryPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import ResetPassword from "./pages/ResetPassword/ResetPassword";
 
 export const ThemeContext = createContext(null)
 
@@ -91,6 +92,7 @@ function App() {
                             }/>
                             <Route element={<LoginPage/>} path="/login"/>
                             <Route element={<RegisterPage/>} path="/register"/>
+                        <Route path="/password_reset/:uidb64/:token" element={<ResetPassword/>}/>
                             <Route element={<NotFoundPage/>} path="*"/>
                         </Routes>
                     </AuthProvider>
