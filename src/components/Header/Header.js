@@ -186,11 +186,11 @@ const Header = () => {
     return (
         <div className="navbar fixed-top navbar_params">
             {theme !== 'light' ?
-                <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
                     <BsBrightnessHigh/>
                 </button>
                 :
-                <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
                     <MdOutlineBrightness2/>
                 </button>
             }

@@ -155,7 +155,7 @@ const PollsPage = () => {
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
                         {user.username === author_name && !isEditMode && !isComplainMode &&(
-                            <button className="btn btn-primary float-end background_color_of_primary_btn" onClick={toggleEditMode}>
+                            <button className="btn btn-primary float-end" onClick={toggleEditMode}>
                                 Редактировать
                             </button>
                         )}
@@ -186,7 +186,7 @@ const PollsPage = () => {
                                     ))}
                                     <div className="d-flex justify-content-between align-items-center mt-3">
                                         <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5 background_color_of_primary_btn">
+                                            <Button type="submit" bsStyle="primary" className="fs-5">
                                                 Изменить опрос
                                             </Button>
                                         </FormGroup>
@@ -231,7 +231,7 @@ const PollsPage = () => {
                                                className="complain fs-5">Пожаловаться</a>
                                         )}
                                         <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5 background_color_of_primary_btn" onClick={vote}>
+                                            <Button type="submit" bsStyle="primary" className="fs-5" onClick={vote}>
                                                 Отправить
                                             </Button>
                                         </FormGroup>

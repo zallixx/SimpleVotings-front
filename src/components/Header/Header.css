@@ -1,12 +1,24 @@
-.btn.text-darkred {
-  color: darkred;
+/* Стиль для хедера */
+#light .navbar_params {
+    background: #DFDFDE;
+    height: 50px;
+    justify-content: center;
+    align-content: center;
+    z-index: 99;
+    box-sizing: border-box;
 }
 
-.btn.text-darkred:hover {
-  text-decoration: underline;
-  color: red;
+#dark .navbar_params {
+    background: #1a1917;
+    height: 50px;
+    justify-content: center;
+    align-content: center;
+    z-index: 99;
+    box-sizing: border-box;
 }
 
+
+/* Стиль для ссылок(табов) в хедере */
 .item_on_header {
     position: relative;
     font-size: 1.1em;
@@ -65,4 +77,73 @@
 
 #dark .item_on_header:hover::after {
     transform: scaleX(1);
+}
+
+
+/* Стиль для кнопки(юзера) в хедере */
+#light .username_btn {
+    position: absolute;
+    right: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: black;
+}
+
+#dark .username_btn {
+    position: absolute;
+    right: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
+}
+
+
+/* Стиль для поп-овера в хедере(с перезаписью цветов ) */
+.light-background {
+  background-color: #DFDFDE !important;
+}
+
+.dark-background {
+  color: white;
+  background-color: #1a1917 !important;
+}
+
+.light-background .popover-arrow::after {
+  border-bottom-color: #DFDFDE !important;
+}
+
+.dark-background .popover-arrow::after {
+  border-bottom-color: #1a1917 !important;
+}
+
+
+/* Стиль для кнопки выхода в хедере */
+.btn.text-darkred {
+  color: darkred;
+}
+
+.btn.text-darkred:hover {
+  text-decoration: underline;
+  color: red;
+}
+
+
+/* Стиль для кнопки смены темы в хедере */
+#light .change_theme_btn {
+    position: absolute;
+    left: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#dark .change_theme_btn {
+    position: absolute;
+    left: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
 }

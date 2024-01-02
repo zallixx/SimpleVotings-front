@@ -48,7 +48,7 @@ const ResetPasswordPage = () => {
                         </small>
                         <FormControl type="password" name="password2" className="form-control mt-3"
                                      placeholder="Repeat New Password" onChange={(e) => setNewParam1(e.target.value)}/>
-                        <Button style={{width: '100%', marginTop: '10px', marginBottom: '10px', height: '50px', fontSize: '20px', fontWeight: 'bold', textAlign: 'center', borderRadius: '10px', backgroundColor: '#0d6efd',}} variant="primary" type="submit" className="mt-3">
+                        <Button style={{width: '100%', marginTop: '10px', marginBottom: '10px', height: '50px', fontSize: '20px', fontWeight: 'bold', textAlign: 'center', borderRadius: '10px', }} variant="primary" type="submit" className="mt-3">
                             Submit
                         </Button>
                     </Form>
