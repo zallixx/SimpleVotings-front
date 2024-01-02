@@ -112,24 +112,20 @@ html,
 
 #light .navbar_params {
     background: #DFDFDE;
-    height: 3.2%;
+    height: 50px;
+    justify-content: center;
+    align-content: center;
+    z-index: 99;
+    box-sizing: border-box;
 }
 
 #dark .navbar_params {
     background: #1a1917;
-    height: 3.2%;
-}
-
-#light .navbar_items {
-    position: absolute;
-    right: 40%;
-    left: 40%;
-}
-
-#dark .navbar_items {
-    position: absolute;
-    right: 40%;
-    left: 40%;
+    height: 50px;
+    justify-content: center;
+    align-content: center;
+    z-index: 99;
+    box-sizing: border-box;
 }
 
 #light .username_btn {
@@ -137,7 +133,6 @@ html,
     right: 0;
     height: 100%;
     color: black;
-    background: #DFDFDE;
 }
 
 #dark .username_btn {
@@ -145,13 +140,11 @@ html,
     right: 0;
     height: 100%;
     color: white;
-    background: #1A1917;
 }
 
 #light .change_theme_btn {
     position: absolute;
     left: 0;
-    background: #DFDFDE;
     color: black;
     height: 100%;
 }
@@ -159,7 +152,6 @@ html,
 #dark .change_theme_btn {
     position: absolute;
     left: 0;
-    background: #1A1917;
     color: white;
     height: 100%;
 }

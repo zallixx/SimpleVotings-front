@@ -32,8 +32,8 @@ const Header = () => {
     const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
     const [activeTab, setActiveTab] = useState(null);
     let {user, logoutUser} = useContext(AuthContext);
-    // eslint-disable-next-line
     const {theme, toggleTheme} = useContext(ThemeContext);
+    const pathname = window.location.pathname.slice(1);
     const target = useRef(null);
 
     useEffect(() => {
@@ -71,19 +71,19 @@ const Header = () => {
     };
 
     const items_tabs = Object.keys(authorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab}
+        <a className={`border-0 rounded-0 item_on_header text_color ${(authorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleAuthorizedTabClick(tab)}>
             {tab}
-        </button>
+        </a>
     ))
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab}
+        <a className={`border-0 rounded-0 item_on_header text_color ${(unauthorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
-        </button>
+        </a>
     ))
 
     const items_menu = (
