@@ -1,19 +1,160 @@
-.tab {
-  margin: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  cursor: pointer;
+/* Стиль для хедера */
+#light .navbar_params {
+    background: #DFDFDE;
+    height: 50px;
+    justify-content: center;
+    align-content: center;
+    z-index: 99;
+    box-sizing: border-box;
 }
 
-.tab.active.btn {
-  text-decoration: underline;
+#dark .navbar_params {
+    background: #1a1917;
+    height: 50px;
+    justify-content: center;
+    align-content: center;
+    z-index: 99;
+    box-sizing: border-box;
 }
 
-.btn.text-darkred {
-  color: darkred;
+
+/* Стиль для ссылок(табов) в хедере */
+.item_on_header {
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 10px;
+    cursor: pointer;
 }
 
-.btn.text-darkred:hover {
-  text-decoration: underline;
-  color: red;
+.item_on_header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -6px;
+    height: 3px;
+    background-color: black;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.item_on_header:hover {
+    color: black;
+}
+
+#dark .item_on_header::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -6px;
+    height: 3px;
+    color: white;
+    background-color: white;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+#dark .item_on_header:hover {
+    color: white;
+}
+
+.item_on_header.active::after {
+    transform: scaleX(1);
+}
+
+.item_on_header:hover::after {
+    transform: scaleX(1);
+}
+
+#dark .item_on_header.active::after {
+    transform: scaleX(1);
+}
+
+#dark .item_on_header:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* Стиль для кнопки(юзера) в хедере */
+#light .username_btn {
+    position: absolute;
+    right: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: black;
+}
+
+#dark .username_btn {
+    position: absolute;
+    right: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
+}
+
+
+/* Стиль для поп-овера в хедере(с перезаписью цветов ) */
+.light-background {
+    color: black !important;
+    background-color: #DFDFDE !important;
+}
+
+.dark-background {
+    color: white !important;
+    background-color: #1a1917 !important;
+}
+
+.light-background .popover-arrow::after {
+    border-bottom-color: #DFDFDE !important;
+}
+
+.dark-background .popover-arrow::after {
+    border-bottom-color: #1a1917 !important;
+}
+
+
+/* Стиль для ссылок, которые находятся в поп-овере в хедере */
+.item_on_menu {
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 10px;
+    cursor: pointer;
+}
+
+/* Стиль для кнопки выхода в поп-овере в хедере */
+.text-darkred {
+    color: darkred !important;
+}
+
+.text-darkred:hover {
+    text-decoration: underline;
+    color: red !important;
+}
+
+
+/* Стиль для кнопки смены темы в хедере */
+#light .change_theme_btn {
+    position: absolute;
+    left: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+#dark .change_theme_btn {
+    position: absolute;
+    left: 0;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    color: white;
 }

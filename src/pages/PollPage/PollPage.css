@@ -18,3 +18,13 @@
     text-underline-offset: 0.1px;
     text-underline-position: under;
 }
+
+#light .background_color_of_choice_btns {
+    background-color: #ffffff;
+    border: 1px solid black;
+}
+
+#dark .background_color_of_choice_btns {
+    background-color: #2f2f2c;
+    border: 1px solid black;
+}

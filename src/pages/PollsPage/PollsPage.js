@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
 import {MdAccessAlarm, MdPerson} from "react-icons/md";
+import './PollsPage.css';
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
@@ -154,7 +155,7 @@ const PollsPage = () => {
                             value={searchTerm}
                             onInput={handleSearch}
                         />
-                        <button className="btn btn-primary background_color_of_primary_btn"
+                        <button className="btn btn-primary"
                                 onClick={event => navigate(`/polls/new/`)}
                                 style={{marginLeft: '10px', maxHeight: '40px', fontSize: '14px'}}>
                             Создать опрос

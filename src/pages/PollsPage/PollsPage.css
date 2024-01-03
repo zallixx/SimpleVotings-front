@@ -1,0 +1,32 @@
+/* Настройка стиля для страницы с опросами. Отвечают за цвета при наведении, обводку, а также за цвета поиска */
+#light .weak-orange {
+    background-color: #ffffff;
+}
+
+#light .weak_blue {
+    background-color: #f9f8f5;
+}
+
+#light .weak_blue:hover {
+    background-color: #ccdeed
+}
+
+#dark .weak-orange {
+    background-color: #333330;
+    color: #eaeaea;
+    border: 1.5px solid black;
+}
+
+#dark .weak-orange::placeholder {
+    color: #eaeaea;
+}
+
+#dark .weak_blue {
+    background-color: #333332;
+    color: #eaeaea;
+    border-color: black;
+}
+
+#dark .weak_blue:hover {
+    background-color: #132535;
+}

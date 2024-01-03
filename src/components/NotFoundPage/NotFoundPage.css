@@ -1,0 +1,36 @@
+/* Стиль для текста на странице 404 */
+
+.root {
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+.label {
+    text-align: center;
+    font-weight: 900;
+    font-size: 300px;
+    line-height: 1;
+}
+
+.description {
+    max-width: 500px;
+    margin: auto;
+}
+
+.title {
+  text-align: center;
+  font-weight: 900;
+  font-size: 38px;
+}
+
+
+/* Текст для кнопки-возврата на главную страницу */
+#light .background_color_of_btns {
+    background: #ffffff;
+    color: black;
+}
+
+#dark .background_color_of_btns {
+    color: white;
+    background: #333332;
+}
