@@ -1,27 +1,22 @@
-import { Title, Text, Container, Group, MantineProvider } from '@mantine/core';
-import classes from './NotFoundPage.module.css';
+import './NotFoundPage.css';
 import {useNavigate} from "react-router-dom";
 
 const NotFoundPage = () => {
     const navigate = useNavigate()
     return (
-    <MantineProvider>
-        <div className="text_color">
-        <Container className={classes.root}>
-            <div className={classes.label}>404</div>
-            <Title className={classes.title}>You have found a secret place.</Title>
-            <Text c="dimmed" size="lg" ta="center" className={classes.description}>
-                Unfortunately, this is only a 404 page. You may have mistyped the address, or the page has
-                been moved to another URL.
-            </Text>
-            <Group justify="center">
+        <div className="root text_color">
+            <div className="label">404</div>
+            <p className="title">Кажется ты нашёл секретное место.</p>
+            <p className="description">
+                Но, к сожалению, это всего-навсего страница с ошибкой 404. Возможно, ты ошибся в адресе, или страница была
+                перемещена на другой адрес.
+            </p>
+            <div className="justify-content-center">
                 <button className="btn my-2 rounded-pill shadow-lg background_color_of_btns my-3" onClick={() => navigate('/')}>
-                    Take me back to home page
+                    Верните меня на главную страницу
                 </button>
-            </Group>
-        </Container>
+            </div>
         </div>
-    </MantineProvider>
     );
 }
 

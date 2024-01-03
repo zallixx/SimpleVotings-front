@@ -32,8 +32,8 @@ const Header = () => {
     const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
     const [activeTab, setActiveTab] = useState(null);
     let {user, logoutUser} = useContext(AuthContext);
-    // eslint-disable-next-line
     const {theme, toggleTheme} = useContext(ThemeContext);
+    const pathname = window.location.pathname.slice(1);
     const target = useRef(null);
 
     useEffect(() => {
@@ -71,19 +71,19 @@ const Header = () => {
     };
 
     const items_tabs = Object.keys(authorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab}
+        <a className={`border-0 rounded-0 item_on_header text_color ${(authorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleAuthorizedTabClick(tab)}>
             {tab}
-        </button>
+        </a>
     ))
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
-        <button className={`btn border-0 rounded-0 tab text_color ${activeTab === tab ? 'active' : ''}`} value={tab}
+        <a className={`border-0 rounded-0 item_on_header text_color ${(unauthorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
-        </button>
+        </a>
     ))
 
     const items_menu = (
@@ -101,13 +101,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Vote history' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -122,13 +122,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Settings' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -143,13 +143,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Profile' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 tab ${activeTab === item ? 'active' : ''} ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => {navigate('/users/' + user.user_id); setActiveTab(item)}}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -165,13 +165,13 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Logout' && (
-                                        <button
-                                            className={`btn border-0 rounded-0 text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
+                                        <a
+                                            className={`item_on_menu text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-59px'}}
+                                            style={{marginLeft: '-48px'}}
                                         >
                                             {item}
-                                        </button>
+                                        </a>
                                     )}
                                 </Col>
                             </Row>
@@ -186,11 +186,11 @@ const Header = () => {
     return (
         <div className="navbar fixed-top navbar_params">
             {theme !== 'light' ?
-                <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
                     <BsBrightnessHigh/>
                 </button>
                 :
-                <button className="btn border-0 change_theme_btn" onClick={toggleTheme} style={{marginBottom: '5px'}}>
+                <button className="btn border-0 change_theme_btn" onClick={toggleTheme}>
                     <MdOutlineBrightness2/>
                 </button>
             }
