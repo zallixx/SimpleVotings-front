@@ -3,6 +3,8 @@
 * {
   box-sizing: border-box;
 }
+
+/* Общий стиль для body */
 body {
   background: #f4f6fa;
   min-height: 100vh;
@@ -11,6 +13,8 @@ body {
   font-family: "Fira Sans", sans-serif;
 }
 
+
+/* Настройка шрифтов для загаловков, спанов и строк */
 h1,
 h2,
 h3,
@@ -23,6 +27,8 @@ span {
   font-family: "Fira Sans", sans-serif;
 }
 
+
+/* Настройка ширины и высоты */
 body,
 html,
 .App,
@@ -32,6 +38,8 @@ html,
   height: 100%;
 }
 
+
+/* Стиль для внешнего блока */
 .body-wrapper {
   display: flex;
   justify-content: center;
@@ -39,12 +47,26 @@ html,
   text-align: left;
 }
 
+
+/* Стиль главного заднего фона */
 #light {
   background-color: #f4f6fa;
 }
 
 #dark {
   background-color: #1e1e1d;
+}
+
+
+/* Стиль для внутреннего блока */
+#light .body-inner {
+    width: 450px;
+    margin: auto;
+    background: #ffffff;
+    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+    padding: 40px 55px 45px 55px;
+    border-radius: 15px;
+    transition: all 0.3s;
 }
 
 #dark .body-inner {
@@ -58,26 +80,31 @@ html,
 }
 
 
-#light .body-inner {
-    width: 450px;
-    margin: auto;
-    background: #ffffff;
-    box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
-    padding: 40px 55px 45px 55px;
-    border-radius: 15px;
-    transition: all 0.3s;
-}
-
+/* Стиль для форм(во время фокуса) */
 .body-wrapper .form-control:focus {
     border-color: #167bff;
     box-shadow: none;
 }
 
+
+/* Стиль для заголовка h3 */
 .body-wrapper h3 {
     text-align: center;
     margin: 0;
     line-height: 1;
     padding-bottom: 20px;
+}
+
+
+/* Стиль для страницы */
+#light .BasePageCss {
+    background-color: #f4f6fa;
+    min-height: 100%;
+    min-height: 100vh;
+    display: flex;
+    background-size: cover;
+    align-items: center;
+    justify-content: center;
 }
 
 #dark .BasePageCss {
@@ -90,16 +117,8 @@ html,
     justify-content: center;
 }
 
-#light .BasePageCss {
-    background-color: #f4f6fa;
-    min-height: 100%;
-    min-height: 100vh;
-    display: flex;
-    background-size: cover;
-    align-items: center;
-    justify-content: center;
-}
 
+/* Стиль для текста */
 #light .text_color {
     color: black;
 }
@@ -108,6 +127,8 @@ html,
     color: white;
 }
 
+
+/* Стиль для кнопок(btn-primary) */
 #dark .btn-primary {
     background-color: #0b53aa;
     border: 0;
