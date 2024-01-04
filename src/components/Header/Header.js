@@ -30,7 +30,6 @@ const Header = () => {
     const navigate = useNavigate()
     const [isOpen, setIsOpen] = useState(false);
     const [user_prop, setUserProp] = useState({name: 'Login to see your username!'});
-    const [activeTab, setActiveTab] = useState(null);
     let {user, logoutUser} = useContext(AuthContext);
     const {theme, toggleTheme} = useContext(ThemeContext);
     const pathname = window.location.pathname.slice(1);
@@ -51,12 +50,10 @@ const Header = () => {
 
     const handleAuthorizedTabClick = (tab) => {
         navigate(authorized_tabs[tab]);
-        setActiveTab(tab);
     };
 
     const handleUnAuthorizedTabClick = (tab) => {
         navigate(unauthorized_tabs[tab]);
-        setActiveTab(tab);
     };
 
     const handleMenuItemClick = (item) => {
@@ -68,10 +65,10 @@ const Header = () => {
                 setIsOpen(false);
             }
         }
-        setActiveTab(item);
     };
 
     const items_tabs = Object.keys(authorized_tabs).map((tab) => (
+        // eslint-disable-next-line
         <a className={`border-0 rounded-0 item_on_header text_color ${(authorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleAuthorizedTabClick(tab)}>
@@ -80,6 +77,7 @@ const Header = () => {
     ))
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
+        // eslint-disable-next-line
         <a className={`border-0 rounded-0 item_on_header text_color ${(unauthorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
@@ -102,6 +100,7 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Vote history' && (
+                                        // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
@@ -123,6 +122,7 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Settings' && (
+                                        // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
@@ -144,9 +144,10 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Profile' && (
+                                        // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
-                                            onClick={() => {navigate('/users/' + user.user_id); setActiveTab(item)}}
+                                            onClick={() => {navigate('/users/' + user.user_id);}}
                                             style={{marginLeft: '-48px'}}
                                         >
                                             {item}
@@ -166,6 +167,7 @@ const Header = () => {
                                 </Col>
                                 <Col>
                                     {item === 'Logout' && (
+                                        // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}

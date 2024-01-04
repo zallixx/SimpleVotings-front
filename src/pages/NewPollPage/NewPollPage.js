@@ -4,13 +4,13 @@ import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 
 const NewPollPage = () => {
-    const [pollType, setPollType] = useState(0);
+    const [pollType, setPollType] = useState("0");
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState(['', '']);
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext);
     const navigate = useNavigate();
-    const [specialCondition, setSpecialCondition] = useState(0);
+    const [specialCondition, setSpecialCondition] = useState("0");
     const [specialConditionValue, setSpecialConditionValue] = useState(0);
 
     const handlePollTypeChange = (event) => {
@@ -58,7 +58,7 @@ const NewPollPage = () => {
                 alert('Заполните вопрос!');
             } else if (specialConditionValue < 0) {
                 alert('Значение не может быть отрицательным');
-            } else if (specialConditionValue > 100 && specialCondition == 2) {
+            } else if (specialConditionValue > 100 && specialCondition === "2") {
                 alert('Значение не может быть больше 100');
             } else {
                 alert("Опрос создан!");
@@ -66,13 +66,13 @@ const NewPollPage = () => {
                 const payload = {
                     type_voting: pollType,
                     question: question,
-                    choices: (pollType == 2 ? discreteAnswers : answers),
+                    choices: (pollType === "2" ? discreteAnswers : answers),
                     author_name: user.username
                 };
-                if (specialCondition == 1) {
+                if (specialCondition === "1") {
                     payload.amount_participants = specialConditionValue;
                     payload.special = specialCondition;
-                } else if (specialCondition == 2) {
+                } else if (specialCondition === "2") {
                     let hours = parseInt(specialConditionValue);
                     let currentDate = new Date();
                     currentDate.setHours(currentDate.getHours() + hours);
@@ -109,20 +109,20 @@ const NewPollPage = () => {
                     <label>
                         Специальное условие:
                         <select className="form-select mb-1 rounded" value={specialCondition} onChange={handleSpecialConditionChange}>
-                            <option value={0}>Нет</option>
-                            <option value={1}>Ограниченное кол-во голосов</option>
-                            <option value={2}>Ограниченное время</option>
+                            <option value={"0"}>Нет</option>
+                            <option value={"1"}>Ограниченное кол-во голосов</option>
+                            <option value={"2"}>Ограниченное время</option>
                         </select>
                     </label>
                     <br/>
-                    {specialCondition == 2 ? (
+                    {specialCondition === "2" ? (
                         <input
                             type="text"
                             className="form-control mb-1 rounded"
                             placeholder="Введите кол-во часов"
                             onChange={handleSpecialConditionValueChange}
                         />
-                    ) : specialCondition == 1 ? (
+                    ) : specialCondition === "1" ? (
                         <input
                             type="text"
                             className="form-control mb-1 rounded"
@@ -133,13 +133,13 @@ const NewPollPage = () => {
                     <label>
                         Тип опроса:
                         <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
-                            <option value={0}>Один из многих</option>
-                            <option value={1}>Несколько из многих</option>
-                            <option value={2}>Дискретный</option>
+                            <option value={"0"}>Один из многих</option>
+                            <option value={"1"}>Несколько из многих</option>
+                            <option value={"2"}>Дискретный</option>
                         </select>
                     </label>
                     <br/>
-                    {pollType == 2 ? (
+                    {pollType === "2" ? (
                         <label>
                             Варианты ответов:
                             <div>

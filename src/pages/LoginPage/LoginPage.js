@@ -46,7 +46,7 @@ const LoginPage = () => {
                         <FormGroup controlId="formPassword" className="mb-3">
                             <FormLabel>Password</FormLabel>
                             <small style={{float: 'right', cursor: 'pointer'}}>
-                                <a onClick={() => setShowFirstModal(true)}>Forgot password?</a>
+                                <p onClick={() => setShowFirstModal(true)}>Forgot password?</p>
                             </small>
                             <FormControl type="password" name="password" className="form-control"
                                          placeholder="Password" required/>
