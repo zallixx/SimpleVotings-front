@@ -65,6 +65,7 @@ const Header = () => {
             navigate(path);
             if (item === 'Logout') {
                 logoutUser();
+                setIsOpen(false);
             }
         }
         setActiveTab(item);
