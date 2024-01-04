@@ -184,26 +184,29 @@ const PollsPage = () => {
                                                 <small className="row">
                                                     {poll.special == 2 ?
                                                         (
-                                                            <div>
+                                                            <span className="d-inline-block" data-toggle="tooltip" title={"Время, через которое опрос закроется"}>
                                                                 <MdAccessAlarm size={22}
                                                                                style={{color: '#910000', marginLeft: '-11px'}}/>
                                                                 <small
                                                                        style={{color: '#910000', marginLeft: '5px'}}>
                                                                     {formatRemainingTime(poll.remaining_time)}
                                                                 </small>
-                                                            </div>
+                                                            </span>
                                                         )
                                                         : poll.special == 1 ?
                                                             (
-                                                                <div>
+                                                                <span className="d-inline-block" data-toggle="tooltip" title={"Оставшееся количество голосов, через которое опрос закроется"}>
                                                                     <MdPerson className="col" size={22}
-                                                                              style={{color: '#910000', marginLeft: '-12px'}}/>
+                                                                              style={{
+                                                                                  color: '#910000',
+                                                                                  marginLeft: '-12px'
+                                                                              }}/>
                                                                     <small
                                                                         className="col"
                                                                         style={{color: '#910000', marginLeft: '5px'}}>
                                                                         {formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)}
                                                                     </small>
-                                                                </div>
+                                                                </span>
                                                             ) : null}
                                                 </small>
                                             </div>

@@ -79,13 +79,15 @@ const LoginPage = () => {
                             )}
                         </Modal.Body>
                     <Modal.Footer className="rounded-bottom-1 border-0">
+                        <span className="d-inline-block" data-toggle="tooltip" title={modal_title === "Success" ? "Мы уже отправили вам письмо на почту, которую вы указали" : null}>
                             <Button variant="primary" type="submit" disabled={disabled_button}>
                                 Отправить
                             </Button>
-                            <Button variant="secondary" onClick={() => setShowFirstModal(false)}>
-                                Отмена
-                            </Button>
-                        </Modal.Footer>
+                        </span>
+                        <Button variant="secondary" onClick={() => setShowFirstModal(false)}>
+                            Отмена
+                        </Button>
+                    </Modal.Footer>
                 </Form>
             </Modal>
             </div>

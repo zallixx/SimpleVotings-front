@@ -63,7 +63,7 @@ const ComplainsPage = () => {
                                                 <a onClick={() => navigate(`/complains/${complain.id}`)}>
                                                     <div className="d-flex w-100 justify-content-between">
                                                         <h5 className="mb-1">{complain.text}</h5>
-                                                        <small> {complain.status + ". Нажми, чтобы посмотреть"}</small>
+                                                        <small> {complain.status + ". Нажми, чтобы посмотреть ответ от администрации"}</small>
                                                     </div>
                                                 </a>
                                             ) : (
