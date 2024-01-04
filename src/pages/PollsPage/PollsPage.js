@@ -178,7 +178,7 @@ const PollsPage = () => {
                                         key={poll.id}
                                         className="list-group-item list-group-item-action weak_blue"
                                     >
-                                        <div className="d-flex w-100 justify-content-between align-items-center container">
+                                        <div className="d-flex w-100 justify-content-between align-items-center ">
                                             <div className="row" style={{display: 'flex', flexDirection: 'row'}}>
                                                 <h5 className="mb-1 row">{poll.question}</h5>
                                                 <small className="row">
