@@ -9,7 +9,8 @@ const LoginPage = () => {
     const [new_param, setNewParam] = useState("");
     const [disabled_button, setDisabledButton] = useState(false);
 
-    const resetPassword = async () => {
+    const resetPassword = async (event) => {
+        event.preventDefault();
         try {
             setDisabledButton(true);
             fetch('http://127.0.0.1:8000/api/reset_password/', {
