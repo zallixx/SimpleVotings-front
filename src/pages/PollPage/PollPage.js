@@ -249,7 +249,7 @@ const PollsPage = () => {
                     <Modal.Body>
                         <textarea type="text" className="form-control" placeholder="Текст жалобы"
                                   onInput={(e) => setComplainText(e.target.value)} required
-                                  maxLength={250} style={{height: '150px', maxHeight: '150px'}}
+                                  maxLength={180} style={{height: '125px', resize: 'none'}}
                         />
                     </Modal.Body>
                     <Modal.Footer closeButton className="rounded-bottom-1 border-0">
