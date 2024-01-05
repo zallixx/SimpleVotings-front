@@ -93,19 +93,22 @@ const SettingsPage = () => {
                 old_password: old_param,
                 new_password: new_param,
             }
-            const response = await fetch('http://127.0.0.1:8000/api/change_password/', {
+            await fetch('http://127.0.0.1:8000/api/change_password/', {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
                 body: JSON.stringify(payload),
+            }).then(response => {
+                if (response.status === 200) {
+                    alert("Пароль изменен");
+                    setShow(false);
+                }
+                else {
+                    alert("Что-то пошло не так. Перепроверьте правильность введенных данных");
+                }
             });
-            if (response.status === 200) {
-                alert("0");
-            } else {
-                alert("-1");
-            }
         } catch (error) {
             console.error(error);
         }
@@ -228,7 +231,6 @@ const SettingsPage = () => {
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
                 });
-                const data = await response.json();
                 if (response.status === 200) {
                     alert("Аккаунт удален");
                     localStorage.removeItem('authTokens');
@@ -251,7 +253,7 @@ const SettingsPage = () => {
                         <h4 style={{justifyContent: 'center', display: 'flex'}}>Настройки публичной информации</h4>
                         {userInfo.avatar ? (
                                 <div>
-                                    <img src={userInfo.avatar} style={{width: '100px', height: '100px'}}/>
+                                    <img src={userInfo.avatar} style={{width: '100px', height: '100px'}} alt={""}/>
                                 </div>
                             )
                             : (

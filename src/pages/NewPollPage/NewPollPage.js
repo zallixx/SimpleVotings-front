@@ -2,15 +2,16 @@ import React, {useContext, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
 import AuthContext from "../../context/AuthContext";
+import {Form} from "react-bootstrap";
 
 const NewPollPage = () => {
-    const [pollType, setPollType] = useState(0);
+    const [pollType, setPollType] = useState("0");
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState(['', '']);
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext);
     const navigate = useNavigate();
-    const [specialCondition, setSpecialCondition] = useState(0);
+    const [specialCondition, setSpecialCondition] = useState("0");
     const [specialConditionValue, setSpecialConditionValue] = useState(0);
 
     const handlePollTypeChange = (event) => {
@@ -53,138 +54,142 @@ const NewPollPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (event.target.type === "submit") {
-            if (question === '') {
-                alert('Заполните вопрос!');
-            } else if (specialConditionValue < 0) {
-                alert('Значение не может быть отрицательным');
-            } else if (specialConditionValue > 100 && specialCondition == 2) {
-                alert('Значение не может быть больше 100');
-            } else {
-                alert("Опрос создан!");
-                const discreteAnswers = ['Да','Нет']
-                const payload = {
-                    type_voting: pollType,
-                    question: question,
-                    choices: (pollType == 2 ? discreteAnswers : answers),
-                    author_name: user.username
-                };
-                if (specialCondition == 1) {
-                    payload.amount_participants = specialConditionValue;
-                    payload.special = specialCondition;
-                } else if (specialCondition == 2) {
-                    let hours = parseInt(specialConditionValue);
-                    let currentDate = new Date();
-                    currentDate.setHours(currentDate.getHours() + hours);
-                    payload.remaining_time = currentDate.toUTCString();
-                    payload.special = specialCondition;
-                }
-                fetch('http://127.0.0.1:8000/api/polls/new/', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + String(authTokens.access),
-                    },
-                    body: JSON.stringify(payload),
-                }).then(() => {
-                    navigate('/polls/');
-                });
+        if (specialConditionValue < 0) {
+            alert('Значение не может быть отрицательным');
+        } else if (specialConditionValue > 100 && specialCondition === "2") {
+            alert('Значение не может быть больше 100');
+        } else {
+            alert("Опрос создан!");
+            const discreteAnswers = ['Да','Нет']
+            const payload = {
+                type_voting: pollType,
+                question: question,
+                choices: (pollType === "2" ? discreteAnswers : answers),
+                author_name: user.username
+            };
+            if (specialCondition === "1") {
+                payload.amount_participants = specialConditionValue;
+                payload.special = specialCondition;
+            } else if (specialCondition === "2") {
+                let hours = parseInt(specialConditionValue);
+                let currentDate = new Date();
+                currentDate.setHours(currentDate.getHours() + hours);
+                payload.remaining_time = currentDate.toUTCString();
+                payload.special = specialCondition;
             }
+            fetch('http://127.0.0.1:8000/api/polls/new/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify(payload),
+            }).then(() => {
+                navigate('/polls/');
+            });
         }
     };
 
     return (
         <div className="BasePageCss">
             <div className="body-inner rounded-5">
-                <div className="mb-1">
-                    <div className="card-body text-lg-start">
-                        <input
-                            className="form-control"
-                            type="text"
-                            placeholder="Вопрос"
-                            value={question}
-                            onChange={handleQuestionChange}
-                        />
-                    </div>
-                    <label>
-                        Специальное условие:
-                        <select className="form-select mb-1 rounded" value={specialCondition} onChange={handleSpecialConditionChange}>
-                            <option value={0}>Нет</option>
-                            <option value={1}>Ограниченное кол-во голосов</option>
-                            <option value={2}>Ограниченное время</option>
-                        </select>
-                    </label>
-                    <br/>
-                    {specialCondition == 2 ? (
-                        <input
-                            type="text"
-                            className="form-control mb-1 rounded"
-                            placeholder="Введите кол-во часов"
-                            onChange={handleSpecialConditionValueChange}
-                        />
-                    ) : specialCondition == 1 ? (
-                        <input
-                            type="text"
-                            className="form-control mb-1 rounded"
-                            placeholder="Введите кол-во голосов"
-                            onChange={handleSpecialConditionValueChange}
-                        />
-                    ) : null}
-                    <label>
-                        Тип опроса:
-                        <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
-                            <option value={0}>Один из многих</option>
-                            <option value={1}>Несколько из многих</option>
-                            <option value={2}>Дискретный</option>
-                        </select>
-                    </label>
-                    <br/>
-                    {pollType == 2 ? (
+                <Form onSubmit={handleSubmit}>
+                    <div className="mb-1">
+                        <div className="card-body text-lg-start">
+                            <input
+                                className="form-control"
+                                type="text"
+                                placeholder="Вопрос"
+                                value={question}
+                                onChange={handleQuestionChange}
+                                required
+                            />
+                        </div>
                         <label>
-                            Варианты ответов:
-                            <div>
-                                <input
-                                    type="text"
-                                    className="form-control mb-1 rounded disabled"
-                                    placeholder="Ответ"
-                                    value="Да"
-                                />
-                            </div>
-                            <div>
-                                <input
-                                    type="text"
-                                    className="form-control mb-1 rounded disabled"
-                                    placeholder="Ответ"
-                                    value="Нет"
-                                />
-                            </div>
+                            Специальное условие:
+                            <select className="form-select mb-1 rounded" value={specialCondition} onChange={handleSpecialConditionChange}>
+                                <option value={"0"}>Нет</option>
+                                <option value={"1"}>Ограниченное кол-во голосов</option>
+                                <option value={"2"}>Ограниченное время</option>
+                            </select>
                         </label>
-                    ) : (
-
+                        <br/>
+                        {specialCondition === "2" ? (
+                            <input
+                                type="text"
+                                className="form-control mb-1 rounded"
+                                placeholder="Введите кол-во часов"
+                                onChange={handleSpecialConditionValueChange}
+                                required={specialCondition === "2"}
+                            />
+                        ) : specialCondition === "1" ? (
+                            <input
+                                type="text"
+                                className="form-control mb-1 rounded"
+                                placeholder="Введите кол-во голосов"
+                                onChange={handleSpecialConditionValueChange}
+                                required={specialCondition === "1"}
+                            />
+                        ) : null}
                         <label>
-                            Варианты ответов:
-                            {answers.map((answer, index) => (
-                                <div key={index}>
+                            Тип опроса:
+                            <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
+                                <option value={"0"}>Один из многих</option>
+                                <option value={"1"}>Несколько из многих</option>
+                                <option value={"2"}>Дискретный</option>
+                            </select>
+                        </label>
+                        <br/>
+                        {pollType === "2" ? (
+                            <label>
+                                Варианты ответов:
+                                <div>
                                     <input
                                         type="text"
-                                        className="form-control mb-1 rounded"
+                                        className="form-control mb-1 rounded disabled"
                                         placeholder="Ответ"
-                                        value={answer}
-                                        onChange={(event) => handleAnswerChange(index, event)}
+                                        value="Да"
+                                        readOnly
                                     />
                                 </div>
-                            ))}
-                            <button className="btn btn-primary" onClick={handleAddAnswer}>
-                                +
-                            </button>
-                            <button className="btn btn-primary" onClick={handleDelAnswer}>
-                                -
-                            </button>
-                        </label>
-                    )}
-                </div>
-                <br/>
-                <button className="btn btn-primary" onClick={handleSubmit}>Создать опрос</button>
+                                <div>
+                                    <input
+                                        type="text"
+                                        className="form-control mb-1 rounded disabled"
+                                        placeholder="Ответ"
+                                        value="Нет"
+                                        readOnly
+                                    />
+                                </div>
+                            </label>
+                        ) : (
+
+                            <label>
+                                Варианты ответов:
+                                {answers.map((answer, index) => (
+                                    <div key={index}>
+                                        <input
+                                            type="text"
+                                            className="form-control mb-1 rounded"
+                                            placeholder="Ответ"
+                                            value={answer}
+                                            onChange={(event) => handleAnswerChange(index, event)}
+                                            required
+                                        />
+                                    </div>
+                                ))}
+                                <button className="btn btn-primary" onClick={handleAddAnswer}>
+                                    +
+                                </button>
+                                <button className="btn btn-primary" onClick={handleDelAnswer}>
+                                    -
+                                </button>
+                            </label>
+                        )}
+                    </div>
+                    <br/>
+                    <button className="btn btn-primary" type="submit">Создать опрос</button>
+                </Form>
             </div>
         </div>
     );
