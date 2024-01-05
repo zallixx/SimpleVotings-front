@@ -98,28 +98,32 @@ const PollsPage = () => {
         const diffInHours = Math.floor(diffInMinutes / 60);
         const diffInDays = Math.floor(diffInHours / 24);
 
-        if (diffInMinutes < 60) {
-            return `Осталось ${diffInMinutes} минут`;
-        } else if (diffInHours < 24) {
-            if (diffInHours > 11 && diffInHours < 20) {
-                return `Осталось ${diffInHours} часов`;
-            } else if (diffInHours % 10 === 1) {
-                return `Остался ${diffInHours} час`;
-            } else if (diffInHours % 10 === 2 || diffInHours % 10 === 3 || diffInHours % 10 === 4) {
-                return `Осталось ${diffInHours} часа`;
-            } else {
-                return `Осталось ${diffInHours} часов`;
+        if(diffInMinutes > 0) {
+            if (diffInMinutes < 60) {
+                return `Осталось ${diffInMinutes} минут`;
+            } else if (diffInHours < 24) {
+                if (diffInHours > 11 && diffInHours < 20) {
+                    return `Осталось ${diffInHours} часов`;
+                } else if (diffInHours % 10 === 1) {
+                    return `Остался ${diffInHours} час`;
+                } else if (diffInHours % 10 === 2 || diffInHours % 10 === 3 || diffInHours % 10 === 4) {
+                    return `Осталось ${diffInHours} часа`;
+                } else {
+                    return `Осталось ${diffInHours} часов`;
+                }
+            } else if (diffInDays < 30) {
+                if (diffInDays > 11 && diffInDays < 20) {
+                    return `Осталось ${diffInDays} дней`;
+                } else if (diffInDays % 10 === 1) {
+                    return `Остался ${diffInDays} день`;
+                } else if (diffInDays % 10 === 2 || diffInDays % 10 === 3 || diffInDays % 10 === 4) {
+                    return `Осталось ${diffInDays} дня`;
+                } else {
+                    return `Осталось ${diffInDays} дней`;
+                }
             }
-        } else if (diffInDays < 30) {
-            if (diffInDays > 11 && diffInDays < 20) {
-                return `Осталось ${diffInDays} дней`;
-            } else if (diffInDays % 10 === 1) {
-                return `Остался ${diffInDays} день`;
-            } else if (diffInDays % 10 === 2 || diffInDays % 10 === 3 || diffInDays % 10 === 4) {
-                return `Осталось ${diffInDays} дня`;
-            } else {
-                return `Осталось ${diffInDays} дней`;
-            }
+        } else {
+            return 0;
         }
     };
     const formatVoteNumber = (voteNumber) => {
@@ -172,47 +176,38 @@ const PollsPage = () => {
                                 </div>
                             ) : (
                                 filteredPolls.map((poll) => (
-                                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                                    <a
-                                        onClick={() => navigate(`/polls/${poll.id}`)}
-                                        key={poll.id}
-                                        className="list-group-item list-group-item-action weak_blue"
-                                    >
-                                        <div className="d-flex w-100 justify-content-between align-items-center ">
-                                            <div className="row" style={{display: 'flex', flexDirection: 'row'}}>
-                                                <h5 className="mb-1 row">{poll.question}</h5>
-                                                <small className="row">
-                                                    {poll.special == 2 ?
-                                                        (
-                                                            <span className="d-inline-block" data-toggle="tooltip" title={"Время, через которое опрос закроется"}>
-                                                                <MdAccessAlarm size={22}
-                                                                               style={{color: '#910000', marginLeft: '-11px'}}/>
-                                                                <small
-                                                                       style={{color: '#910000', marginLeft: '5px'}}>
-                                                                    {formatRemainingTime(poll.remaining_time)}
-                                                                </small>
-                                                            </span>
-                                                        )
-                                                        : poll.special == 1 ?
-                                                            (
-                                                                <span className="d-inline-block" data-toggle="tooltip" title={"Оставшееся количество голосов, через которое опрос закроется"}>
-                                                                    <MdPerson className="col" size={22}
-                                                                              style={{
-                                                                                  color: '#910000',
-                                                                                  marginLeft: '-12px'
-                                                                              }}/>
-                                                                    <small
-                                                                        className="col"
-                                                                        style={{color: '#910000', marginLeft: '5px'}}>
-                                                                        {formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)}
+                                    <>
+                                        {(poll.special === 1 && (poll.amount_participants - poll.participants_amount_voted) < 1) || (poll.special === 2 && (formatRemainingTime(poll.remaining_time) === 0)) ? null : (
+                                            <a onClick={() => navigate(`/polls/${poll.id}`)}
+                                               key={poll.id}
+                                               className="list-group-item list-group-item-action weak_blue"
+                                            >
+                                                <div className="d-flex w-100 justify-content-between align-items-center ">
+                                                    <div className="row" style={{display: 'flex', flexDirection: 'row', MaxHeight: '67px'}}>
+                                                        <h5 className="mb-1 row">{poll.question}</h5>
+                                                        <small className="row">
+                                                            {poll.special === 2 ? (
+                                                                <span className="d-inline-block" data-toggle="tooltip" title={"Время, через которое опрос закроется"}>
+                                                                    <MdAccessAlarm size={22} style={{color: '#910000', marginLeft: '-11px'}}/>
+                                                                    <small style={{color: '#910000', marginLeft: '5px'}}>
+                                                                        {formatRemainingTime(poll.remaining_time)}
                                                                     </small>
                                                                 </span>
-                                                            ) : null}
-                                                </small>
-                                            </div>
-                                            <small>{formatTimeSinceCreation(poll.created_at)}</small>
-                                        </div>
-                                    </a>
+                                                                ) : poll.special === 1 ? (
+                                                                    <span className="d-inline-block" data-toggle="tooltip" title={"Оставшееся количество голосов, через которое опрос закроется"}>
+                                                                        <MdPerson className="col" size={22} style={{color: '#910000', marginLeft: '-12px'}}/>
+                                                                        <small className="col" style={{color: '#910000', marginLeft: '5px'}}>
+                                                                            {formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)}
+                                                                        </small>
+                                                                    </span>
+                                                                ) : null}
+                                                        </small>
+                                                    </div>
+                                                    <small>{formatTimeSinceCreation(poll.created_at)}</small>
+                                                </div>
+                                            </a>
+                                        )}
+                                    </>
                                 ))
                             )}
                         </div>
