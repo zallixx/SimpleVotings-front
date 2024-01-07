@@ -53,6 +53,7 @@ const PollsPage = () => {
     const handleSearch = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
+        setCurrentPollsPage(1);
 
         if (value !== "") {
             if (value.startsWith("@")) {
@@ -155,6 +156,38 @@ const PollsPage = () => {
 
     const currentPolls = filteredPolls.slice(indexOfFirstPoll, indexOfLastPoll);
 
+    const handleClickCheckbox = (name_of_checkbox) => {
+        setCurrentPollsPage(1);
+        if (name_of_checkbox === "Все") {
+            setChekedStatus("Все");
+            setFilteredPolls(polls);
+        }
+        else if (name_of_checkbox === "Открытые") {
+            setChekedStatus("Открытые");
+            setFilteredPolls(polls.filter((poll) => {
+                if (poll.special === 1) {
+                    return poll.amount_participants - poll.participants_amount_voted >= 1;
+                }
+                if (poll.special === 2) {
+                    return formatRemainingTime(poll.remaining_time) !== 0;
+                }
+                return true;
+            }));
+        }
+        else if (name_of_checkbox === "Закрытые") {
+            setChekedStatus("Закрытые");
+            setFilteredPolls(polls.filter((poll) => {
+                if (poll.special === 1) {
+                    return poll.amount_participants - poll.participants_amount_voted < 1;
+                }
+                if (poll.special === 2) {
+                    return formatRemainingTime(poll.remaining_time) === 0;
+                }
+                return false;
+            }));
+        }
+    }
+
     return (
         <div className="BasePageCss">
             <div className="body-wrapper">
@@ -179,9 +212,9 @@ const PollsPage = () => {
                         <table className="table table-hover mt-2">
                             <thead className="table-header">
                             <tr>
-                                <th scope="col" style={{textAlign: "left"}}>Название опроса</th>
+                                <th scope="col" style={{textAlign: "left", width: '60%'}}>Название опроса</th>
                                 <th scope="col">
-                                    <button className="text_color" style={{backgroundColor: 'transparent', border: 'none', fontWeight: 'bold'}} onClick={() => setShowStatusPopOver(!showStatusPopOver)} ref={target}>Статус</button>
+                                    <span className="text_color" style={{cursor: 'pointer', fontWeight: 'bold'}} onClick={() => setShowStatusPopOver(!showStatusPopOver)} ref={target}>Статус</span>
                                 </th>
                                 <th scope="col" style={{textAlign: "right"}}>Создан</th>
                             </tr>
@@ -202,17 +235,15 @@ const PollsPage = () => {
                                         </tr>
                                     ) : cheked_status === "Открытые" ? (
                                         <>
-                                            {!((poll.special === 1 && (poll.amount_participants - poll.participants_amount_voted) < 1) || (poll.special === 2 && (formatRemainingTime(poll.remaining_time) === 0))) ? (
-                                                <tr key={index} onClick={() => navigate(`/polls/${poll.id}`)} className="weak_blue">
-                                                    <td>{poll.question}</td>
-                                                    <td>{'Открыт' + (poll.special === 1 ? `(${formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)})`
-                                                            : poll.special === 2 ? `(${formatRemainingTime(poll.remaining_time)})` : ''
-                                                    )}</td>
-                                                    <td style={{textAlign: "right"}}>{formatTimeSinceCreation(poll.created_at)}</td>
-                                                </tr>
-                                            ) : null}
+                                            <tr key={index} onClick={() => navigate(`/polls/${poll.id}`)} className="weak_blue">
+                                                <td>{poll.question}</td>
+                                                <td>{'Открыт' + (poll.special === 1 ? `(${formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)})`
+                                                        : poll.special === 2 ? `(${formatRemainingTime(poll.remaining_time)})` : ''
+                                                )}</td>
+                                                <td style={{textAlign: "right"}}>{formatTimeSinceCreation(poll.created_at)}</td>
+                                            </tr>
                                         </>
-                                    ) : cheked_status === "Закрытые" && (poll.special === 1 && (poll.amount_participants - poll.participants_amount_voted) < 1) || (poll.special === 2 && (formatRemainingTime(poll.remaining_time) === 0)) ? (
+                                    ) : cheked_status === "Закрытые" ? (
                                         <tr key={index} onClick={() => navigate(`/polls/${poll.id}`)} className="weak_blue">
                                             <td>{poll.question}</td>
                                             <td>Закрыт</td>
@@ -225,16 +256,15 @@ const PollsPage = () => {
                         </table>
                         <ul className="pagination mt-3 justify-content-end">
                             <li className={`page-item ${currentPollsPage === 1 ? 'disabled' : ''}`}>
-                                <a className="page-link" onClick={() => setCurrentPollsPage(currentPollsPage - 1)}>Previous</a>
+                                <a className="page-link" onClick={() => setCurrentPollsPage(currentPollsPage - 1)}>Назад</a>
                             </li>
                             {Array.from({length: Math.ceil(filteredPolls.length / pollsPerPage)}).map((_, index) => (
-                                <li className={`page-item ${currentPollsPage === index + 1 ? 'active' : ''}`}
-                                    key={index}>
+                                <li className={`page-item ${currentPollsPage === index + 1 ? 'active' : ''}`} key={index}>
                                     <a className="page-link" onClick={() => setCurrentPollsPage(index + 1)}>{index + 1}</a>
                                 </li>
                             ))}
                             <li className={`page-item ${currentPollsPage === Math.ceil(filteredPolls.length / pollsPerPage) ? 'disabled' : ''}`}>
-                                <a className="page-link" onClick={() => setCurrentPollsPage(currentPollsPage + 1)}>Next</a>
+                                <a className="page-link" onClick={() => setCurrentPollsPage(currentPollsPage + 1)}>Вперед</a>
                             </li>
                         </ul>
                     </div>
@@ -245,15 +275,15 @@ const PollsPage = () => {
                     <Popover.Body className={`rounded-6`}>
                         <div className="d-flex flex-column">
                             <label className="form-check-label fs-5 fw-normal radio">
-                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Все"} onClick={() => {cheked_status === "Все" && setShowStatusPopOver(false) ? setChekedStatus(null) : setChekedStatus("Все")}} onChange={() => setShowStatusPopOver(false)}/>
+                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Все"} onClick={() => handleClickCheckbox("Все")} onChange={() => setShowStatusPopOver(false)}/>
                                 {'Все'}
                             </label>
                             <label className="form-check-label fs-5 fw-normal radio">
-                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Открытые"} onClick={() => {cheked_status === "Открытые" && setShowStatusPopOver(false) ? setChekedStatus(null) : setChekedStatus("Открытые")}} onChange={() => setShowStatusPopOver(false)}/>
+                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Открытые"} onClick={() => handleClickCheckbox("Открытые")} onChange={() => setShowStatusPopOver(false)}/>
                                 {'Открытые'}
                             </label>
                             <label className="form-check-label fs-5 fw-normal radio">
-                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Закрытые"} onClick={() => {cheked_status === "Закрытые" && setShowStatusPopOver(false) ? setChekedStatus(null) : setChekedStatus("Закрытые")}} onChange={() => setShowStatusPopOver(false)}/>
+                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Закрытые"} onClick={() => handleClickCheckbox("Закрытые")} onChange={() => setShowStatusPopOver(false)}/>
                                 {'Закрытые'}
                             </label>
                         </div>
