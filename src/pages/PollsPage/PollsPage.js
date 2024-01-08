@@ -1,16 +1,24 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useRef, useState} from "react";
 
 import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
 import {MdAccessAlarm, MdPerson} from "react-icons/md";
 import './PollsPage.css';
+import {Overlay, Popover} from "react-bootstrap";
 
 const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
+    const [showStatusPopOver, setShowStatusPopOver] = useState(false);
+    const target = useRef(null);
+    const [cheked_status, setChekedStatus] = useState("Все");
+    const [currentPollsPage, setCurrentPollsPage] = useState(1);
+    const pollsPerPage = 8;
+    const indexOfLastPoll = currentPollsPage * pollsPerPage;
+    const indexOfFirstPoll = indexOfLastPoll - pollsPerPage;
 
     const fetchPolls = async () => {
         try {
@@ -45,6 +53,7 @@ const PollsPage = () => {
     const handleSearch = (event) => {
         const value = event.target.value;
         setSearchTerm(value);
+        setCurrentPollsPage(1);
 
         if (value !== "") {
             if (value.startsWith("@")) {
@@ -74,19 +83,19 @@ const PollsPage = () => {
         const diffInMonths = Math.floor(diffInDays / 30);
 
         if (diffInMinutes < 20) {
-            return "just now";
+            return "Только что";
         } else if (diffInHours < 1) {
-            return `${diffInMinutes} minutes ago`;
+            return `${diffInMinutes} минут назад`;
         } else if (diffInDays < 1) {
-            return `${diffInHours} hours ago`;
+            return `${diffInHours} часов назад`;
         } else if (diffInDays < 2) {
-            return `${diffInDays} day ago`;
+            return `${diffInDays} день назад`;
         } else if (diffInDays < 30) {
-            return `${diffInDays} days ago`;
+            return `${diffInDays} дней назад`;
         } else if (diffInMonths < 2) {
-            return `${diffInMonths} month ago`;
+            return `${diffInMonths} месяц назад`;
         } else {
-            return `${diffInMonths} months ago`;
+            return `${diffInMonths} месяцев назад`;
         }
     };
 
@@ -145,6 +154,40 @@ const PollsPage = () => {
         );
     }
 
+    const currentPolls = filteredPolls.slice(indexOfFirstPoll, indexOfLastPoll);
+
+    const handleClickCheckbox = (name_of_checkbox) => {
+        setCurrentPollsPage(1);
+        if (name_of_checkbox === "Все") {
+            setChekedStatus("Все");
+            setFilteredPolls(polls);
+        }
+        else if (name_of_checkbox === "Открытые") {
+            setChekedStatus("Открытые");
+            setFilteredPolls(polls.filter((poll) => {
+                if (poll.special === 1) {
+                    return poll.amount_participants - poll.participants_amount_voted >= 1;
+                }
+                if (poll.special === 2) {
+                    return formatRemainingTime(poll.remaining_time) !== 0;
+                }
+                return true;
+            }));
+        }
+        else if (name_of_checkbox === "Закрытые") {
+            setChekedStatus("Закрытые");
+            setFilteredPolls(polls.filter((poll) => {
+                if (poll.special === 1) {
+                    return poll.amount_participants - poll.participants_amount_voted < 1;
+                }
+                if (poll.special === 2) {
+                    return formatRemainingTime(poll.remaining_time) === 0;
+                }
+                return false;
+            }));
+        }
+    }
+
     return (
         <div className="BasePageCss">
             <div className="body-wrapper">
@@ -165,55 +208,88 @@ const PollsPage = () => {
                             Создать опрос
                         </button>
                     </div>
-                    <div
-                        className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                        <div className="list-group list-group-checkable h-100 w-100 rounded">
-                            {filteredPolls.length === 0 ? (
-                                <div className="text_color">
-                                    <label>Похоже, что опросов по-вашему поиску нет... Перепроверьте поиск или </label>
-                                    {' '}
-                                    <a href={`/polls/new/`}>создайте новый опрос</a>.
-                                </div>
-                            ) : (
-                                filteredPolls.map((poll) => (
-                                    <>
-                                        {(poll.special === 1 && (poll.amount_participants - poll.participants_amount_voted) < 1) || (poll.special === 2 && (formatRemainingTime(poll.remaining_time) === 0)) ? null : (
-                                            <a onClick={() => navigate(`/polls/${poll.id}`)}
-                                               key={poll.id}
-                                               className="list-group-item list-group-item-action weak_blue"
-                                            >
-                                                <div className="d-flex w-100 justify-content-between align-items-center ">
-                                                    <div className="row" style={{display: 'flex', flexDirection: 'row', MaxHeight: '67px'}}>
-                                                        <h5 className="mb-1 row">{poll.question}</h5>
-                                                        <small className="row">
-                                                            {poll.special === 2 ? (
-                                                                <span className="d-inline-block" data-toggle="tooltip" title={"Время, через которое опрос закроется"}>
-                                                                    <MdAccessAlarm size={22} style={{color: '#910000', marginLeft: '-11px'}}/>
-                                                                    <small style={{color: '#910000', marginLeft: '5px'}}>
-                                                                        {formatRemainingTime(poll.remaining_time)}
-                                                                    </small>
-                                                                </span>
-                                                                ) : poll.special === 1 ? (
-                                                                    <span className="d-inline-block" data-toggle="tooltip" title={"Оставшееся количество голосов, через которое опрос закроется"}>
-                                                                        <MdPerson className="col" size={22} style={{color: '#910000', marginLeft: '-12px'}}/>
-                                                                        <small className="col" style={{color: '#910000', marginLeft: '5px'}}>
-                                                                            {formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)}
-                                                                        </small>
-                                                                    </span>
-                                                                ) : null}
-                                                        </small>
-                                                    </div>
-                                                    <small>{formatTimeSinceCreation(poll.created_at)}</small>
-                                                </div>
-                                            </a>
-                                        )}
-                                    </>
-                                ))
-                            )}
-                        </div>
+                    <div>
+                        <table className="table table-hover mt-2">
+                            <thead className="table-header">
+                            <tr>
+                                <th scope="col" style={{textAlign: "left", width: '60%'}}>Название опроса</th>
+                                <th scope="col">
+                                    <span className="text_color" style={{cursor: 'pointer', fontWeight: 'bold'}} onClick={() => setShowStatusPopOver(!showStatusPopOver)} ref={target}>Статус</span>
+                                </th>
+                                <th scope="col" style={{textAlign: "right"}}>Создан</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {currentPolls.map((poll, index) => (
+                                <>
+                                    {cheked_status === 'Все' ? (
+                                        <tr key={index} onClick={() => navigate(`/polls/${poll.id}`)} className="weak_blue">
+                                            <td>{poll.question}</td>
+                                            <td>{(poll.special === 1 && (poll.amount_participants - poll.participants_amount_voted) < 1) || (poll.special === 2 && (formatRemainingTime(poll.remaining_time) === 0)) ? (
+                                                'Закрыт'
+                                            ) : (
+                                                'Открыт' + (poll.special === 1 ? `(${formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)})`
+                                                    : poll.special === 2 ? `(${formatRemainingTime(poll.remaining_time)})` : '')
+                                            )}</td>
+                                            <td style={{textAlign: "right"}}>{formatTimeSinceCreation(poll.created_at)}</td>
+                                        </tr>
+                                    ) : cheked_status === "Открытые" ? (
+                                        <>
+                                            <tr key={index} onClick={() => navigate(`/polls/${poll.id}`)} className="weak_blue">
+                                                <td>{poll.question}</td>
+                                                <td>{'Открыт' + (poll.special === 1 ? `(${formatVoteNumber(poll.amount_participants - poll.participants_amount_voted)})`
+                                                        : poll.special === 2 ? `(${formatRemainingTime(poll.remaining_time)})` : ''
+                                                )}</td>
+                                                <td style={{textAlign: "right"}}>{formatTimeSinceCreation(poll.created_at)}</td>
+                                            </tr>
+                                        </>
+                                    ) : cheked_status === "Закрытые" ? (
+                                        <tr key={index} onClick={() => navigate(`/polls/${poll.id}`)} className="weak_blue">
+                                            <td>{poll.question}</td>
+                                            <td>Закрыт</td>
+                                            <td style={{textAlign: "right"}}>{formatTimeSinceCreation(poll.created_at)}</td>
+                                        </tr>
+                                    ) : null}
+                                </>
+                            ))}
+                            </tbody>
+                        </table>
+                        <ul className="pagination mt-3 justify-content-end">
+                            <li className={`page-item ${currentPollsPage === 1 ? 'disabled' : ''}`}>
+                                <a className="page-link" onClick={() => setCurrentPollsPage(currentPollsPage - 1)}>Назад</a>
+                            </li>
+                            {Array.from({length: Math.ceil(filteredPolls.length / pollsPerPage)}).map((_, index) => (
+                                <li className={`page-item ${currentPollsPage === index + 1 ? 'active' : ''}`} key={index}>
+                                    <a className="page-link" onClick={() => setCurrentPollsPage(index + 1)}>{index + 1}</a>
+                                </li>
+                            ))}
+                            <li className={`page-item ${currentPollsPage === Math.ceil(filteredPolls.length / pollsPerPage) ? 'disabled' : ''}`}>
+                                <a className="page-link" onClick={() => setCurrentPollsPage(currentPollsPage + 1)}>Вперед</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
+            <Overlay target={target.current} show={showStatusPopOver} placement="bottom" rootClose rootCloseEvent="click" onHide={e => setShowStatusPopOver(false)}>
+                <Popover id="popover-contained" className={`rounded-6`}>
+                    <Popover.Body className={`rounded-6`}>
+                        <div className="d-flex flex-column">
+                            <label className="form-check-label fs-5 fw-normal radio">
+                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Все"} onClick={() => handleClickCheckbox("Все")} onChange={() => setShowStatusPopOver(false)}/>
+                                {'Все'}
+                            </label>
+                            <label className="form-check-label fs-5 fw-normal radio">
+                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Открытые"} onClick={() => handleClickCheckbox("Открытые")} onChange={() => setShowStatusPopOver(false)}/>
+                                {'Открытые'}
+                            </label>
+                            <label className="form-check-label fs-5 fw-normal radio">
+                                <input className="form-check-input mx-2 border-1 border-dark" type={"checkbox"} checked={cheked_status === "Закрытые"} onClick={() => handleClickCheckbox("Закрытые")} onChange={() => setShowStatusPopOver(false)}/>
+                                {'Закрытые'}
+                            </label>
+                        </div>
+                    </Popover.Body>
+                </Popover>
+            </Overlay>
         </div>
     );
 }
