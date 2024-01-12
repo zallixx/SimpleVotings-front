@@ -1,0 +1,107 @@
+/* Стиль для ссылок(табов) в футоре */
+.link {
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 15%;
+    white-space: nowrap;
+    cursor: pointer;
+    color: white;
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -6px;
+    height: 3px;
+    background-color: black;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.link:hover {
+    color: black;
+}
+
+#dark .link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -6px;
+    height: 3px;
+    color: white;
+    background-color: white;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+#dark .link:hover {
+    color: white;
+}
+
+.link.active::after {
+    transform: scaleX(1);
+}
+
+.link:hover::after {
+    transform: scaleX(1);
+}
+
+#dark .link.active::after {
+    transform: scaleX(1);
+}
+
+#dark .link:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* Остальные стили */
+.hr {
+    width: 100%;
+    height: 1px;
+    border-radius: 1px;
+}
+
+#light .hr {
+    background-color: #1e1e1d;
+    border: 1px solid #1e1e1d;
+}
+
+#dark .hr {
+    background-color: #f4f6fa;
+    border: 1px solid #f4f6fa;
+}
+
+.footerContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.footerCol {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 5%;
+    font-size: 150%;
+}
+
+.footer {
+    padding: 2% 10% 2% 10%;
+}
+
+#light .footer {
+  background-color: #f4f6fa;
+}
+
+#dark .footer {
+  background-color: #1e1e1d;
+}

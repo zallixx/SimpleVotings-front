@@ -1,0 +1,105 @@
+/* Стиль для ссылок(табов) в меню */
+.link {
+    position: relative;
+    font-size: 1.1em;
+    text-decoration: none;
+    font-weight: 500;
+    margin: 20%;
+    white-space: nowrap;
+    cursor: pointer;
+    color: white;
+}
+
+.link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -6px;
+    height: 3px;
+    background-color: black;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+.link:hover {
+    color: black;
+}
+
+#dark .link::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: -6px;
+    height: 3px;
+    color: white;
+    background-color: white;
+    border-radius: 5px;
+    transform: scaleX(0);
+    transition: transform .5s;
+}
+
+#dark .link:hover {
+    color: white;
+}
+
+.link.active::after {
+    transform: scaleX(1);
+}
+
+.link:hover::after {
+    transform: scaleX(1);
+}
+
+#dark .link.active::after {
+    transform: scaleX(1);
+}
+
+#dark .link:hover::after {
+    transform: scaleX(1);
+}
+
+
+/* Остальные стили */
+.menu {
+    display: flex;
+    justify-content: space-evenly;
+    width: 25%;
+    margin: auto;
+}
+
+.homeCol {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 25%;
+    font-size: 1.5em;
+}
+
+.homeContent {
+    margin: 10%;
+    padding: 5%;
+}
+
+.mainText {
+    font-size: 5em;
+    margin: 15%;
+}
+
+.BackgroundImage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#light .BackgroundImage {
+    background-image: linear-gradient(rgba(205, 205, 205, 1), rgba(230, 230, 230, 1), rgba(255, 255, 255, 1));
+}
+
+#dark .BackgroundImage {
+    background-image: linear-gradient(rgba(25, 25, 25, 1), rgba(50, 50, 50, 1), rgba(75, 75, 75, 1));
+}

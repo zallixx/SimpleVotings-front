@@ -1,0 +1,17 @@
+.about_the_project {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#light .about_the_project {
+    background-color: #f4f6fa;
+}
+
+#dark .about_the_project {
+    background-color: #1e1e1d;
+}
+
+.content_about_the_project {
+    margin: 25%;
+}

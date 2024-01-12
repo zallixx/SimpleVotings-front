@@ -1,0 +1,17 @@
+.about_us {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#light .about_us {
+    background-color: #f4f6fa;
+}
+
+#dark .about_us {
+    background-color: #1e1e1d;
+}
+
+.content_about_us {
+    margin: 25%;
+}

@@ -5,6 +5,7 @@ import HomePage from './pages/HomePage/HomePage';
 import {AuthProvider} from "./context/AuthContext";
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
 import Header from "./components/Header/Header";
+import Footer from "./components/Footer/Footer"
 import PrivateRoute from "./utils/PrivateRoute";
 import LoginPage from './pages/LoginPage/LoginPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -20,6 +21,9 @@ import VoteHistoryPage from "./pages/VoteHistoryPage/VoteHistoryPage";
 import SettingsPage from "./pages/SettingsPage/SettingsPage";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
 import ResetPassword from "./pages/ResetPassword/ResetPassword";
+import AboutTheProject from "./pages/AboutTheProject/AboutTheProject";
+import AboutUs from "./pages/AboutUs/AboutUs";
+import Reviews from "./pages/Reviews/Reviews";
 
 export const ThemeContext = createContext(null)
 
@@ -90,11 +94,27 @@ function App() {
                                     <ProfilePage/>
                                 </PrivateRoute>
                             }/>
+                            <Route path="/aboutTheProject/" element={
+                                <PrivateRoute>
+                                    <AboutTheProject/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/aboutUs/" element={
+                                <PrivateRoute>
+                                    <AboutUs/>
+                                </PrivateRoute>
+                            }/>
+                            <Route path="/reviews/" element={
+                                <PrivateRoute>
+                                    <Reviews/>
+                                </PrivateRoute>
+                            }/>
                             <Route element={<LoginPage/>} path="/login"/>
                             <Route element={<RegisterPage/>} path="/register"/>
-                        <Route path="/password_reset/:uidb64/:token" element={<ResetPassword/>}/>
+                            <Route path="/password_reset/:uidb64/:token" element={<ResetPassword/>}/>
                             <Route element={<NotFoundPage/>} path="*"/>
                         </Routes>
+                        <Footer/>
                     </AuthProvider>
                 </Router>
             </div>
