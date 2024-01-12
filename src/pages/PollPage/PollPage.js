@@ -136,7 +136,6 @@ const PollsPage = () => {
                         'Authorization': 'Bearer ' + String(authTokens.access),
                     },
                 });
-                const data = await response.json();
                 console.log(response)
                 if (response.status === 200) {
                     navigate('/polls');
@@ -243,20 +242,25 @@ const PollsPage = () => {
                 </div>
             </div>
             <Modal show={isComplainMode} centered className={"custom-modal-" + localStorage.getItem("theme")} onHide={handleClose}>
-                <Modal.Header className="rounded-top-1 border-0">
-                    <Modal.Title>Составление жалобы</Modal.Title>
-                </Modal.Header>
+                <Form onSubmit={complain}>
+                    <Modal.Header className="rounded-top-1 border-0">
+                        <Modal.Title>Составление жалобы</Modal.Title>
+                    </Modal.Header>
                     <Modal.Body>
-                        <input type="text" className="form-control" placeholder="Текст жалобы" onInput={(e) => setComplainText(e.target.value)}/>
+                        <textarea type="text" className="form-control" placeholder="Текст жалобы"
+                                  onInput={(e) => setComplainText(e.target.value)} required
+                                  maxLength={180} style={{height: '125px', resize: 'none'}}
+                        />
                     </Modal.Body>
                     <Modal.Footer closeButton className="rounded-bottom-1 border-0">
-                        <Button variant="danger" onClick={complain}>
+                        <Button variant="danger" type="submit">
                             Отправить жалобу
                         </Button>
                         <Button variant="secondary" onClick={handleClose}>
                             Отмена
                         </Button>
                     </Modal.Footer>
+                </Form>
             </Modal>
         </div>
     );

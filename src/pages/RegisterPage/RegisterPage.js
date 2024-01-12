@@ -18,25 +18,25 @@ const RegisterPage = () => {
                     <Form className="LoginForm" id="loginForm" onSubmit={registerUser}>
                         <FormGroup controlId="formUsername" className="mb-3">
                             <FormLabel>Username</FormLabel>
-                            <FormControl type="text" name="username" className="form-control" placeholder="Username"/>
+                            <FormControl type="text" name="username" className="form-control" placeholder="Username" required/>
                         </FormGroup>
                         <FormGroup controlId="formEmail" className="mb-3">
                             <FormLabel>Email</FormLabel>
                             <FormControl type="email" name="email" className="form-control"
-                                         placeholder="Email Address"/>
+                                         placeholder="Email Address" required/>
                         </FormGroup>
                         <FormGroup controlId="formPassword1" className="mb-3">
                             <FormLabel>Password</FormLabel>
                             <FormControl type="password" name="password" className="form-control"
-                                         placeholder="Password"/>
+                                         placeholder="Password" required/>
                         </FormGroup>
                         <FormGroup controlId="formPassword2" className="mb-3 ">
                             <FormLabel>Repeat Password</FormLabel>
                             <FormControl type="password" name="password2" className="form-control"
-                                         placeholder="Repeat Password"/>
+                                         placeholder="Repeat Password" required/>
                         </FormGroup>
                         <FormGroup style={buttonStyle} controlId="formSubmit" className="d-grid">
-                            <Button variant="primary" type="submit" className="">
+                            <Button variant="primary" type="submit">
                                 Register
                             </Button>
                         </FormGroup>

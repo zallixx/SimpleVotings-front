@@ -4,11 +4,11 @@
 }
 
 #light .weak_blue {
-    background-color: #f9f8f5;
+    --bs-table-bg: #f9f8f5;
 }
 
 #light .weak_blue:hover {
-    background-color: #ccdeed
+    --bs-table-bg: #ccdeed
 }
 
 #dark .weak-orange {
@@ -22,11 +22,23 @@
 }
 
 #dark .weak_blue {
-    background-color: #333332;
-    color: #eaeaea;
+    --bs-table-bg: #333332;
+    --bs-table-color: #eaeaea;
     border-color: black;
 }
 
 #dark .weak_blue:hover {
-    background-color: #132535;
+    --bs-table-hover-color: #eaeaea;
+}
+
+#dark .table-header {
+    --bs-table-bg: #333330;
+    --bs-table-color: #eaeaea;
+    border-color: black;
+}
+
+#light .table-header {
+    --bs-table-bg: #f9f8f5;
+    --bs-table-color: black;
+    border-color: #dee2e6;
 }

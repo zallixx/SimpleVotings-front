@@ -1,3 +1,4 @@
+/* Стиль для кружка(стоит левее варианта, который можно выбрать) */
 .radio input[type="radio"]:checked+span {
   border-color: #0b76ef;
   background-color: #0b76ef;
@@ -7,6 +8,8 @@
     background-color: #b3d7ff;
 }
 
+
+/* Стиль для текста "Пожаловаться" на странице опроса */
 .complain {
     color: #FF0B0B;
     opacity: 51%;
@@ -14,11 +17,14 @@
     text-underline-position: under;
 }
 
+
+/* Стиль для текста, который содержит имя автора на странице опроса */
 .author {
     text-underline-offset: 0.1px;
     text-underline-position: under;
 }
 
+/* Стиль для кнопок выбора вариантов ответа */
 #light .background_color_of_choice_btns {
     background-color: #ffffff;
     border: 1px solid black;
