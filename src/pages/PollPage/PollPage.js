@@ -66,7 +66,8 @@ const PollsPage = () => {
         }
     };
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
         let toServer = {};
         if (poll.question) {
             toServer.question = poll.question
@@ -75,19 +76,22 @@ const PollsPage = () => {
             toServer.choices = poll.choices
         }
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
+            fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
                 body: JSON.stringify(toServer),
+            }).then((response) => {
+                if (response.status === 200) {
+                    alert("Опрос успешно отредактирован");
+                    window.location.reload();
+                }
+                else {
+                    alert("Произошла ошибка при редактировании опроса. Может быть у вас присутвуют одинаковые варианты ответов.");
+                }
             });
-            if (response.status === 200) {
-                alert("0");
-            } else {
-                alert("-1");
-            }
         } catch (error) {
             console.error(error);
         }
