@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
 import {MdAccessAlarm, MdPerson} from "react-icons/md";
+import { parseISO } from 'date-fns';
 import './PollsPage.css';
 import {Overlay, Popover} from "react-bootstrap";
 
@@ -31,8 +32,8 @@ const PollsPage = () => {
             });
             const data = await response.json();
             if (response.status === 200) {
-                setPolls(data);
-                setFilteredPolls(data);
+                setPolls([...data].sort((a, b) => parseISO(b.created_at) - parseISO(a.created_at)));
+                setFilteredPolls([...data].sort((a, b) => parseISO(b.created_at) - parseISO(a.created_at)));
                 setLoading(false)
             } else {
                 alert('Something went wrong!');
