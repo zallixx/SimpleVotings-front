@@ -196,7 +196,7 @@ const PollsPage = () => {
                             type="search"
                             className="form-control rounded weak-orange"
                             style={{flex: 1}}
-                            placeholder="Введите название опроса..."
+                            placeholder="Введите название опроса... Или @ с именем автора опроса"
                             aria-label="Search"
                             value={searchTerm}
                             onInput={handleSearch}
