@@ -44,21 +44,6 @@ function App() {
                     <AuthProvider>
                         <Header/>
                         <Routes>
-                            <Route path="/" element={
-                                <PrivateRoute>
-                                    <HomePage/>
-                                </PrivateRoute>
-                            }/>
-                            <Route path="/polls" element={
-                                <PrivateRoute>
-                                    <PollsPage/>
-                                </PrivateRoute>
-                            }/>
-                            <Route path="/polls/:id" element={
-                                <PrivateRoute>
-                                    <PollPage/>
-                                </PrivateRoute>
-                            }/>
                             <Route path="/polls/:id/results" element={
                                 <PrivateRoute>
                                     <ResultPage/>
@@ -109,9 +94,12 @@ function App() {
                                     <Reviews/>
                                 </PrivateRoute>
                             }/>
+                            <Route element={<HomePage/>} path="/"/>
+                            <Route element={<PollsPage/>} path="/polls"/>
+                            <Route element={<PollPage/>} path="/polls/:id"/>
                             <Route element={<LoginPage/>} path="/login"/>
                             <Route element={<RegisterPage/>} path="/register"/>
-                            <Route path="/password_reset/:uidb64/:token" element={<ResetPassword/>}/>
+                            <Route element={<ResetPassword/>} path="/password_reset/:uidb64/:token"/>
                             <Route element={<NotFoundPage/>} path="*"/>
                         </Routes>
                         <Footer/>

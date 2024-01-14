@@ -13,6 +13,7 @@ const PollsPage = () => {
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext)
+    user = user === null ? {username: ''} : user
     const params = useParams();
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
@@ -25,7 +26,6 @@ const PollsPage = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
                 },
             });
             const data = await response.json();

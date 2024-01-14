@@ -12,7 +12,6 @@ const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
-    let {authTokens} = useContext(AuthContext);
     const [showStatusPopOver, setShowStatusPopOver] = useState(false);
     const target = useRef(null);
     const [cheked_status, setChekedStatus] = useState("Все");
@@ -27,7 +26,6 @@ const PollsPage = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
                 },
             });
             const data = await response.json();

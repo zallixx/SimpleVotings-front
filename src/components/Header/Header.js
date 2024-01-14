@@ -15,8 +15,10 @@ const authorized_tabs = {
 };
 
 const unauthorized_tabs = {
+    'Home': '/',
     'Login': '/login/',
     'Register': '/register/',
+    'Polls': '/polls/',
 }
 
 const menu_items = {
