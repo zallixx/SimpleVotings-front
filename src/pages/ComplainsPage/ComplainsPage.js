@@ -5,6 +5,7 @@ import ReactLoading from "react-loading";
 
 const ComplainsPage = () => {
     let {authTokens} = useContext(AuthContext);
+    let {user} = useContext(AuthContext);
     const [complains, setComplains] = useState([]);
     const [isLoading, setLoading] = useState(true);
     const navigate = useNavigate();
@@ -29,6 +30,26 @@ const ComplainsPage = () => {
         }
     };
 
+    const fetchAllComplains = async () => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/complains/all/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+            });
+            const data = await response.json();
+            if (response.status === 200) {
+                setComplains(data);
+            } else {
+                alert('Something went wrong!');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
         fetchComplains().then(
             () => setLoading(false)
@@ -47,6 +68,11 @@ const ComplainsPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner h-100 w-75 position-relative">
+                    {user.is_admin ? (
+                        <div style={{display: 'flex', justifyContent: "end"}}>
+                            <button type="button" className="btn btn-primary" onClick={() => fetchAllComplains()}>Показать жалобы, которые ожидают рассмотрения</button>
+                        </div>
+                    ) : null}
                     <div
                         className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
                         <div className="list-group list-group-checkable h-100 w-100 rounded">
@@ -67,14 +93,24 @@ const ComplainsPage = () => {
                                                     </div>
                                                 </a>
                                             ) : (
-                                                // eslint-disable-next-line
-                                                <a>
-                                                    <div className="d-flex w-100 justify-content-between">
-                                                        <h5 className="mb-1">{complain.text}</h5>
-                                                        <small> {complain.status}</small>
-                                                    </div>
-                                                </a>
-                                            )}
+                                                <>
+                                                    {user.is_admin ? (
+                                                        // eslint-disable-next-line
+                                                        <a onClick={() => navigate(`/complains/${complain.id}`)}>
+                                                            <div className="d-flex w-100 justify-content-between">
+                                                                <h5 className="mb-1">{complain.text}</h5>
+                                                                <small> {complain.status}</small>
+                                                            </div>
+                                                        </a>
+                                                    ) : (
+                                                        // eslint-disable-next-line
+                                                        <a>
+                                                            <div className="d-flex w-100 justify-content-between">
+                                                                <h5 className="mb-1">{complain.text}</h5>
+                                                                <small> {complain.status}</small>
+                                                            </div>
+                                                        </a>)}
+                                                </>)}
                                         </div>
                                     ))
                                     }

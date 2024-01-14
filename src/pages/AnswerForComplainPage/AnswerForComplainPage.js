@@ -1,12 +1,16 @@
 import React, {useContext, useEffect, useState} from "react";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
+import {Form} from "react-bootstrap";
 
 const AnswerForComplainPage = () => {
     let {authTokens} = useContext(AuthContext);
+    let {user} = useContext(AuthContext);
+    const navigate = useNavigate();
     const [isLoading, setLoading] = useState(true);
     const [complain, setComplain] = useState();
+    const [AnswerText, setAnswerText] = useState('');
     const params = useParams();
 
     const fetchComplain = async () => {
@@ -29,6 +33,30 @@ const AnswerForComplainPage = () => {
         }
     };
 
+    const sendAnswerToComplain = async (event) => {
+        event.preventDefault();
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/complains/' + params.id + '/set_answer/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + String(authTokens.access),
+                },
+                body: JSON.stringify({
+                    'response': AnswerText
+                })
+            });
+            if (response.status === 200) {
+                alert('Ответ отправлен');
+                window.location.reload();
+            } else {
+                alert('Что-то пошло не так');
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
     useEffect(() => {
         fetchComplain().then(
             () => setLoading(false)
@@ -47,11 +75,26 @@ const AnswerForComplainPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner h-100 w-75 position-relative">
-                    <h3 className="mb-1">{complain[0].text}</h3>
+                    <h3 className="mb-1">
+                        {complain[0].text}
+                        {" - "}
+                        <a onClick={() => navigate('/polls/' + complain[0].poll)} style={{cursor: 'pointer', color: 'blue'}}>Ссылка на опрос</a>
+                    </h3>
                     <hr/>
-                    <div className="d-flex flex-column flex-md-row p-4 gap-4 py-md-5 align-items-center justify-content-center">
-                        <h6>Ответ:</h6>
-                        <p className="mb-2">{complain[0].response}</p>
+                    <div className="d-flex flex-column align-items-center">
+                        {user.is_admin && complain[0].response === '' ? (
+                            <Form onSubmit={sendAnswerToComplain}>
+                                <textarea type="text" className="form-control" placeholder="Ответ на жалобу" required maxLength={180}
+                                          style={{height: '125px', width: '250px', resize: 'none'}} onInput={(e) => setAnswerText(e.target.value)}
+                                />
+                                <button className="btn btn-primary" type="submit" onClick={null}>Отправить</button>
+                            </Form>
+                        ) : (
+                            <>
+                                <h6>Ответ:</h6>
+                                <p className="mb-2">{complain[0].response}</p>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

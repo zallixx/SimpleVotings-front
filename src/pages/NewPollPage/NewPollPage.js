@@ -54,40 +54,39 @@ const NewPollPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (specialConditionValue < 0) {
-            alert('Значение не может быть отрицательным');
-        } else if (specialConditionValue > 100 && specialCondition === "2") {
-            alert('Значение не может быть больше 100');
-        } else {
-            alert("Опрос создан!");
-            const discreteAnswers = ['Да','Нет']
-            const payload = {
-                type_voting: pollType,
-                question: question,
-                choices: (pollType === "2" ? discreteAnswers : answers),
-                author_name: user.username
-            };
-            if (specialCondition === "1") {
-                payload.amount_participants = specialConditionValue;
-                payload.special = specialCondition;
-            } else if (specialCondition === "2") {
-                let hours = parseInt(specialConditionValue);
-                let currentDate = new Date();
-                currentDate.setHours(currentDate.getHours() + hours);
-                payload.remaining_time = currentDate.toUTCString();
-                payload.special = specialCondition;
-            }
-            fetch('http://127.0.0.1:8000/api/polls/new/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-                body: JSON.stringify(payload),
-            }).then(() => {
-                navigate('/polls/');
-            });
+        const discreteAnswers = ['Да','Нет']
+        const payload = {
+            type_voting: pollType,
+            question: question,
+            choices: (pollType === "2" ? discreteAnswers : answers),
+            author_name: user.username
+        };
+        if (specialCondition === "1") {
+            payload.amount_participants = specialConditionValue;
+            payload.special = specialCondition;
+        } else if (specialCondition === "2") {
+            let hours = parseInt(specialConditionValue);
+            let currentDate = new Date();
+            currentDate.setHours(currentDate.getHours() + hours);
+            payload.remaining_time = currentDate.toUTCString();
+            payload.special = specialCondition;
         }
+        fetch('http://127.0.0.1:8000/api/polls/new/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + String(authTokens.access),
+            },
+            body: JSON.stringify(payload),
+        }).then((response) => {
+            if (response.status === 201) {
+                alert('Опрос успешно создан');
+                navigate('/polls');
+            }
+            else {
+                alert('Произошла ошибка при создании опроса. Проверьте введенные данные. Может быть у вас присутвуют одинаковые варианты ответов.');
+            }
+        });
     };
 
     return (
@@ -116,7 +115,9 @@ const NewPollPage = () => {
                         <br/>
                         {specialCondition === "2" ? (
                             <input
-                                type="text"
+                                type="number"
+                                min={0}
+                                max={100}
                                 className="form-control mb-1 rounded"
                                 placeholder="Введите кол-во часов"
                                 onChange={handleSpecialConditionValueChange}
@@ -124,7 +125,9 @@ const NewPollPage = () => {
                             />
                         ) : specialCondition === "1" ? (
                             <input
-                                type="text"
+                                type="number"
+                                min={1}
+                                max={100}
                                 className="form-control mb-1 rounded"
                                 placeholder="Введите кол-во голосов"
                                 onChange={handleSpecialConditionValueChange}

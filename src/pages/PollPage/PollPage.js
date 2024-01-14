@@ -13,6 +13,7 @@ const PollsPage = () => {
     const navigate = useNavigate();
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext)
+    user = user === null ? {username: ''} : user
     const params = useParams();
     const [author_name, setAuthorName] = useState('');
     const [isEditMode, setEditMode] = useState(false);
@@ -25,7 +26,6 @@ const PollsPage = () => {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
                 },
             });
             const data = await response.json();
@@ -43,30 +43,36 @@ const PollsPage = () => {
 
     const vote = async (e) => {
         e.preventDefault();
-        const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-                body: JSON.stringify({
-                    'choices': choices
-                })
-            });
-            const data = await response.json();
-            if (response.status === 201) {
-                navigate('/polls/' + params.id + '/results');
-            } else {
-                alert(data);
+        if (user.username === "") {
+            alert("Вы не авторизованы");
+        }
+        else {
+            const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify({
+                        'choices': choices
+                    })
+                });
+                const data = await response.json();
+                if (response.status === 201) {
+                    navigate('/polls/' + params.id + '/results');
+                } else {
+                    alert(data);
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
     };
 
-    const handleFormSubmit = async () => {
+    const handleFormSubmit = (event) => {
+        event.preventDefault();
         let toServer = {};
         if (poll.question) {
             toServer.question = poll.question
@@ -75,19 +81,22 @@ const PollsPage = () => {
             toServer.choices = poll.choices
         }
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
+            fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                     'Authorization': 'Bearer ' + String(authTokens.access),
                 },
                 body: JSON.stringify(toServer),
+            }).then((response) => {
+                if (response.status === 200) {
+                    alert("Опрос успешно отредактирован");
+                    window.location.reload();
+                }
+                else {
+                    alert("Произошла ошибка при редактировании опроса. Может быть у вас присутвуют одинаковые варианты ответов.");
+                }
             });
-            if (response.status === 200) {
-                alert("0");
-            } else {
-                alert("-1");
-            }
         } catch (error) {
             console.error(error);
         }
@@ -110,6 +119,10 @@ const PollsPage = () => {
 
     let complain = (e) => {
         e.preventDefault();
+        if(user.username === "") {
+            alert("Вы не авторизованы")
+        }
+        else {
             try {
                  fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
                     method: 'POST',
@@ -124,6 +137,7 @@ const PollsPage = () => {
             } catch (error) {
                 console.error(error);
             }
+        }
     }
 
     let deletePoll = async () => {
@@ -156,6 +170,11 @@ const PollsPage = () => {
                         {user.username === author_name && !isEditMode && !isComplainMode &&(
                             <button className="btn btn-primary float-end" onClick={toggleEditMode}>
                                 Редактировать
+                            </button>
+                        )}
+                        {user.username !== author_name && !isEditMode && !isComplainMode && user.is_admin && (
+                            <button className="btn btn-danger float-end" onClick={deletePoll}>
+                                Удалить
                             </button>
                         )}
                         {isEditMode ? (
