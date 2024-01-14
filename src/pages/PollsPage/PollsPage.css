@@ -42,3 +42,9 @@
     --bs-table-color: black;
     border-color: #dee2e6;
 }
+
+/* Стиль для поп-овера(выбор статуса) */
+.dark-popover-status {
+    --bs-popover-bg: #222220 !important;
+    --bs-body-color: white !important;
+}

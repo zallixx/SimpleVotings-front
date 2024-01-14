@@ -12,6 +12,7 @@ const PollsPage = () => {
     const [isLoading, setLoading] = useState(true);
     const [polls, setPolls] = useState([]);
     const navigate = useNavigate();
+    let theme = localStorage.getItem("theme");
     const [showStatusPopOver, setShowStatusPopOver] = useState(false);
     const target = useRef(null);
     const [cheked_status, setChekedStatus] = useState("Все");
@@ -270,7 +271,7 @@ const PollsPage = () => {
                 </div>
             </div>
             <Overlay target={target.current} show={showStatusPopOver} placement="bottom" rootClose rootCloseEvent="click" onHide={e => setShowStatusPopOver(false)}>
-                <Popover id="popover-contained" className={`rounded-6`}>
+                <Popover id="popover-contained" className={`rounded-6 ${theme === 'light' ? 'light-popover-status' : 'dark-popover-status'}`}>
                     <Popover.Body className={`rounded-6`}>
                         <div className="d-flex flex-column">
                             <label className="form-check-label fs-5 fw-normal radio">
