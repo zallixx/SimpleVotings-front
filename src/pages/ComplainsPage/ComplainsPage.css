@@ -1,0 +1,19 @@
+/* Стили для эл-тов(жалобы) списка */
+#light .weak_blue {
+    background-color: #f9f8f5;
+}
+
+#light .weak_blue:hover {
+    background-color: #ccdeed
+}
+
+#dark .weak_blue {
+    background-color: #333332;
+    color: #eaeaea;
+    border-color: black;
+}
+
+#dark .weak_blue:hover {
+    background-color: #092a54;
+    color: #eaeaea;
+}

@@ -16,8 +16,6 @@ const authorized_tabs = {
 
 const unauthorized_tabs = {
     'Home': '/',
-    'Login': '/login/',
-    'Register': '/register/',
     'Polls': '/polls/',
 }
 
@@ -219,6 +217,11 @@ const Header = () => {
                 <ButtonGroup>
                     {user !== null ? items_tabs : unauthorized_items}
                 </ButtonGroup>
+                {user !== null ? null : (
+                    <a className="item_on_header text_color" style={{position: 'absolute', right: '5px'}} onClick={() => navigate('/login')}>
+                        Login
+                    </a>
+                )}
             </div>
         </div>
     );

@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ReactLoading from "react-loading";
 
+import './ComplainsPage.css';
+
 const ComplainsPage = () => {
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext);
@@ -86,7 +88,7 @@ const ComplainsPage = () => {
                                         <div className="list-group-item list-group-item-action weak_blue rounded">
                                             {complain.status === "Рассмотрена" ? (
                                                 // eslint-disable-next-line
-                                                <a onClick={() => navigate(`/complains/${complain.id}`)}>
+                                                <a onClick={() => navigate(`/complains/${complain.id}`)} style={{cursor: 'pointer'}}>
                                                     <div className="d-flex w-100 justify-content-between">
                                                         <h5 className="mb-1">{complain.text}</h5>
                                                         <small> {complain.status + ". Нажми, чтобы посмотреть ответ от администрации"}</small>
@@ -96,7 +98,7 @@ const ComplainsPage = () => {
                                                 <>
                                                     {user.is_admin ? (
                                                         // eslint-disable-next-line
-                                                        <a onClick={() => navigate(`/complains/${complain.id}`)}>
+                                                        <a onClick={() => navigate(`/complains/${complain.id}`)} style={{cursor: 'pointer'}}>
                                                             <div className="d-flex w-100 justify-content-between">
                                                                 <h5 className="mb-1">{complain.text}</h5>
                                                                 <small> {complain.status}</small>
