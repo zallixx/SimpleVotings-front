@@ -223,7 +223,7 @@ const PollsPage = () => {
                                     </label>
                                     <br/>
                                     <label>Варианты ответов: </label>
-                                    {poll.type_voting === "2" ? (
+                                    {poll.type_voting === "2" || poll.type_voting === 2 ? (
                                         <>
                                             <div>
                                                 <input
