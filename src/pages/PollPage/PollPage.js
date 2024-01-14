@@ -162,6 +162,11 @@ const PollsPage = () => {
                                 Редактировать
                             </button>
                         )}
+                        {user.username !== author_name && !isEditMode && !isComplainMode && user.is_admin && (
+                            <button className="btn btn-danger float-end" onClick={deletePoll}>
+                                Удалить
+                            </button>
+                        )}
                         {isEditMode ? (
                             <>
                                 <Form onSubmit={handleFormSubmit}>
