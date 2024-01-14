@@ -168,7 +168,12 @@ const PollsPage = () => {
 
     const handleAddChoice = (event) => {
         event.preventDefault();
-        setPoll({...poll, choices: [...poll.choices, '']});
+        if (poll.choices.length < 10) {
+            setPoll({...poll, choices: [...poll.choices, '']});
+        }
+        else {
+            alert('Максимум 10 вариантов ответа!');
+        }
     };
 
     const handleDelChoice = (event) => {
@@ -258,6 +263,7 @@ const PollsPage = () => {
                                                             setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
                                                         }}
                                                         readOnly={poll.type_voting === 2 || poll.type_voting === "2"}
+                                                        required
                                                     />
                                                 ))}
                                                 <button className="btn btn-primary" onClick={handleAddChoice}>+</button>
