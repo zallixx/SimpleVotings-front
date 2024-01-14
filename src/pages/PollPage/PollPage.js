@@ -43,26 +43,31 @@ const PollsPage = () => {
 
     const vote = async (e) => {
         e.preventDefault();
-        const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
-        try {
-            const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + String(authTokens.access),
-                },
-                body: JSON.stringify({
-                    'choices': choices
-                })
-            });
-            const data = await response.json();
-            if (response.status === 201) {
-                navigate('/polls/' + params.id + '/results');
-            } else {
-                alert(data);
+        if (user.username === "") {
+            alert("Вы не авторизованы");
+        }
+        else {
+            const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
+            try {
+                const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + String(authTokens.access),
+                    },
+                    body: JSON.stringify({
+                        'choices': choices
+                    })
+                });
+                const data = await response.json();
+                if (response.status === 201) {
+                    navigate('/polls/' + params.id + '/results');
+                } else {
+                    alert(data);
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
         }
     };
 
@@ -114,6 +119,10 @@ const PollsPage = () => {
 
     let complain = (e) => {
         e.preventDefault();
+        if(user.username === "") {
+            alert("Вы не авторизованы")
+        }
+        else {
             try {
                  fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
                     method: 'POST',
@@ -128,6 +137,7 @@ const PollsPage = () => {
             } catch (error) {
                 console.error(error);
             }
+        }
     }
 
     let deletePoll = async () => {
