@@ -73,12 +73,16 @@ const PollsPage = () => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
+        const discreteAnswers = ['Да','Нет']
         let toServer = {};
         if (poll.question) {
             toServer.question = poll.question
         }
         if (poll.choices) {
-            toServer.choices = poll.choices
+            toServer.choices = (poll.type_voting === "2" || poll.type_voting === 2) ? discreteAnswers : poll.choices;
+        }
+        if (poll.type_voting) {
+            toServer.type_voting = poll.type_voting
         }
         try {
             fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/edit/', {
@@ -162,6 +166,20 @@ const PollsPage = () => {
 
     const handleClose = () => setComplainMode(false);
 
+    const handleAddChoice = (event) => {
+        event.preventDefault();
+        setPoll({...poll, choices: [...poll.choices, '']});
+    };
+
+    const handleDelChoice = (event) => {
+        event.preventDefault();
+        if (poll.choices.length > 2) {
+            setPoll({...poll, choices: poll.choices.slice(0, -1)});
+        } else {
+            alert('Минимум 2 варианта ответа!');
+        }
+    };
+
     return (
         <div className="BasePageCss text_color">
             <div key={poll.id} className="body-inner rounded-5">
@@ -180,38 +198,80 @@ const PollsPage = () => {
                         {isEditMode ? (
                             <>
                                 <Form onSubmit={handleFormSubmit}>
-                                    <input
-                                        type="text"
-                                        value={poll.question}
-                                        className="form-control mb-2"
-                                        onChange={(e) => setPoll((prevPoll) => ({
-                                            ...prevPoll,
-                                            question: e.target.value
-                                        }))}
-                                    />
-                                    {poll.choices.map((choice, index) => (
+                                    <div className="d-flex flex-row">
+                                        <label className="mt-1">Вопрос: </label>
                                         <input
                                             type="text"
-                                            key={index}
-                                            value={choice}
-                                            className="form-control mb-1"
-                                            onChange={(e) => {
-                                                const updatedChoices = [...poll.choices];
-                                                updatedChoices[index] = e.target.value;
-                                                setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
-                                            }}
+                                            value={poll.question}
+                                            style={{marginLeft: '5px'}}
+                                            placeholder="Вопрос"
+                                            className="form-control mb-2"
+                                            onChange={(e) => setPoll((prevPoll) => ({
+                                                ...prevPoll,
+                                                question: e.target.value
+                                            }))}
+                                            required
                                         />
-                                    ))}
+                                    </div>
+                                    <label>
+                                        Тип опроса:
+                                        <select className="form-select mb-1 rounded" value={poll.type_voting} onChange={(e) => {setPoll((prevPoll) => ({...prevPoll, type_voting: e.target.value}))}}>
+                                            <option value={"0"}>Один из многих</option>
+                                            <option value={"1"}>Несколько из многих</option>
+                                            <option value={"2"}>Дискретный</option>
+                                        </select>
+                                    </label>
+                                    <br/>
+                                    <label>Варианты ответов: </label>
+                                    {poll.type_voting === "2" ? (
+                                        <>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    className="form-control mb-1 rounded disabled"
+                                                    placeholder="Ответ"
+                                                    value="Нет"
+                                                    readOnly
+                                                />
+                                            </div>
+                                            <div>
+                                                <input
+                                                    type="text"
+                                                    className="form-control mb-1 rounded disabled"
+                                                    placeholder="Ответ"
+                                                    value="Да"
+                                                    readOnly
+                                                />
+                                            </div>
+                                        </>
+                                        ) : (
+                                            <>
+                                                {poll.choices.map((choice, index) => (
+                                                    <input
+                                                        type="text"
+                                                        key={index}
+                                                        value={choice}
+                                                        className="form-control mb-1"
+                                                        onChange={(e) => {
+                                                            const updatedChoices = [...poll.choices];
+                                                            updatedChoices[index] = e.target.value;
+                                                            setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
+                                                        }}
+                                                        readOnly={poll.type_voting === 2 || poll.type_voting === "2"}
+                                                    />
+                                                ))}
+                                                <button className="btn btn-primary" onClick={handleAddChoice}>+</button>
+                                                <button className="btn btn-primary" onClick={handleDelChoice}>-</button>
+                                            </>
+                                    )}
                                     <div className="d-flex justify-content-between align-items-center mt-3">
-                                        <FormGroup>
-                                            <Button type="submit" bsStyle="primary" className="fs-5">
-                                                Изменить опрос
-                                            </Button>
-                                        </FormGroup>
+                                        <Button type="submit" bsStyle="primary" className="fs-5">
+                                            Изменить опрос
+                                        </Button>
                                     </div>
                                 </Form>
                             </>
-                        )  : (
+                        ) : (
                             <>
                                 <h3 className="card-title mb-1">{poll.question}</h3>
                                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
