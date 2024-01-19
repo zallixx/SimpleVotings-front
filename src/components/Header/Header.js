@@ -9,21 +9,21 @@ import {ThemeContext} from "../../App";
 import './Header.css';
 
 const authorized_tabs = {
-    'Home': '/',
-    'Polls': '/polls/',
-    'Complains': '/complains/',
+    'Дом': '/',
+    'Опросы': '/polls/',
+    'Жалобы': '/complains/',
 };
 
 const unauthorized_tabs = {
-    'Home': '/',
-    'Polls': '/polls/',
+    'Дом': '/',
+    'Опросы': '/polls/',
 }
 
 const menu_items = {
-    'Vote history': '/vote-history/',
-    'Settings': '/settings/',
-    'Profile': '/user/',
-    'Logout': '/login/',
+    'История голосования': '/vote-history/',
+    'Настройки': '/settings/',
+    'Профиль': '/user/',
+    'Выйти': '/login/',
 };
 
 const Header = () => {
@@ -60,7 +60,7 @@ const Header = () => {
         const path = menu_items[item];
         if (path) {
             navigate(path);
-            if (item === 'Logout') {
+            if (item === 'Выйти') {
                 logoutUser();
                 setIsOpen(false);
             }
@@ -69,7 +69,7 @@ const Header = () => {
 
     const items_tabs = Object.keys(authorized_tabs).map((tab) => (
         // eslint-disable-next-line
-        <a className={`border-0 rounded-0 item_on_header text_color ${(authorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
+        <a className={`border-0 rounded-0 item_on_header text_color ${(authorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Дом") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleAuthorizedTabClick(tab)}>
             {tab}
@@ -78,7 +78,7 @@ const Header = () => {
 
     const unauthorized_items = Object.keys(unauthorized_tabs).map((tab) => (
         // eslint-disable-next-line
-        <a className={`border-0 rounded-0 item_on_header text_color ${(unauthorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Home") ? "active" : ""}`} value={tab}
+        <a className={`border-0 rounded-0 item_on_header text_color ${(unauthorized_tabs[tab].includes(pathname) && pathname !== "") || (pathname === "" && tab === "Дом") ? "active" : ""}`} value={tab}
                 key={tab}
                 onClick={() => handleUnAuthorizedTabClick(tab)}>
             {tab}
@@ -93,13 +93,13 @@ const Header = () => {
                         <Col>
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
-                                    {item === 'Vote history' && (
+                                    {item === 'История голосования' && (
                                         <MdHistory size={27} style={{textAlign: 'left', cursor: 'pointer'}}
                                                    onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
-                                    {item === 'Vote history' && (
+                                    {item === 'История голосования' && (
                                         // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
@@ -115,13 +115,13 @@ const Header = () => {
                         <Col>
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
-                                    {item === 'Settings' && (
+                                    {item === 'Настройки' && (
                                         <MdSettings size={27} style={{textAlign: 'left', cursor: 'pointer'}}
                                                     onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
-                                    {item === 'Settings' && (
+                                    {item === 'Настройки' && (
                                         // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
@@ -137,13 +137,13 @@ const Header = () => {
                         <Col>
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
-                                    {item === 'Profile' && (
+                                    {item === 'Профиль' && (
                                         <MdPerson size={27} style={{textAlign: 'left', cursor: 'pointer'}}
                                                   onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
-                                    {item === 'Profile' && (
+                                    {item === 'Профиль' && (
                                         // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
@@ -159,14 +159,14 @@ const Header = () => {
                         <Col>
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
-                                    {item === 'Logout' && (
+                                    {item === 'Выйти' && (
                                         <MdLogout size={27}
                                                   style={{textAlign: 'left', color: 'darkred', cursor: 'pointer'}}
                                                   onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
-                                    {item === 'Logout' && (
+                                    {item === 'Выйти' && (
                                         // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}

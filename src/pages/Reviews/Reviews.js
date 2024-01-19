@@ -5,7 +5,7 @@ const Reviews = () => {
         <div className="BasePageCss reviews text_color">
             <div className="content_reviews">
                 <p>
-                    There will be a page with reviews that you can leave.
+                    Тут появится страница с отзывами, которые вы сможете оставить.
                 </p>
             </div>
 

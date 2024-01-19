@@ -38,27 +38,27 @@ const LoginPage = () => {
         <div className="BasePageCss">
             <div className="body-wrapper">
                 <div className="body-inner">
-                    <h3 style={{textAlign: 'center'}}>Login to your account</h3>
+                    <h3 style={{textAlign: 'center'}}>Войдите в свой аккаунт</h3>
                     <Form className="LoginForm" id="loginForm" onSubmit={loginUser}>
                         <FormGroup controlId="formUsername" className="mb-3">
-                            <FormLabel>Username</FormLabel>
+                            <FormLabel>Имя пользователя</FormLabel>
                             <FormControl type="text" name="username" className="form-control" placeholder="Username" required/>
                         </FormGroup>
                         <FormGroup controlId="formPassword" className="mb-3">
-                            <FormLabel>Password</FormLabel>
+                            <FormLabel>Пароль</FormLabel>
                             <small style={{float: 'right', cursor: 'pointer'}}>
-                                <p onClick={() => setShowFirstModal(true)}>Forgot password?</p>
+                                <p onClick={() => setShowFirstModal(true)}>Забыли пароль?</p>
                             </small>
                             <FormControl type="password" name="password" className="form-control"
                                          placeholder="Password" required/>
                         </FormGroup>
                         <FormGroup style={{marginBottom: 0}} controlId="formSubmit" className="d-grid">
                             <Button variant="primary" type="submit" className="">
-                                Login
+                                Авторизоваться
                             </Button>
                         </FormGroup>
                     </Form>
-                    <p className="mt-2" style={{textAlign: 'center'}}>Don't have an account? <a href="/register">Register here</a></p>
+                    <p className="mt-2" style={{textAlign: 'center'}}>У вас нет учетной записи?<a href="/register">Зарегистрируйтесь здесь</a></p>
                 </div>
             <Modal centered onHide={() => showFirstModal ? setShowFirstModal(false) : null} show={showFirstModal}>
                 <Form onSubmit={resetPassword}>
@@ -68,13 +68,13 @@ const LoginPage = () => {
                         <Modal.Body>
                             {modal_title === "Password Recover" ? (
                                 <>
-                                    <small>We need your email to sent you a reset password link</small>
+                                    <small>Нам нужен ваш адрес электронной почты, чтобы отправить вам ссылку для сброса пароля.</small>
                                     <FormControl type="email" name="email" className="form-control mt-3"
                                                  placeholder="Email Address" onInput={(e) => setNewParam(e.target.value)} required/>
                                 </>
                             ) : (
                                 <>
-                                    <small>We have sent you an email with a link to reset your password</small>
+                                    <small>Мы отправили вам электронное письмо со ссылкой для сброса пароля.</small>
                                 </>
                             )}
                         </Modal.Body>

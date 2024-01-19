@@ -7,7 +7,7 @@ const AboutTheProjects = () => {
         <div className="about_the_project text_color">
             <div className="content_about_the_project">
                 <p>
-                    There will be a page about the project here. (How to use, what is it for and who needs it)
+                    Здесь будет страница о проекте. (Как использовать, для чего и кому нужно)
                 </p>
             </div>
 

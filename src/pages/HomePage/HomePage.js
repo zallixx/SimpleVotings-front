@@ -10,16 +10,16 @@ const HomePage = () => {
     return (
         <div className="BackgroundImage text_color">
             <div className="homeContent">
-                <h1 className="mainText">Polls</h1>
+                <h1 className="mainText">Опросы</h1>
                 <div className="menu">
                     <div className="homeCol">
-                        {A('Polls', '/polls/')}
-                        {A('Settings', '/settings/')}
+                        {A('Опросы', '/polls/')}
+                        {A('Настройки', '/settings/')}
                     </div>
 
                     <div className="homeCol">
-                        {A('Login', '/login/')}
-                        {A('Vote history', '/vote-history/')}
+                        {A('Авторизоваться', '/login/')}
+                        {A('История голосования', '/vote-history/')}
                     </div>
                 </div>
             </div>

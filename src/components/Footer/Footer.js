@@ -12,12 +12,12 @@ const Footer = () => {
             <div className="hr"></div>
             <div className="footerContent">
                 <div className="footerCol">
-                    {A('About the project', '/aboutTheProject/')}
+                    {A('О проекте', '/aboutTheProject/')}
                 </div>
 
                 <div className="footerCol">
-                    {A('About us', '/aboutUs/')}
-                    {A('Reviews', '/reviews/')}
+                    {A('О нас', '/aboutUs/')}
+                    {A('Отзывы', '/reviews/')}
                 </div>
             </div>
         </div>
