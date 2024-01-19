@@ -103,3 +103,18 @@
 #dark .BackgroundImage {
     background-image: linear-gradient(rgba(25, 25, 25, 1), rgba(50, 50, 50, 1), rgba(75, 75, 75, 1));
 }
+
+.headerContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerLeft {
+  flex: 1;
+}
+
+.headerRight {
+  flex: 1;
+  text-align: right;
+}
