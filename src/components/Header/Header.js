@@ -20,7 +20,7 @@ const unauthorized_tabs = {
 }
 
 const menu_items = {
-    'История голосования': '/vote-history/',
+    'История голосов': '/vote-history/',
     'Настройки': '/settings/',
     'Профиль': '/user/',
     'Выйти': '/login/',
@@ -93,18 +93,18 @@ const Header = () => {
                         <Col>
                             <Row xs={1} md={2} className="align-items-center">
                                 <Col>
-                                    {item === 'История голосования' && (
+                                    {item === 'История голосов' && (
                                         <MdHistory size={27} style={{textAlign: 'left', cursor: 'pointer'}}
                                                    onClick={() => handleMenuItemClick(item)}/>
                                     )}
                                 </Col>
                                 <Col>
-                                    {item === 'История голосования' && (
+                                    {item === 'История голосов' && (
                                         // eslint-disable-next-line
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-48px'}}
+                                            style={{marginLeft: '-75px'}}
                                         >
                                             {item}
                                         </a>
@@ -126,7 +126,7 @@ const Header = () => {
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-48px'}}
+                                            style={{marginLeft: '-75px'}}
                                         >
                                             {item}
                                         </a>
@@ -148,7 +148,7 @@ const Header = () => {
                                         <a
                                             className={`item_on_menu ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => {navigate('/users/' + user.user_id);}}
-                                            style={{marginLeft: '-48px'}}
+                                            style={{marginLeft: '-75px'}}
                                         >
                                             {item}
                                         </a>
@@ -171,7 +171,7 @@ const Header = () => {
                                         <a
                                             className={`item_on_menu text-darkred ${theme === 'light' ? 'light-background' : 'dark-background'}`}
                                             onClick={() => handleMenuItemClick(item)}
-                                            style={{marginLeft: '-48px'}}
+                                            style={{marginLeft: '-75px'}}
                                         >
                                             {item}
                                         </a>
@@ -208,7 +208,7 @@ const Header = () => {
                          onHide={e => setIsOpen(false)}>
                     <Popover id="popover-contained"
                              className={`rounded-6 ${theme === 'light' ? 'light-background' : 'dark-background'}`}
-                             style={{overflow: 'hidden', width: '145px'}}>
+                             style={{overflow: 'hidden', width: '180px'}}>
                         {user !== null ? items_menu : null}
                     </Popover>
                 </Overlay>
