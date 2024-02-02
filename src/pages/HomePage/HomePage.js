@@ -23,7 +23,7 @@ const HomePage = () => {
                 </div>
             </header>
 
-            {/* Основная часть (контент) */}
+            {/* Основная часть (контент) (лендинг page) */}
             <main>
                 <div className="BackgroundImage">
                     <div className="homeContent">

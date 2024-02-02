@@ -81,6 +81,7 @@ const AnswerForComplainPage = () => {
                         <a onClick={() => navigate('/polls/' + complain[0].poll)} style={{cursor: 'pointer', color: 'blue'}}>Ссылка на опрос</a>
                     </h3>
                     <hr/>
+
                     <div className="d-flex flex-column align-items-center">
                         {user.is_admin && complain[0].response === '' ? (
                             <Form onSubmit={sendAnswerToComplain}>

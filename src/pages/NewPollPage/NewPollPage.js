@@ -8,6 +8,7 @@ const NewPollPage = () => {
     const [pollType, setPollType] = useState("0");
     const [question, setQuestion] = useState('');
     const [answers, setAnswers] = useState(['', '']);
+    const [picture, setPicture] = useState('');
     let {authTokens} = useContext(AuthContext);
     let {user} = useContext(AuthContext);
     const navigate = useNavigate();
@@ -54,8 +55,11 @@ const NewPollPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const discreteAnswers = ['Да','Нет']
+        console.log(picture)
+        const discreteAnswers = ['Да', 'Нет']
+        /*add ability to upload pictures*/
         const payload = {
+            picture: picture,
             type_voting: pollType,
             question: question,
             choices: (pollType === "2" ? discreteAnswers : answers),
@@ -82,12 +86,21 @@ const NewPollPage = () => {
             if (response.status === 201) {
                 alert('Опрос успешно создан');
                 navigate('/polls');
-            }
-            else {
+            } else {
                 alert('Произошла ошибка при создании опроса. Проверьте введенные данные. Может быть у вас присутвуют одинаковые варианты ответов.');
             }
         });
     };
+
+    function handlePictureChange(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            setPicture(event.target.result);
+        };
+        reader.readAsDataURL(file);
+        console.log(picture)
+    }
 
     return (
         <div className="BasePageCss">
@@ -106,7 +119,8 @@ const NewPollPage = () => {
                         </div>
                         <label>
                             Специальное условие:
-                            <select className="form-select mb-1 rounded" value={specialCondition} onChange={handleSpecialConditionChange}>
+                            <select className="form-select mb-1 rounded" value={specialCondition}
+                                    onChange={handleSpecialConditionChange}>
                                 <option value={"0"}>Нет</option>
                                 <option value={"1"}>Ограниченное кол-во голосов</option>
                                 <option value={"2"}>Ограниченное время</option>
@@ -136,12 +150,23 @@ const NewPollPage = () => {
                         ) : null}
                         <label>
                             Тип опроса:
-                            <select className="form-select mb-1 rounded" value={pollType} onChange={handlePollTypeChange}>
+                            <select className="form-select mb-1 rounded" value={pollType}
+                                    onChange={handlePollTypeChange}>
                                 <option value={"0"}>Один из многих</option>
                                 <option value={"1"}>Несколько из многих</option>
                                 <option value={"2"}>Дискретный</option>
                             </select>
                         </label>
+                        <div className="mb-1">
+                            <div className="card-body text-lg-start">
+                                <input
+                                    className="form-control"
+                                    type="file"
+                                    placeholder="Выберите файл"
+                                    onChange={handlePictureChange}
+                                />
+                            </div>
+                        </div>
                         <br/>
                         {pollType === "2" ? (
                             <label>

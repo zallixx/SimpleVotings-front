@@ -30,6 +30,7 @@ const PollsPage = () => {
             });
             const data = await response.json();
             if (response.status === 200) {
+                console.log(data)
                 setPoll(data);
                 setAuthorName(data.author_name);
                 setLoading(false);
@@ -39,6 +40,7 @@ const PollsPage = () => {
         } catch (error) {
             alert(error)
         }
+
     };
 
     const vote = async (e) => {
@@ -190,7 +192,8 @@ const PollsPage = () => {
             <div key={poll.id} className="body-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
-                        {user.username === author_name && !isEditMode && !isComplainMode &&(
+                        <img className="img-fluid mb-2" src={`http://localhost:8000${poll.picture}`}/>
+                        {user.username === author_name && !isEditMode && !isComplainMode && (
                             <button className="btn btn-primary float-end" onClick={toggleEditMode}>
                                 Редактировать
                             </button>
@@ -220,7 +223,10 @@ const PollsPage = () => {
                                     </div>
                                     <label>
                                         Тип опроса:
-                                        <select className="form-select mb-1 rounded" value={poll.type_voting} onChange={(e) => {setPoll((prevPoll) => ({...prevPoll, type_voting: e.target.value}))}}>
+                                        <select className="form-select mb-1 rounded" value={poll.type_voting}
+                                                onChange={(e) => {
+                                                    setPoll((prevPoll) => ({...prevPoll, type_voting: e.target.value}))
+                                                }}>
                                             <option value={"0"}>Один из многих</option>
                                             <option value={"1"}>Несколько из многих</option>
                                             <option value={"2"}>Дискретный</option>
@@ -249,26 +255,26 @@ const PollsPage = () => {
                                                 />
                                             </div>
                                         </>
-                                        ) : (
-                                            <>
-                                                {poll.choices.map((choice, index) => (
-                                                    <input
-                                                        type="text"
-                                                        key={index}
-                                                        value={choice}
-                                                        className="form-control mb-1"
-                                                        onChange={(e) => {
-                                                            const updatedChoices = [...poll.choices];
-                                                            updatedChoices[index] = e.target.value;
-                                                            setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
-                                                        }}
-                                                        readOnly={poll.type_voting === 2 || poll.type_voting === "2"}
-                                                        required
-                                                    />
-                                                ))}
-                                                <button className="btn btn-primary" onClick={handleAddChoice}>+</button>
-                                                <button className="btn btn-primary" onClick={handleDelChoice}>-</button>
-                                            </>
+                                    ) : (
+                                        <>
+                                            {poll.choices.map((choice, index) => (
+                                                <input
+                                                    type="text"
+                                                    key={index}
+                                                    value={choice}
+                                                    className="form-control mb-1"
+                                                    onChange={(e) => {
+                                                        const updatedChoices = [...poll.choices];
+                                                        updatedChoices[index] = e.target.value;
+                                                        setPoll((prevPoll) => ({...prevPoll, choices: updatedChoices}));
+                                                    }}
+                                                    readOnly={poll.type_voting === 2 || poll.type_voting === "2"}
+                                                    required
+                                                />
+                                            ))}
+                                            <button className="btn btn-primary" onClick={handleAddChoice}>+</button>
+                                            <button className="btn btn-primary" onClick={handleDelChoice}>-</button>
+                                        </>
                                     )}
                                     <div className="d-flex justify-content-between align-items-center mt-3">
                                         <Button type="submit" bsStyle="primary" className="fs-5">
