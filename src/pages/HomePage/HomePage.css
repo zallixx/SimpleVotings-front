@@ -1,120 +1,146 @@
-/* Стиль для ссылок(табов) в меню */
-.link {
+#dark .home-page-container {
+    background-color: #1e1e1d;
+}
+
+.home-banner-container {
     position: relative;
-    font-size: 1.1em;
-    text-decoration: none;
-    font-weight: 500;
-    margin: 20%;
-    white-space: nowrap;
-    cursor: pointer;
-    color: white;
-}
-
-.link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    bottom: -6px;
-    height: 3px;
-    background-color: black;
-    border-radius: 5px;
-    transform: scaleX(0);
-    transition: transform .5s;
-}
-
-.link:hover {
-    color: black;
-}
-
-#dark .link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    width: 100%;
-    bottom: -6px;
-    height: 3px;
-    color: white;
-    background-color: white;
-    border-radius: 5px;
-    transform: scaleX(0);
-    transition: transform .5s;
-}
-
-#dark .link:hover {
-    color: white;
-}
-
-.link.active::after {
-    transform: scaleX(1);
-}
-
-.link:hover::after {
-    transform: scaleX(1);
-}
-
-#dark .link.active::after {
-    transform: scaleX(1);
-}
-
-#dark .link:hover::after {
-    transform: scaleX(1);
-}
-
-
-/* Остальные стили */
-.menu {
     display: flex;
-    justify-content: space-evenly;
-    width: 25%;
-    margin: auto;
+    padding-top: 3rem;
 }
 
-.homeCol {
+.home-banner-container,
+.about-section-container {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-text-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.home-text-section,
+.about-section-text-container {
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+}
+
+.primary-heading {
+    font-size: clamp(2rem, 5vw, 4rem);
+    text-align: center;
+    max-width: 90%;
+}
+
+.primary-text {
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    max-width: 500px;
+    margin: 1.5rem 0;
+    text-align: center;
+}
+
+
+.secondary-button {
+    padding: 1rem 2.5rem;
+    outline: none;
+    border: none;
+    border-radius: 5rem;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: white;
+    transition: 0.2s;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
-    margin: 25%;
-    font-size: 1.5em;
+    justify-content: center;
 }
 
-.homeContent {
-    margin: 10%;
-    padding: 5%;
+/* */
+
+.about-section-container {
+    margin-top: 20rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.mainText {
-    font-size: 5em;
-    margin: 15%;
+#dark .about-section-container {
+    background-color: #1e1e1d;
 }
 
-.BackgroundImage {
-    width: 100%;
-    height: 100%;
+.about-section-text-container {
+    flex: 1;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+}
+
+/* */
+
+.work-section-wrapper {
+    margin-top: 15rem;
+}
+
+#dark .work-section-wrapper {
+    background-color: #1e1e1d;
+}
+
+.work-section-top p {
+    text-align: center;
+    max-width: 600px !important;
+}
+.work-section-top h1 {
+    max-width: 700px !important;
+}
+.work-section-top {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
 }
 
-#light .BackgroundImage {
-    background-image: linear-gradient(rgba(205, 205, 205, 1), rgba(230, 230, 230, 1), rgba(255, 255, 255, 1));
+.work-section-info {
+    width: 290px;
+    min-height: 350px;
+    padding: 1rem 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 1rem;
+    margin: 1rem 2rem;
 }
 
-#dark .BackgroundImage {
-    background-image: linear-gradient(rgba(25, 25, 25, 1), rgba(50, 50, 50, 1), rgba(75, 75, 75, 1));
+
+#dark .work-section-info {
+    background-color: #222220;
+    color: white;
 }
 
-.headerContent {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+#light .work-section-info {
+    background-color: white;
+    color: #505050;
 }
 
-.headerLeft {
-  flex: 1;
+.work-section-info h2 {
+    margin: 1rem 0;
 }
-
-.headerRight {
-  flex: 1;
-  text-align: right;
+.work-section-bottom {
+    margin-top: 5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.work-section-info p {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
 }

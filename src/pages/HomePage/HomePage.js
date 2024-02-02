@@ -1,50 +1,66 @@
 import React from "react";
+import {useNavigate} from "react-router-dom";
 
 import './HomePage.css';
 
 const HomePage = () => {
-    const A = (text, hreff) => {
-        return (<a className="link text_color" href={hreff}>{text}</a>)
-    };
+    const navigate = useNavigate();
+    const surveyInfoData = [{
+        title: "Создавайте свои опросы",
+        text: "Создавайте свои уникальные опросы и получайте обратную связь от участников, чтобы собрать разнообразные мнения.",
+    }, {
+        title: "Принимайте участие",
+        text: "Принимайте активное участие в опросах, голосуя за интересные темы и внося свой вклад в формирование общего мнения.",
+    }, {
+        title: "Быстрые результаты",
+        text: "Получайте быстрые и точные результаты ваших опросов.",
+    },];
 
     return (
-        <div>
-            {/* Шапка */}
-            <header className="header">
-                <div className="headerContent">
-                    <div className="headerLeft" style={{ textAlign: 'left', paddingLeft: '40px' }}>
-                        <p style={{ textTransform: 'uppercase', fontSize: '80px', whiteSpace: 'pre' }}>
-                            Голосуй{"\n"}онлайн{"\n"}с SimpleVoting
+        <div className="home-page-container">
+            <div className="home-container text_color">
+                <div className="home-banner-container">
+                    <div className="home-text-section">
+                        <h1 className="primary-heading">
+                            Участвуйте в наших опросах или создайте собственные опросы
+                        </h1>
+                        <p className="primary-text">
+                            Принимайте участие в опросах и влияйте на результаты опросов. Ваше мнение важно для каждого!
                         </p>
-                    </div>
-                    <div className="headerRight" style={{ marginTop: '50px', paddingRight: '50px' }}>
-                        <img src={require('./image.jpeg')} alt="SimpleVoting" />
+                        <button className="secondary-button btn-primary btn" onClick={() => navigate('/register')}>
+                            Зарегестрироваться
+                        </button>
                     </div>
                 </div>
-            </header>
-
-            {/* Основная часть (контент) (лендинг page) */}
-            <main>
-                <div className="BackgroundImage">
-                    <div className="homeContent">
-                        <div className="menu">
-                            <div className="homeCol">
-                                {A('Polls', '/polls/')}
-                                {A('Settings', '/settings/')}
-                            </div>
-                            <div className="homeCol">
-                                {A('Login', '/login/')}
-                                {A('Vote history', '/vote-history')}
-                            </div>
+            </div>
+            <div className="about-section-container text_color">
+                <div className="about-section-text-container">
+                    <h1 className="primary-heading">
+                        Голосования: Ваш Голос Имеет Значение
+                    </h1>
+                    <p className="primary-text">
+                        Создавайте свои голосования и участвуйте в опросах других участников. Вместе мы делаем наш
+                        сервис местом для активного участия в различных голосованиях и получения результатов.
+                    </p>
+                </div>
+            </div>
+            <div className="work-section-wrapper text_color">
+                <div className="work-section-top">
+                    <h1 className="primary-heading">Как это работает</h1>
+                    <p className="primary-text">
+                        Узнайте, как просто и увлекательно участвовать в наших опросах. Давайте вместе формировать
+                        мнения!
+                    </p>
+                </div>
+                <div className="work-section-bottom">
+                    {surveyInfoData.map((data) => (
+                        <div className="work-section-info" key={data.title}>
+                            <h2>{data.title}</h2>
+                            <p>{data.text}</p>
                         </div>
-                    </div>
+                    ))}
                 </div>
-            </main>
-
-            {/* Подвал */}
-            <footer>
-                <p>&copy; 2023 Your Polls App</p>
-            </footer>
+            </div>
         </div>
     );
 };
