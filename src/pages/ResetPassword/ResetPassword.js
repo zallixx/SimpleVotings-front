@@ -37,19 +37,19 @@ const ResetPasswordPage = () => {
             <div className="body-wrapper">
                 <div className="body-inner">
                     <Form onSubmit={resetPassword}>
-                        <h3 style={{textAlign: 'center'}}>Reset Password</h3>
+                        <h3 style={{textAlign: 'center'}}>Изменить пароль</h3>
                         <small style={{float: 'left'}}>
-                            Enter new password
+                            Введите новый пароль
                         </small>
                         <FormControl type="password" name="password" className="form-control mt-3"
                                      placeholder="New Password" onChange={(e) => setNewParam(e.target.value)}/>
                         <small style={{float: 'left'}}>
-                            Repeat new password
+                            Повторите новый пароль
                         </small>
                         <FormControl type="password" name="password2" className="form-control mt-3"
                                      placeholder="Repeat New Password" onChange={(e) => setNewParam1(e.target.value)}/>
                         <Button style={{width: '100%', marginTop: '10px', marginBottom: '10px', height: '50px', fontSize: '20px', fontWeight: 'bold', textAlign: 'center', borderRadius: '10px', }} variant="primary" type="submit" className="mt-3">
-                            Submit
+                            Отправить
                         </Button>
                     </Form>
                 </div>
