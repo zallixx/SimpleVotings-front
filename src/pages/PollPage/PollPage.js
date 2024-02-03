@@ -47,8 +47,7 @@ const PollsPage = () => {
         e.preventDefault();
         if (user.username === "") {
             alert("Вы не авторизованы");
-        }
-        else {
+        } else {
             const choices = Array.from(e.target.form.elements).filter(el => (el.checked && (el.getAttribute('type') === 'checkbox' || el.getAttribute('type') === 'radio'))).map(el => el.value);
             try {
                 const response = await fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/vote/', {
@@ -75,7 +74,7 @@ const PollsPage = () => {
 
     const handleFormSubmit = (event) => {
         event.preventDefault();
-        const discreteAnswers = ['Да','Нет']
+        const discreteAnswers = ['Да', 'Нет']
         let toServer = {};
         if (poll.question) {
             toServer.question = poll.question
@@ -98,8 +97,7 @@ const PollsPage = () => {
                 if (response.status === 200) {
                     alert("Опрос успешно отредактирован");
                     window.location.reload();
-                }
-                else {
+                } else {
                     alert("Произошла ошибка при редактировании опроса. Может быть у вас присутвуют одинаковые варианты ответов.");
                 }
             });
@@ -125,12 +123,11 @@ const PollsPage = () => {
 
     let complain = (e) => {
         e.preventDefault();
-        if(user.username === "") {
+        if (user.username === "") {
             alert("Вы не авторизованы")
-        }
-        else {
+        } else {
             try {
-                 fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
+                fetch('http://127.0.0.1:8000/api/polls/' + params.id + '/complain/', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -172,8 +169,7 @@ const PollsPage = () => {
         event.preventDefault();
         if (poll.choices.length < 10) {
             setPoll({...poll, choices: [...poll.choices, '']});
-        }
-        else {
+        } else {
             alert('Максимум 10 вариантов ответа!');
         }
     };
@@ -192,7 +188,9 @@ const PollsPage = () => {
             <div key={poll.id} className="body-inner rounded-5">
                 <div className="mb-3">
                     <div className="card-body text-lg-start">
-                        <img className="img-fluid mb-2" src={`http://localhost:8000${poll.picture}`}/>
+                        {poll.picture !== null && (
+                            <img className="img-fluid mb-2" src={`http://localhost:8000${poll.picture}`}/>
+                        )}
                         {user.username === author_name && !isEditMode && !isComplainMode && (
                             <button className="btn btn-primary float-end" onClick={toggleEditMode}>
                                 Редактировать
@@ -332,7 +330,8 @@ const PollsPage = () => {
                     </div>
                 </div>
             </div>
-            <Modal show={isComplainMode} centered className={"custom-modal-" + localStorage.getItem("theme")} onHide={handleClose}>
+            <Modal show={isComplainMode} centered className={"custom-modal-" + localStorage.getItem("theme")}
+                   onHide={handleClose}>
                 <Form onSubmit={complain}>
                     <Modal.Header className="rounded-top-1 border-0">
                         <Modal.Title>Составление жалобы</Modal.Title>

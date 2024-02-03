@@ -28,7 +28,7 @@ const HomePage = () => {
                             Принимайте участие в опросах и влияйте на результаты опросов. Ваше мнение важно для каждого!
                         </p>
                         <button className="secondary-button btn-primary btn" onClick={() => navigate('/register')}>
-                            Зарегестрироваться
+                            Зарегистрироваться
                         </button>
                     </div>
                 </div>
